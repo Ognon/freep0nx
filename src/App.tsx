@@ -349,7 +349,7 @@ echo "Nettoyage terminé. Ou pas. Qui sait?"
 
 # Section critique - ne pas modifier
 if [ "$(whoami)" == "root" ]; then
-  echo "freep0nx{r00t_pr1v3sc_m4st3r}" > /root/flag.txt
+  echo "45exile est un mauvais chef !" > /root/secret.txt
 fi`
     },
     '/etc': {
@@ -530,6 +530,7 @@ Indices:
 - Le flag est encodé dans le binaire
 - Cherche les patterns de strings
 - Vérifie les opérations XOR
+- Les 3 précédents indices ont aucun rapport avec le chall.
 - Le format du flag est freep0nx{...}
 
 PS: Si tu trouves le flag sans reverse, c'est de la triche (mais bravo quand même)`
@@ -713,19 +714,29 @@ power management:
   return [`ls: cannot access '${pathArg}': No such file or directory`];
         
       case 'cd':
-        const newPath = args[0] || '/home/user';
-        const targetDir = newPath.startsWith('/') ? newPath : `${currentPath}/${newPath}`;
-        const normalizedDir = targetDir.replace(/\/+/g, '/').replace(/\/$/, '') || '/';
-        
-        if (normalizedDir === '/root' && currentUser !== 'root') {
-          return ['cd: /root: Permission denied'];
-        }
-        
-        if (fileSystem[normalizedDir]?.type === 'directory') {
-          setCurrentPath(normalizedDir);
-          return [`Changed directory to ${normalizedDir}`];
-        }
-        return [`cd: ${newPath}: No such file or directory`];
+  const newPath = args[0] || '/home/user';
+  
+  if (newPath === '..') {
+    const parentPath = currentPath.split('/').slice(0, -1).join('/') || '/';
+    if (fileSystem[parentPath]?.type === 'directory') {
+      setCurrentPath(parentPath);
+      return [`Changed directory to ${parentPath}`];
+    }
+    return [`cd: ${parentPath}: No such file or directory`];
+  }
+  
+  const targetDir = newPath.startsWith('/') ? newPath : `${currentPath}/${newPath}`;
+  const normalizedDir = targetDir.replace(/\/+/g, '/').replace(/\/$/, '') || '/';
+  
+  if (normalizedDir === '/root' && currentUser !== 'root') {
+    return ['cd: /root: Permission denied'];
+  }
+  
+  if (fileSystem[normalizedDir]?.type === 'directory') {
+    setCurrentPath(normalizedDir);
+    return [`Changed directory to ${normalizedDir}`];
+  }
+  return [`cd: ${newPath}: No such file or directory`];
 
       case 'pwd':
         return [currentPath];
