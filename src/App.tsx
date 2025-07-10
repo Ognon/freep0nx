@@ -446,7 +446,6 @@ Jan 15 10:30:20 server sshd[1237]: User hacker attempted to login with password 
       content: `2024-01-15 14:32:17 [Warning] Aborted connection 123 to db: 'production' user: 'webapp' host: 'localhost' (Got an error reading communication packets)
 2024-01-15 14:32:18 [Note] SQL injection attempt: SELECT * FROM users WHERE username='admin' OR '1'='1'--' AND password='anything'
 2024-01-15 14:32:19 [Error] Access denied for user 'root'@'localhost' (using password: YES)
-2024-01-15 14:32:20 [Note] Flag found in query log: freep0nx{sql_1nj3ct10n_pr0}
 2024-01-15 14:32:21 [Note] User tried: DROP TABLE users; (Ahah, bien tenté)`
     },
     '/var/www': {
@@ -803,25 +802,6 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
         }
         return ['find: no results found'];
 
-      case 'grep':
-        if (args.includes('freep0nx') && args.includes('/var/log/')) {
-          return [
-            '/var/log/mysql.log:2024-01-15 14:32:20 [Note] Flag found in query log: freep0nx{sql_1nj3ct10n_pr0}'
-          ];
-        }
-        if (args.includes('admin') && args.includes('/etc/passwd')) {
-          return ['No matches found'];
-        }
-        if (args.includes('password') && args.includes('/home/user/')) {
-          return [
-            '/home/user/.secret_notes:- Mot de passe WiFi: 12345678 (Personne ne devinera!)',
-            '/home/user/downloads/wordlist.txt:password',
-            '/home/user/downloads/wordlist.txt:123456',
-            '/home/user/downloads/wordlist.txt:12345678'
-          ];
-        }
-        return ['grep: no matches found'];
-
       case 'ps':
         return [
           'PID TTY          TIME CMD',
@@ -1005,7 +985,6 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
           'sudo [command] - execute command as root',
           'sudo -l - list sudo privileges',
           'find [options] - search for files',
-          'grep [pattern] [files] - search text patterns',
           'ps - show running processes',
           'netstat - show network connections',
           'curl [options] - make HTTP requests',
@@ -1370,7 +1349,6 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
             <p>• Use <code className="bg-gray-800 px-1 rounded">ls -a</code> for hidden files</p>
             <p>• Check <code className="bg-gray-800 px-1 rounded">/var/log/</code> for logs</p>
             <p>• Try <code className="bg-gray-800 px-1 rounded">sudo -l</code> for privileges</p>
-            <p>• Search with <code className="bg-gray-800 px-1 rounded">grep "flag" *.txt</code></p>
           </div>
         </div>
       </div>
