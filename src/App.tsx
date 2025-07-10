@@ -1050,6 +1050,7 @@ power management:
     }
     return null;
   }).filter(Boolean);
+};
 
   const getSpecialityIcon = (speciality: string) => {
     if (speciality.includes('web')) return <Code className="w-4 h-4" />;
@@ -1297,6 +1298,7 @@ power management:
         </div>
 
       {/* Section Challenges - 3 colonnes */}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Carte Challenges */}
         <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-purple-500/30 p-6">
