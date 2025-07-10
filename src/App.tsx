@@ -1310,7 +1310,7 @@ power management:
                 
                 <div 
                   ref={terminalRef}
-                  className="h-192 overflow-y-auto p-4 font-mono text-sm bg-gradient-to-b from-black/80 to-gray-900/80"
+                  className="h-[500px] overflow-y-auto p-4 font-mono text-sm bg-gradient-to-b from-black/80 to-gray-900/80"
                   style={{ scrollbarWidth: 'thin', scrollbarColor: '#10b981 #1f2937' }}
                 >
                   {history.length === 0 && (
