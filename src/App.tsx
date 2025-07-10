@@ -1324,22 +1324,32 @@ power management:
             </div>
           )}
           
-          {history.map((cmd, index) => (
-            <div key={index} className="mb-3">
-              <div className="text-green-400 flex items-center">
-                <span className="text-purple-400">{currentUser}@freep0nx</span>
-                <span className="text-white">:</span>
-                <span className="text-blue-400">{currentPath}</span>
-                <span className="text-white">$ </span>
-                <span className="text-green-300">{cmd.input}</span>
-              </div>
-              {cmd.output.map((line, lineIndex) => (
-                <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
-                  {line}
-                </div>
-              ))}
-            </div>
-          ))}
+         {history.map((cmd, index) => (
+  <div key={index} className="mb-3">
+    <div className="text-green-400 flex items-center">
+      <span className="text-purple-400">{currentUser}@freep0nx</span>
+      <span className="text-white">:</span>
+      <span className="text-blue-400">{currentPath}</span>
+      <span className="text-white">$ </span>
+      <span className="text-green-300">{cmd.input}</span>
+    </div>
+    {cmd.output.map((line, lineIndex) => (
+      <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
+        {line.includes('freep0nx{') ? (
+          <span className="text-yellow-300 bg-yellow-900/20 px-1 rounded font-bold animate-pulse">
+            {line}
+          </span>
+        ) : line.includes('Permission denied') ? (
+          <span className="text-red-400">{line}</span>
+        ) : line.includes('✓') || line.includes('successful') ? (
+          <span className="text-green-400">{line}</span>
+        ) : (
+          line
+        )}
+      </div>
+    ))}
+  </div>
+))}
           
           <form onSubmit={handleSubmit} className="flex items-center">
             <span className="text-purple-400">{currentUser}@freep0nx</span>
