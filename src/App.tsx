@@ -1500,6 +1500,10 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
                 {foundMasterFlags.length === masterFlags.length && (
                   <div className="text-center text-yellow-400 font-bold text-sm">
                     🏆 MASTER HACKER ACHIEVED! GG 🏆
+                    OMG
+                    OMG
+                    OMG
+                    OMG
                   </div>
                 )}
               </div>
