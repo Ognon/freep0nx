@@ -671,39 +671,39 @@ power management:
 
     switch (command) {
       case 'ls':
-        const showHidden = args.includes('-a') || args.includes('-la') || args.includes('-al');
-        const longFormat = args.includes('-l') || args.includes('-la') || args.includes('-al');
-        const pathArg = args.find(arg => !arg.startsWith('-')) || currentPath;
-        const targetPath = pathArg.startsWith('/') ? pathArg : `${currentPath}/${pathArg}`;
-        const normalizedPath = targetPath.replace(/\/+/g, '/').replace(/\/$/, '') || '/';
+  const showHidden = args.includes('-a') || args.includes('-la') || args.includes('-al');
+  const longFormat = args.includes('-l') || args.includes('-la') || args.includes('-al');
+  const pathArg = args.find(arg => !arg.startsWith('-')) || currentPath;
+  const targetPath = pathArg.startsWith('/') ? pathArg : `${currentPath}/${pathArg}`;
+  const normalizedPath = targetPath.replace(/\/+/g, '/').replace(/\/$/, '') || '/';
+  
+  if (fileSystem[normalizedPath]?.type === 'directory') {
+    if (normalizedPath === '/root' && currentUser !== 'root') {
+      return ['ls: cannot open directory \'/root\': Permission denied'];
+    }
+    
+    let contents = [...(fileSystem[normalizedPath].contents || [])];
+    if (showHidden && fileSystem[normalizedPath].hidden) {
+      contents = [...contents, ...fileSystem[normalizedPath].hidden];
+    }
+    
+    if (longFormat) {
+      return contents.map(item => {
+        const isHidden = item.startsWith('.');
+        const isDir = fileSystem[`${normalizedPath}/${item}`]?.type === 'directory' || 
+                     fileSystem[normalizedPath === '/' ? `/${item}` : `${normalizedPath}/${item}`]?.type === 'directory';
+        const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
+        const size = isDir ? '4096' : Math.floor(Math.random() * 1024) + 1;
+        const date = 'Jan 15 ' + Math.floor(Math.random() * 12) + ':' + Math.floor(Math.random() * 60);
+        const color = isHidden ? '\x1b[90m' : isDir ? '\x1b[34m' : '\x1b[0m';
+        return `${permissions} 1 ${currentUser} ${currentUser} ${size} ${date} ${color}${item}\x1b[0m`;
+      });
+    }
+    
+    return contents;
+  }
+  return [`ls: cannot access '${pathArg}': No such file or directory`];
         
-        if (fileSystem[normalizedPath]?.type === 'directory') {
-          if (normalizedPath === '/root' && currentUser !== 'root') {
-            return ['ls: cannot open directory \'/root\': Permission denied'];
-          }
-          
-          let contents = [...(fileSystem[normalizedPath].contents || [])];
-          if (showHidden && fileSystem[normalizedPath].hidden) {
-            contents = [...contents, ...fileSystem[normalizedPath].hidden];
-          }
-          
-          if (longFormat) {
-            return contents.map(item => {
-              const isHidden = item.startsWith('.');
-              const isDir = fileSystem[`${normalizedPath}/${item}`]?.type === 'directory' || 
-                           fileSystem[normalizedPath === '/' ? `/${item}` : `${normalizedPath}/${item}`]?.type === 'directory';
-              const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
-              const size = isDir ? '4096' : Math.floor(Math.random() * 1024) + 1;
-              const date = 'Jan 15 ' + (Math.floor(Math.random() * 12) + ':' + Math.floor(Math.random() * 60);
-              const color = isHidden ? '\x1b[90m' : isDir ? '\x1b[34m' : '\x1b[0m';
-              return `${permissions} 1 ${currentUser} ${currentUser} ${size} ${date} ${color}${item}\x1b[0m`;
-            });
-          }
-          
-          return contents;
-        }
-        return [`ls: cannot access '${pathArg}': No such file or directory`];
-
       case 'cd':
         const newPath = args[0] || '/home/user';
         const targetDir = newPath.startsWith('/') ? newPath : `${currentPath}/${newPath}`;
