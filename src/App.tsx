@@ -272,8 +272,9 @@ cat challenge
 sudo -l
 find / -name "*.log" 2>/dev/null
 grep -r "freep0nx" /var/log/
-curl -H "Cookie: admin=true" localhost/admin
-echo "freep0nx{c00k13_m4n1pul4t10n_m4st3r}" > /tmp/cookie_flag.txt
+curl -H "Cookie: user=admin localhost/admin
+#Trying IDOR...
+curl https://venerable-rolypoly-67ff26.netlify.app/?member=1
 nano /etc/passwd
 # Oups, mauvaise commande
 vim /etc/shadow
