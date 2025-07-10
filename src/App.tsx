@@ -15,6 +15,17 @@ interface Member {
   hidden?: boolean;
 }
 
+const flagDescriptions = [
+  "🔍 Source Code Analysis",
+  "🤖 Web Crawling", 
+  "📁 Directory Traversal",
+  "🔐 Access Control (IDOR)",
+  "🔄 Reverse Engineering",
+  "🍪 Cookie Manipulation",
+  "💉 SQL Injection",
+  "📋 Log Analysis"
+];
+
 const App: React.FC = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<Command[]>([]);
@@ -1283,256 +1294,139 @@ power management:
 
       {/* CTF Section */}
       {showCTF && (
-        <section className="py-16 bg-black/40">
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white mb-4">Challenge CTF</h2>
-              <p className="text-gray-300 text-lg">Testez vos compétences avec nos challenges</p>
+  <section className="py-16 bg-black/40">
+    <div className="container mx-auto px-6">
+      {/* Terminal en pleine largeur */}
+      <div className="bg-black/90 backdrop-blur-sm rounded-lg border border-green-500/30 overflow-hidden shadow-2xl mb-8">
+        <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 px-4 py-3 border-b border-green-500/30">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Terminal className="w-4 h-4 text-green-400" />
+              <span className="text-green-400 font-mono text-sm">freep0nx@terminal</span>
             </div>
-            
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Terminal */}
-              <div className="bg-black/90 backdrop-blur-sm rounded-lg border border-green-500/30 overflow-hidden shadow-2xl">
-                <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 px-4 py-3 border-b border-green-500/30">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Terminal className="w-4 h-4 text-green-400" />
-                      <span className="text-green-400 font-mono text-sm">freep0nx@terminal</span>
-                      <span className="text-gray-400 text-xs">- Enhanced Terminal v2.0</span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div 
-                  ref={terminalRef}
-                  className="h-[500px] overflow-y-auto p-4 font-mono text-sm bg-gradient-to-b from-black/80 to-gray-900/80"
-                  style={{ scrollbarWidth: 'thin', scrollbarColor: '#10b981 #1f2937' }}
-                >
-                  {history.length === 0 && (
-                    <div className="text-green-400 mb-4">
-                      <div className="text-purple-400 mb-2">Welcome to freep0nx CTF Terminal!</div>
-                      <div className="text-gray-400 text-xs mb-2">Type 'help' for available commands</div>
-                      <div className="text-yellow-400 text-xs">🎯 Find hidden flags in the system!</div>
-                    </div>
-                  )}
-                  
-                 {history.map((cmd, index) => (
-  <div key={index} className="mb-3">
-    <div className="text-green-400 flex items-center">
-      <span className="text-purple-400">{currentUser}@freep0nx</span>
-      <span className="text-white">:</span>
-      <span className="text-blue-400">{currentPath}</span>
-      <span className="text-white">$ </span>
-      <span className="text-green-300">{cmd.input}</span>
-    </div>
-    {cmd.output.map((line, lineIndex) => {
-      // Gestion spéciale pour ls -l
-      if (cmd.input.startsWith('ls -') && line.includes('rwx')) {
-        const parts = line.split(' ');
-        const isDir = parts[0].startsWith('d');
-        const isHidden = parts[parts.length - 1].startsWith('.');
-        
-        return (
-          <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed font-mono">
-            {parts.slice(0, -1).join(' ')}{' '}
-            <span className={isHidden ? 'text-gray-500' : isDir ? 'text-blue-400' : 'text-gray-300'}>
-              {parts[parts.length - 1]}
-            </span>
+            <div className="flex space-x-2">
+              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            </div>
           </div>
-        );
-      }
-      
-      return (
-        <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
-          {line.includes('freep0nx{') ? (
-            <span className="text-yellow-300 bg-yellow-900/20 px-1 rounded font-bold">
-              {line}
-            </span>
-          ) : line.includes('Permission denied') ? (
-            <span className="text-red-400">{line}</span>
-          ) : line.includes('✓') || line.includes('successful') ? (
-            <span className="text-green-400">{line}</span>
-          ) : (
-            line
-          )}
         </div>
-      );
-    })}
-  </div>
-))}
-                  
-                  <form onSubmit={handleSubmit} className="flex items-center">
-                    <span className="text-purple-400">{currentUser}@freep0nx</span>
-                    <span className="text-white">:</span>
-                    <span className="text-blue-400">{currentPath}</span>
-                    <span className="text-white">$ </span>
-                    <input
-                      type="text"
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      className="flex-1 bg-transparent text-green-400 outline-none ml-1 caret-green-400"
-                      autoFocus
-                      spellCheck={false}
-                    />
-                  </form>
-                </div>
-              </div>
-
-              {/* Challenge Info */}
-              <div className="space-y-6">
-                <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-purple-500/30 p-6">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-                    <Flag className="w-5 h-5 mr-2 text-purple-400" />
-                    CTF Challenges ({foundFlags.length}/{validFlags.length})
-                  </h3>
-                  <div className="space-y-3 text-gray-300">
-                    <div className="flex items-center justify-between">
-                      <span>🔍 Source Code Analysis</span>
-                      <span className={foundFlags.includes('freep0nx{1nsp3ct_3l3m3nt_pr0}') ? 'text-green-400' : 'text-gray-500'}>
-                        {foundFlags.includes('freep0nx{1nsp3ct_3l3m3nt_pr0}') ? '✓' : '○'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>🤖 Web Crawling</span>
-                      <span className={foundFlags.includes('freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}') ? 'text-green-400' : 'text-gray-500'}>
-                        {foundFlags.includes('freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}') ? '✓' : '○'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>📁 Directory Traversal</span>
-                      <span className={foundFlags.includes('freep0nx{v3ry_s3cr3t_fl4g}') ? 'text-green-400' : 'text-gray-500'}>
-                        {foundFlags.includes('freep0nx{v3ry_s3cr3t_fl4g}') ? '✓' : '○'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>🔐 Access Control (IDOR)</span>
-                      <span className={foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}') ? 'text-green-400' : 'text-gray-500'}>
-                        {foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}') ? '✓' : '○'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>🔄 Reverse Engineering</span>
-                      <span className={foundFlags.includes('freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}') ? 'text-green-400' : 'text-gray-500'}>
-                        {foundFlags.includes('freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}') ? '✓' : '○'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>🍪 Cookie Manipulation</span>
-                      <span className={foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}') ? 'text-green-400' : 'text-gray-500'}>
-                        {foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}') ? '✓' : '○'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>💉 SQL Injection</span>
-                      <span className={foundFlags.includes('freep0nx{sql_1nj3ct10n_pr0}') ? 'text-green-400' : 'text-gray-500'}>
-                        {foundFlags.includes('freep0nx{sql_1nj3ct10n_pr0}') ? '✓' : '○'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>📋 Log Analysis</span>
-                      <span className={foundFlags.includes('freep0nx{l0g_f1l3_4n4lys1s_3xp3rt}') ? 'text-green-400' : 'text-gray-500'}>
-                        {foundFlags.includes('freep0nx{l0g_f1l3_4n4lys1s_3xp3rt}') ? '✓' : '○'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Flag Validator */}
-                <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-green-500/30 p-6">
-                  <h4 className="text-lg font-bold text-white mb-4 flex items-center">
-                    <Key className="w-5 h-5 mr-2 text-green-400" />
-                    Flag Validator
-                  </h4>
-                  <div className="flex space-x-2">
-                    <div className="relative flex-1">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        value={flagInput}
-                        onChange={(e) => setFlagInput(e.target.value)}
-                        placeholder="Enter flag here..."
-                        className="w-full bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 pr-10 focus:border-green-500 focus:outline-none"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                      >
-                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
-                    </div>
-                    <button
-                      onClick={validateFlag}
-                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                  
-                  {foundFlags.length > 0 && (
-                    <div className="mt-4">
-                      <h5 className="text-green-400 font-semibold mb-2">Found Flags:</h5>
-                      <div className="space-y-1">
-                        {foundFlags.map((flag, index) => (
-                          <div key={index} className={`font-mono text-sm px-2 py-1 rounded ${
-                            flag === 'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}' 
-                              ? 'text-yellow-300 bg-yellow-900/20 border border-yellow-500/30' 
-                              : 'text-green-300 bg-green-900/20'
-                          }`}>
-                            {flag}
-                            {flag === 'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}' && (
-                              <div className="text-yellow-400 text-xs mt-1 font-bold">
-                                🏆 FÉLICITATIONS ! Tu es un vrai reverseur, mashallah ! 🏆
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Terminal Hints */}
-                <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-blue-500/30 p-6">
-                  <h4 className="text-lg font-bold text-white mb-4 flex items-center">
-                    <Terminal className="w-5 h-5 mr-2 text-blue-400" />
-                    Terminal Hints
-                  </h4>
-                  <div className="space-y-2 text-sm text-gray-300">
-                    <p>• Use <code className="bg-gray-800 px-1 rounded">ls -a</code> to show hidden files</p>
-                    <p>• Use <code className="bg-gray-800 px-1 rounded">sudo -l</code> to check privileges</p>
-                    <p>• Use <code className="bg-gray-800 px-1 rounded">find</code> to search for files</p>
-                    <p>• Use <code className="bg-gray-800 px-1 rounded">grep</code> to search in files</p>
-                    <p>• Try <code className="bg-gray-800 px-1 rounded">download challenge</code> for reverse engineering</p>
-                    <p>• Check browser cookies with F12 Developer Tools</p>
-                    <p>• Look for SQL injection opportunities</p>
-                    <p>• Analyze log files for hidden information</p>
-                  </div>
-                </div>
-
-                {/* Cookie Challenge Hint */}
-                <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-orange-500/30 p-6">
-                  <h4 className="text-lg font-bold text-white mb-4 flex items-center">
-                    <Cookie className="w-5 h-5 mr-2 text-orange-400" />
-                    Cookie Challenge
-                  </h4>
-                  <div className="text-sm text-gray-300">
-                    <p className="mb-2">Try manipulating browser cookies to gain admin access!</p>
-                    <p className="text-orange-400">Hint: Set a cookie named "admin" with value "true"</p>
-                    <code className="block bg-gray-800 px-2 py-1 rounded mt-2 text-xs">
-                      document.cookie="admin=true"
-                    </code>
-                  </div>
-                </div>
-              </div>
+        
+        <div 
+          ref={terminalRef}
+          className="h-[500px] overflow-y-auto p-4 font-mono text-sm bg-gradient-to-b from-black/80 to-gray-900/80"
+        >
+          {/* Garde tout le contenu existant du terminal ici */}
+          {history.length === 0 && (
+            <div className="text-green-400 mb-4">
+              <div className="text-purple-400 mb-2">Welcome to freep0nx CTF Terminal!</div>
+              <div className="text-gray-400 text-xs mb-2">Type 'help' for available commands</div>
             </div>
+          )}
+          
+          {history.map((cmd, index) => (
+            <div key={index} className="mb-3">
+              <div className="text-green-400 flex items-center">
+                <span className="text-purple-400">{currentUser}@freep0nx</span>
+                <span className="text-white">:</span>
+                <span className="text-blue-400">{currentPath}</span>
+                <span className="text-white">$ </span>
+                <span className="text-green-300">{cmd.input}</span>
+              </div>
+              {cmd.output.map((line, lineIndex) => (
+                <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
+                  {line}
+                </div>
+              ))}
+            </div>
+          ))}
+          
+          <form onSubmit={handleSubmit} className="flex items-center">
+            <span className="text-purple-400">{currentUser}@freep0nx</span>
+            <span className="text-white">:</span>
+            <span className="text-blue-400">{currentPath}</span>
+            <span className="text-white">$ </span>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="flex-1 bg-transparent text-green-400 outline-none ml-1 caret-green-400"
+              autoFocus
+              spellCheck={false}
+            />
+          </form>
+        </div>
+      </div>
+
+      {/* Section Challenges - 3 colonnes */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Carte Challenges */}
+        <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-purple-500/30 p-6">
+          <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+            <Flag className="w-5 h-5 mr-2 text-purple-400" />
+            CTF Challenges ({foundFlags.length}/{validFlags.length})
+          </h3>
+          <div className="space-y-3 text-gray-300">
+            {validFlags.map((flag, index) => (
+              <div key={index} className="flex items-center justify-between">
+                <span>{flagDescriptions[index]}</span>
+                <span className={foundFlags.includes(flag) ? 'text-green-400' : 'text-gray-500'}>
+                  {foundFlags.includes(flag) ? '✓' : '○'}
+                </span>
+              </div>
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+
+        {/* Carte Validateur */}
+        <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-green-500/30 p-6">
+          <h4 className="text-lg font-bold text-white mb-4 flex items-center">
+            <Key className="w-5 h-5 mr-2 text-green-400" />
+            Flag Validator
+          </h4>
+          <div className="flex space-x-2">
+            <div className="relative flex-1">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={flagInput}
+                onChange={(e) => setFlagInput(e.target.value)}
+                placeholder="Enter flag here..."
+                className="w-full bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 pr-10 focus:border-green-500 focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+            <button
+              onClick={validateFlag}
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+
+        {/* Carte Indices */}
+        <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-blue-500/30 p-6">
+          <h4 className="text-lg font-bold text-white mb-4 flex items-center">
+            <Terminal className="w-5 h-5 mr-2 text-blue-400" />
+            Terminal Hints
+          </h4>
+          <div className="space-y-2 text-sm text-gray-300">
+            <p>• Use <code className="bg-gray-800 px-1 rounded">ls -a</code> for hidden files</p>
+            <p>• Check <code className="bg-gray-800 px-1 rounded">/var/log/</code> for logs</p>
+            <p>• Try <code className="bg-gray-800 px-1 rounded">sudo -l</code> for privileges</p>
+            <p>• Search with <code className="bg-gray-800 px-1 rounded">grep "flag" *.txt</code></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
 
       {/* Master Flag Validator - Hidden at bottom */}
       <div className="mt-16 pb-8">
