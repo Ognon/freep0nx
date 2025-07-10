@@ -1233,6 +1233,7 @@ power management:
               <Terminal className="w-4 h-4 text-green-400" />
               <span className="text-green-400 font-mono text-sm">freep0nx@terminal</span>
             </div>
+          </div> 
             <div className="flex space-x-2">
               <div className="w-3 h-3 bg-red-500 rounded-full"></div>
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
