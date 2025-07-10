@@ -189,6 +189,7 @@ const App: React.FC = () => {
     'M4st3rFl4g{h1dd3n_s3rv1c3_d1sc0v3ry}',
     'M4st3rFl4g{c0nf1g_f1l3_l34k}',
     'M4st3rFl4g{d33p_w3b_s3cr3ts}',
+    'M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}',
     'M4st3rFl4g{pr1v1l3g3_3sc4l4t10n_g0d}'
   ];
 
