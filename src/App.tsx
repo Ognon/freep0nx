@@ -490,6 +490,7 @@ ADMIN_PASS=4dm1n_p4ss_2024
       type: 'file',
       content: `#!/bin/bash
 # Backup script - runs as root via cron
+# freep0nx{r00t_pr1v3sc_m4st3r}
 
 if [ "$EUID" -eq 0 ]; then
     echo "Running backup as root..."
@@ -1126,9 +1127,9 @@ power management:
   // IDOR vulnerability - check URL parameter
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const memberId = urlParams.get('member_id');
+    const memberId = urlParams.get('member');
     
-    if (memberId === '1337' && !foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}')) {
+    if (memberId === '1' && !foundFlags.includes('0r_4tt4ck_succ3ss}')) {
       // Show hidden member
       console.log('IDOR vulnerability exploited! Hidden member revealed.');
       setSelectedMember(teamMembers.length - 1); // Last member is hidden
