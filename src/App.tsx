@@ -189,7 +189,7 @@ const App: React.FC = () => {
     'M4st3rFl4g{h1dd3n_s3rv1c3_d1sc0v3ry}',
     'M4st3rFl4g{c0nf1g_f1l3_l34k}',
     'M4st3rFl4g{d33p_w3b_s3cr3ts}',
-    'M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}',
+    'M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}'
     'M4st3rFl4g{pr1v1l3g3_3sc4l4t10n_g0d}'
   ];
 
@@ -618,34 +618,21 @@ power management:
                      fileSystem[normalizedPath === '/' ? `/${item}` : `${normalizedPath}/${item}`]?.type === 'directory';
         const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
         const size = isDir ? '4096' : Math.floor(Math.random() * 1024) + 1;
+        // Formatage correct de la date avec des 0 initiaux
         const hours = String(Math.floor(Math.random() * 12)).padStart(2, '0');
         const minutes = String(Math.floor(Math.random() * 60)).padStart(2, '0');
         const date = `Jan 15 ${hours}:${minutes}`;
         
-        // Ajout des couleurs ANSI
-        const coloredItem = isDir 
-          ? `\x1b[34m${item}\x1b[0m` // Bleu pour les dossiers
-          : isHidden 
-            ? `\x1b[90m${item}\x1b[0m` // Gris pour les fichiers cachés
-            : item;
-            
-        return `${permissions} 1 ${currentUser} ${currentUser} ${size} ${date} ${coloredItem}`;
-      });
+        // Retourner un objet au lieu d'une chaîne avec codes ANSI
+        return {
+          text: `${permissions} 1 ${currentUser} ${currentUser} ${size} ${date} ${item}`,
+          isDir,
+          isHidden
+        };
+      }).map(item => item.text); // Temporairement enlever les couleurs
     }
     
-    // Version courte avec couleurs
-    return contents.map(item => {
-      const isDir = fileSystem[`${normalizedPath}/${item}`]?.type === 'directory' || 
-                   fileSystem[normalizedPath === '/' ? `/${item}` : `${normalizedPath}/${item}`]?.type === 'directory';
-      const isHidden = item.startsWith('.');
-      
-      if (isDir) {
-        return `\x1b[34m${item}\x1b[0m`; // Bleu pour les dossiers
-      } else if (isHidden) {
-        return `\x1b[90m${item}\x1b[0m`; // Gris pour les fichiers cachés
-      }
-      return item;
-    });
+    return contents;
   }
   return [`ls: cannot access '${pathArg}': No such file or directory`];
         
@@ -1035,23 +1022,6 @@ power management:
     }
   };
 
-  const renderColoredText = (text: string) => {
-  const parts = text.split(/(\x1b\[[0-9;]*m)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith('\x1b[')) {
-      const code = part.match(/\x1b\[([0-9;]*)m/)?.[1];
-      if (!code) return null;
-      
-      let className = '';
-      if (code === '34') className = 'text-blue-400'; // Dossiers en bleu
-      if (code === '90') className = 'text-gray-500'; // Fichiers cachés en gris
-      
-      return <span key={i} className={className}>{parts[i+1]}</span>;
-    }
-    return null;
-  }).filter(Boolean);
-};
-
   const getSpecialityIcon = (speciality: string) => {
     if (speciality.includes('web')) return <Code className="w-4 h-4" />;
     if (speciality.includes('reverse') || speciality.includes('rev')) return <Cpu className="w-4 h-4" />;
@@ -1221,8 +1191,8 @@ power management:
         </div>
       </section>
 
-{/* CTF Section */}
-{showCTF && (
+      {/* CTF Section */}
+      {showCTF && (
   <section className="py-16 bg-black/40">
     <div className="container mx-auto px-6">
       {/* Terminal en pleine largeur */}
@@ -1240,8 +1210,12 @@ power management:
             </div>
           </div>
         </div>
-
-        <div ref={terminalRef} className="h-[500px] overflow-y-auto p-4 font-mono text-sm bg-gradient-to-b from-black/80 to-gray-900/80 whitespace-pre">
+        
+        <div 
+          ref={terminalRef}
+          className="h-[500px] overflow-y-auto p-4 font-mono text-sm bg-gradient-to-b from-black/80 to-gray-900/80"
+        >
+          {/* Garde tout le contenu existant du terminal ici */}
           {history.length === 0 && (
             <div className="text-green-400 mb-4">
               <div className="text-purple-400 mb-2">Welcome to freep0nx CTF Terminal!</div>
@@ -1258,27 +1232,11 @@ power management:
                 <span className="text-white">$ </span>
                 <span className="text-green-300">{cmd.input}</span>
               </div>
-              {cmd.output.map((line, lineIndex) => {
-                if (typeof line === 'string' && (line.includes('freep0nx{') || line.includes('M4st3rFl4g{'))) {
-                  const flagMatch = line.match(/(freep0nx|M4st3rFl4g)\{[^}]*\}/);
-                  if (flagMatch) {
-                    const parts = line.split(flagMatch[0]);
-                    return (
-                      <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
-                        {parts[0]}
-                        <span className="text-red-400">{flagMatch[0]}</span>
-                        {parts[1]}
-                      </div>
-                    );
-                  }
-                }
-                
-                return (
-                  <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed whitespace-pre">
-                    {renderColoredText(line)}
-                  </div>
-                );
-              })}
+              {cmd.output.map((line, lineIndex) => (
+                <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
+                  {line}
+                </div>
+              ))}
             </div>
           ))}
           
@@ -1316,6 +1274,52 @@ power management:
                 </span>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Carte Validateur */}
+        <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-green-500/30 p-6">
+          <h4 className="text-lg font-bold text-white mb-4 flex items-center">
+            <Key className="w-5 h-5 mr-2 text-green-400" />
+            Flag Validator
+          </h4>
+          <div className="flex space-x-2">
+            <div className="relative flex-1">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={flagInput}
+                onChange={(e) => setFlagInput(e.target.value)}
+                placeholder="Enter flag here..."
+                className="w-full bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 pr-10 focus:border-green-500 focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+            <button
+              onClick={validateFlag}
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+
+        {/* Carte Indices */}
+        <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-blue-500/30 p-6">
+          <h4 className="text-lg font-bold text-white mb-4 flex items-center">
+            <Terminal className="w-5 h-5 mr-2 text-blue-400" />
+            Terminal Hints
+          </h4>
+          <div className="space-y-2 text-sm text-gray-300">
+            <p>• Use <code className="bg-gray-800 px-1 rounded">ls -a</code> for hidden files</p>
+            <p>• Check <code className="bg-gray-800 px-1 rounded">/var/log/</code> for logs</p>
+            <p>• Try <code className="bg-gray-800 px-1 rounded">sudo -l</code> for privileges</p>
+            <p>• Search with <code className="bg-gray-800 px-1 rounded">grep "flag" *.txt</code></p>
           </div>
         </div>
       </div>
