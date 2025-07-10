@@ -282,7 +282,7 @@ ssh root@localhost
     },
     '/home/user/documents': {
       type: 'directory',
-      contents: ['notes.txt', 'notes.pdf', 'biglist.txt],
+      contents: ['notes.txt', 'notes.pdf', 'biglist.txt'],
       hidden: ['.private']
     },
     '/home/user/documents/.private': {
