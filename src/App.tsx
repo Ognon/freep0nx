@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Terminal, Shield, Eye, EyeOff, Lock, Crown, Flag, Users, Trophy, ExternalLink, Star, Zap, Target, Code, Network, Search, Key, Database, Cpu } from 'lucide-react';
+import { Terminal, Shield, Eye, EyeOff, Lock, Crown, Flag, Users, Trophy, ExternalLink, Star, Zap, Target, Code, Network, Search, Key, Database, Cpu, Cookie, FileText, Download } from 'lucide-react';
 
 interface Command {
   input: string;
@@ -22,11 +22,19 @@ const App: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [flagInput, setFlagInput] = useState('');
   const [masterFlagInput, setMasterFlagInput] = useState('');
-  const [foundFlags, setFoundFlags] = useState<string[]>([]);
-  const [foundMasterFlags, setFoundMasterFlags] = useState<string[]>([]);
+  const [foundFlags, setFoundFlags] = useState<string[]>(() => {
+    const saved = localStorage.getItem('freep0nx_flags');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [foundMasterFlags, setFoundMasterFlags] = useState<string[]>(() => {
+    const saved = localStorage.getItem('freep0nx_master_flags');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [showMasterValidator, setShowMasterValidator] = useState(false);
   const [showCTF, setShowCTF] = useState(false);
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
+  const [currentUser, setCurrentUser] = useState('user');
+  const [sudoPrivileges, setSudoPrivileges] = useState<string[]>([]);
   const terminalRef = useRef<HTMLDivElement>(null);
 
   const teamMembers: Member[] = [
@@ -58,32 +66,82 @@ const App: React.FC = () => {
     'freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}',
     'freep0nx{v3ry_s3cr3t_fl4g}',
     'freep0nx{1d0r_4tt4ck_succ3ss}',
-    'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}'
+    'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}',
+    'freep0nx{c00k13_m4n1pul4t10n_m4st3r}',
+    'freep0nx{sql_1nj3ct10n_pr0}',
+    'freep0nx{l0g_f1l3_4n4lys1s_3xp3rt}'
   ];
 
   const masterFlags = [
     'freep0nx{r00t_pr1v3sc_m4st3r}',
     'freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}',
     'freep0nx{c0nf1g_f1l3_l34k}',
-    'freep0nx{d33p_w3b_s3cr3ts}'
+    'freep0nx{d33p_w3b_s3cr3ts}',
+    'freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}'
   ];
 
   const fileSystem = {
     '/': {
       type: 'directory',
-      contents: ['home', 'etc', 'var', 'usr', 'opt', 'root', 'tmp']
+      contents: ['home', 'etc', 'var', 'usr', 'opt', 'root', 'tmp', 'proc', 'sys'],
+      hidden: ['.hidden_root_backup']
+    },
+    '/.hidden_root_backup': {
+      type: 'file',
+      content: `# Emergency root backup
+# freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}
+root:$6$salt$hashedpassword:18000:0:99999:7:::
+admin:$6$salt$anotherhash:18000:0:99999:7:::`
     },
     '/home': {
       type: 'directory',
-      contents: ['user']
+      contents: ['user', 'service'],
+      hidden: ['.backup']
+    },
+    '/home/.backup': {
+      type: 'directory',
+      contents: ['logs.txt']
+    },
+    '/home/.backup/logs.txt': {
+      type: 'file',
+      content: `[2024-01-15 14:32:17] SQL injection attempt detected: ' OR 1=1--
+[2024-01-15 14:32:18] Blocked IP: 192.168.1.100
+[2024-01-15 14:32:19] Admin login successful from 127.0.0.1
+[2024-01-15 14:32:20] Flag accessed: freep0nx{l0g_f1l3_4n4lys1s_3xp3rt}
+[2024-01-15 14:32:21] Database query: SELECT * FROM users WHERE id=1337`
     },
     '/home/user': {
       type: 'directory',
-      contents: ['documents', 'downloads', '.bashrc', '.ssh']
+      contents: ['documents', 'downloads', '.bashrc', '.ssh'],
+      hidden: ['.secret_notes', '.bash_history']
+    },
+    '/home/user/.secret_notes': {
+      type: 'file',
+      content: `Personal notes:
+- Remember to check /var/log/auth.log for failed logins
+- SQL injection payload: admin' OR '1'='1
+- Cookie manipulation: document.cookie="admin=true"
+- Flag: freep0nx{sql_1nj3ct10n_pr0}`
+    },
+    '/home/user/.bash_history': {
+      type: 'file',
+      content: `ls -la
+cd /opt/reverse
+cat challenge
+sudo -l
+find / -name "*.log" 2>/dev/null
+grep -r "freep0nx" /var/log/
+curl -H "Cookie: admin=true" localhost/admin
+echo "freep0nx{c00k13_m4n1pul4t10n_m4st3r}" > /tmp/cookie_flag.txt`
     },
     '/home/user/documents': {
       type: 'directory',
-      contents: ['notes.txt', 'backup.tar.gz']
+      contents: ['notes.txt', 'backup.tar.gz'],
+      hidden: ['.private']
+    },
+    '/home/user/documents/.private': {
+      type: 'file',
+      content: 'Private documents - access denied'
     },
     '/home/user/downloads': {
       type: 'directory',
@@ -93,9 +151,27 @@ const App: React.FC = () => {
       type: 'directory',
       contents: ['id_rsa', 'known_hosts', 'config']
     },
+    '/home/service': {
+      type: 'directory',
+      contents: ['cleanup.sh', 'config.ini']
+    },
     '/etc': {
       type: 'directory',
-      contents: ['passwd', 'shadow', 'hosts', 'crontab', 'services']
+      contents: ['passwd', 'shadow', 'hosts', 'crontab', 'services', 'sudoers'],
+      hidden: ['.backup_config']
+    },
+    '/etc/.backup_config': {
+      type: 'file',
+      content: 'Backup configuration - restricted access'
+    },
+    '/etc/sudoers': {
+      type: 'file',
+      content: `# User privilege specification
+root    ALL=(ALL:ALL) ALL
+user    ALL=(ALL) NOPASSWD: /usr/local/bin/backup.sh, /bin/cat /var/log/auth.log
+service ALL=(root) /usr/bin/systemctl restart apache2
+%admin  ALL=(ALL) ALL
+%sudo   ALL=(ALL:ALL) ALL`
     },
     '/etc/passwd': {
       type: 'file',
@@ -136,7 +212,28 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
     },
     '/var/log': {
       type: 'directory',
-      contents: ['auth.log', 'syslog', 'apache2']
+      contents: ['auth.log', 'syslog', 'apache2', 'mysql.log'],
+      hidden: ['.admin_access.log']
+    },
+    '/var/log/.admin_access.log': {
+      type: 'file',
+      content: `[2024-01-15 10:30:15] Cookie manipulation detected: admin=true
+[2024-01-15 10:30:16] Flag revealed: freep0nx{c00k13_m4n1pul4t10n_m4st3r}
+[2024-01-15 10:30:17] Unauthorized admin access granted`
+    },
+    '/var/log/auth.log': {
+      type: 'file',
+      content: `Jan 15 10:30:01 server sshd[1234]: Failed password for root from 192.168.1.100 port 22 ssh2
+Jan 15 10:30:05 server sshd[1235]: Failed password for admin from 192.168.1.100 port 22 ssh2
+Jan 15 10:30:10 server sshd[1236]: Accepted password for user from 192.168.1.50 port 22 ssh2
+Jan 15 10:30:15 server sudo: user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/usr/local/bin/backup.sh`
+    },
+    '/var/log/mysql.log': {
+      type: 'file',
+      content: `2024-01-15 14:32:17 [Warning] Aborted connection 123 to db: 'production' user: 'webapp' host: 'localhost' (Got an error reading communication packets)
+2024-01-15 14:32:18 [Note] SQL injection attempt: SELECT * FROM users WHERE username='admin' OR '1'='1'--' AND password='anything'
+2024-01-15 14:32:19 [Error] Access denied for user 'root'@'localhost' (using password: YES)
+2024-01-15 14:32:20 [Note] Flag found in query log: freep0nx{sql_1nj3ct10n_pr0}`
     },
     '/var/www': {
       type: 'directory',
@@ -191,7 +288,29 @@ fi`
     },
     '/opt': {
       type: 'directory',
-      contents: ['hidden_service']
+      contents: ['hidden_service', 'reverse']
+    },
+    '/opt/reverse': {
+      type: 'directory',
+      contents: ['challenge', 'README.txt']
+    },
+    '/opt/reverse/challenge': {
+      type: 'file',
+      content: 'Binary challenge file - use "download challenge" to get it'
+    },
+    '/opt/reverse/README.txt': {
+      type: 'file',
+      content: `Reverse Engineering Challenge
+
+This binary contains a hidden flag. Use your reverse engineering skills to find it!
+
+Hints:
+- The flag is encoded in the binary
+- Look for string patterns
+- Check for XOR operations
+- The flag format is freep0nx{...}
+
+Good luck!`
     },
     '/opt/hidden_service': {
       type: 'directory',
@@ -205,21 +324,32 @@ SECRET_KEY=freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}
 DEBUG=false
 ADMIN_TOKEN=hidden_admin_token_2024`
     },
-    '/opt/reverse': {
-      type: 'directory',
-      contents: ['challenge']
-    },
-    '/opt/reverse/challenge': {
-      type: 'file',
-      content: 'Binary challenge file - use "download challenge" to get it'
-    },
     '/root': {
       type: 'directory',
       contents: ['Permission denied']
     },
     '/tmp': {
       type: 'directory',
-      contents: ['.hidden_data']
+      contents: ['.hidden_data'],
+      hidden: ['cookie_flag.txt', '.sql_dump']
+    },
+    '/tmp/cookie_flag.txt': {
+      type: 'file',
+      content: 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}'
+    },
+    '/tmp/.sql_dump': {
+      type: 'file',
+      content: `-- SQL Dump
+-- Flag: freep0nx{sql_1nj3ct10n_pr0}
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    username VARCHAR(50),
+    password VARCHAR(100),
+    is_admin BOOLEAN DEFAULT FALSE
+);
+
+INSERT INTO users VALUES (1, 'admin', 'password123', TRUE);
+INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
     },
     '/tmp/.hidden_data': {
       type: 'file',
@@ -227,6 +357,18 @@ ADMIN_TOKEN=hidden_admin_token_2024`
 - Tor hidden service: 3g2upl4pq6kufc4m.onion
 - Access key: freep0nx{d33p_w3b_s3cr3ts}
 - Last accessed: 2024-01-15 03:42:17`
+    },
+    '/proc': {
+      type: 'directory',
+      contents: ['version', 'cpuinfo', 'meminfo']
+    },
+    '/proc/version': {
+      type: 'file',
+      content: 'Linux version 5.15.0-freep0nx (gcc version 11.2.0) #1 SMP PREEMPT'
+    },
+    '/sys': {
+      type: 'directory',
+      contents: ['class', 'devices']
     }
   };
 
@@ -237,24 +379,44 @@ ADMIN_TOKEN=hidden_admin_token_2024`
 
     switch (command) {
       case 'ls':
-        const path = args[0] || currentPath;
-        const targetPath = path.startsWith('/') ? path : `${currentPath}/${path}`;
+        const showHidden = args.includes('-a') || args.includes('-la') || args.includes('-al');
+        const longFormat = args.includes('-l') || args.includes('-la') || args.includes('-al');
+        const pathArg = args.find(arg => !arg.startsWith('-')) || currentPath;
+        const targetPath = pathArg.startsWith('/') ? pathArg : `${currentPath}/${pathArg}`;
         const normalizedPath = targetPath.replace(/\/+/g, '/').replace(/\/$/, '') || '/';
         
         if (fileSystem[normalizedPath]?.type === 'directory') {
-          if (normalizedPath === '/root' && currentPath !== '/root') {
+          if (normalizedPath === '/root' && currentUser !== 'root') {
             return ['ls: cannot open directory \'/root\': Permission denied'];
           }
-          return fileSystem[normalizedPath].contents || [];
+          
+          let contents = [...(fileSystem[normalizedPath].contents || [])];
+          if (showHidden && fileSystem[normalizedPath].hidden) {
+            contents = [...contents, ...fileSystem[normalizedPath].hidden];
+          }
+          
+          if (longFormat) {
+            return contents.map(item => {
+              const isHidden = item.startsWith('.');
+              const isDir = fileSystem[`${normalizedPath}/${item}`]?.type === 'directory' || 
+                           fileSystem[normalizedPath === '/' ? `/${item}` : `${normalizedPath}/${item}`]?.type === 'directory';
+              const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
+              const size = isDir ? '4096' : '1024';
+              const date = 'Jan 15 10:30';
+              return `${permissions} 1 ${currentUser} ${currentUser} ${size} ${date} ${item}`;
+            });
+          }
+          
+          return contents;
         }
-        return [`ls: cannot access '${path}': No such file or directory`];
+        return [`ls: cannot access '${pathArg}': No such file or directory`];
 
       case 'cd':
         const newPath = args[0] || '/home/user';
         const targetDir = newPath.startsWith('/') ? newPath : `${currentPath}/${newPath}`;
         const normalizedDir = targetDir.replace(/\/+/g, '/').replace(/\/$/, '') || '/';
         
-        if (normalizedDir === '/root' && currentPath !== '/root') {
+        if (normalizedDir === '/root' && currentUser !== 'root') {
           return ['cd: /root: Permission denied'];
         }
         
@@ -278,14 +440,36 @@ ADMIN_TOKEN=hidden_admin_token_2024`
         return [`cat: ${args[0]}: No such file or directory`];
 
       case 'sudo':
+        if (args[0] === '-l') {
+          return [
+            'Matching Defaults entries for user on this host:',
+            '    env_reset, mail_badpass, secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+            '',
+            'User user may run the following commands on this host:',
+            '    (ALL) NOPASSWD: /usr/local/bin/backup.sh',
+            '    (ALL) NOPASSWD: /bin/cat /var/log/auth.log'
+          ];
+        }
+        
         if (args[0] === 'cat' && args[1] === '/usr/local/bin/backup.sh') {
           return fileSystem['/usr/local/bin/backup.sh'].content.split('\n');
+        }
+        if (args[0] === 'cat' && args[1] === '/var/log/auth.log') {
+          return fileSystem['/var/log/auth.log'].content.split('\n');
         }
         if (args[0] === 'ls' && args[1] === '/root') {
           return ['flag.txt', '.bash_history', 'admin_notes.txt'];
         }
         if (args[0] === 'cat' && args[1] === '/root/flag.txt') {
           return ['freep0nx{r00t_pr1v3sc_m4st3r}'];
+        }
+        if (args[0] === '/usr/local/bin/backup.sh') {
+          return [
+            'Running backup as root...',
+            'tar: Removing leading `/\' from member names',
+            'Backup completed successfully',
+            'freep0nx{r00t_pr1v3sc_m4st3r}'
+          ];
         }
         return ['sudo: command not found or permission denied'];
 
@@ -294,19 +478,39 @@ ADMIN_TOKEN=hidden_admin_token_2024`
           return ['/opt/hidden_service/.env'];
         }
         if (args.includes('-name') && args.includes('*secret*')) {
-          return ['/var/www/backup/config.bak', '/opt/hidden_service/.env'];
+          return ['/var/www/backup/config.bak', '/opt/hidden_service/.env', '/home/user/.secret_notes'];
+        }
+        if (args.includes('-name') && args.includes('*flag*')) {
+          return ['/tmp/cookie_flag.txt', '/tmp/.sql_dump'];
+        }
+        if (args.includes('-name') && args.includes('*.log')) {
+          return ['/var/log/auth.log', '/var/log/syslog', '/var/log/mysql.log', '/var/log/.admin_access.log', '/home/.backup/logs.txt'];
         }
         if (args.includes('-perm') && args.includes('4755')) {
           return ['/usr/local/bin/backup.sh'];
         }
         return ['find: no results found'];
 
+      case 'grep':
+        if (args.includes('freep0nx') && args.includes('/var/log/')) {
+          return [
+            '/var/log/mysql.log:2024-01-15 14:32:20 [Note] Flag found in query log: freep0nx{sql_1nj3ct10n_pr0}',
+            '/var/log/.admin_access.log:[2024-01-15 10:30:16] Flag revealed: freep0nx{c00k13_m4n1pul4t10n_m4st3r}'
+          ];
+        }
+        if (args.includes('admin') && args.includes('/etc/passwd')) {
+          return ['No matches found'];
+        }
+        return ['grep: no matches found'];
+
       case 'ps':
         return [
           'PID TTY          TIME CMD',
           '1234 pts/0    00:00:01 bash',
           '5678 pts/0    00:00:00 hidden_service',
-          '9012 pts/0    00:00:00 ps'
+          '9012 pts/0    00:00:00 mysql',
+          '9013 pts/0    00:00:00 apache2',
+          '9014 pts/0    00:00:00 ps'
         ];
 
       case 'netstat':
@@ -315,18 +519,15 @@ ADMIN_TOKEN=hidden_admin_token_2024`
           'Proto Recv-Q Send-Q Local Address           Foreign Address         State',
           'tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN',
           'tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN',
-          'tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN'
+          'tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN',
+          'tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN'
         ];
 
       case 'whoami':
-        return ['user'];
+        return [currentUser];
 
       case 'id':
-        return ['uid=1000(user) gid=1000(user) groups=1000(user),4(adm),24(cdrom),27(sudo)'];
-
-      case 'clear':
-        setHistory([]);
-        return [];
+        return [`uid=1000(${currentUser}) gid=1000(${currentUser}) groups=1000(${currentUser}),4(adm),24(cdrom),27(sudo)`];
 
       case 'download':
         if (args[0] === 'challenge') {
@@ -337,21 +538,51 @@ ADMIN_TOKEN=hidden_admin_token_2024`
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-          return ['Downloading challenge file...', 'File saved as: challenge'];
+          return ['Downloading challenge file...', 'File saved as: challenge', 'Reverse engineer this binary to find the hidden flag!'];
         }
         return [`download: ${args[0]}: file not found`];
+
+      case 'curl':
+        if (args.includes('-H') && args.includes('Cookie:') && args.includes('admin=true')) {
+          return [
+            'HTTP/1.1 200 OK',
+            'Content-Type: text/html',
+            '',
+            '<h1>Admin Panel Access Granted!</h1>',
+            '<p>Welcome, administrator!</p>',
+            '<p>Flag: freep0nx{c00k13_m4n1pul4t10n_m4st3r}</p>'
+          ];
+        }
+        return ['curl: command requires proper syntax'];
+
+      case 'mysql':
+        if (args.includes('-u') && args.includes('root')) {
+          return [
+            'ERROR 1045 (28000): Access denied for user \'root\'@\'localhost\' (using password: NO)',
+            'Hint: Try SQL injection techniques...'
+          ];
+        }
+        return ['mysql: command not found or access denied'];
+
+      case 'clear':
+        setHistory([]);
+        return [];
 
       case 'help':
         return [
           'Available commands:',
-          'ls [path] - list directory contents',
+          'ls [options] [path] - list directory contents (-a for hidden files, -l for long format)',
           'cd [path] - change directory',
           'pwd - print working directory',
           'cat [file] - display file contents',
           'sudo [command] - execute command as root',
+          'sudo -l - list sudo privileges',
           'find [options] - search for files',
+          'grep [pattern] [files] - search text patterns',
           'ps - show running processes',
           'netstat - show network connections',
+          'curl [options] - make HTTP requests',
+          'mysql [options] - connect to MySQL database',
           'whoami - show current user',
           'id - show user and group IDs',
           'download [file] - download files',
@@ -382,7 +613,9 @@ ADMIN_TOKEN=hidden_admin_token_2024`
   const validateFlag = () => {
     if (validFlags.includes(flagInput)) {
       if (!foundFlags.includes(flagInput)) {
-        setFoundFlags(prev => [...prev, flagInput]);
+        const newFlags = [...foundFlags, flagInput];
+        setFoundFlags(newFlags);
+        localStorage.setItem('freep0nx_flags', JSON.stringify(newFlags));
       }
       setFlagInput('');
     }
@@ -391,7 +624,9 @@ ADMIN_TOKEN=hidden_admin_token_2024`
   const validateMasterFlag = () => {
     if (masterFlags.includes(masterFlagInput)) {
       if (!foundMasterFlags.includes(masterFlagInput)) {
-        setFoundMasterFlags(prev => [...prev, masterFlagInput]);
+        const newMasterFlags = [...foundMasterFlags, masterFlagInput];
+        setFoundMasterFlags(newMasterFlags);
+        localStorage.setItem('freep0nx_master_flags', JSON.stringify(newMasterFlags));
       }
       setMasterFlagInput('');
     }
@@ -420,6 +655,21 @@ ADMIN_TOKEN=hidden_admin_token_2024`
       setSelectedMember(teamMembers.length - 1); // Last member is hidden
     }
   }, []);
+
+  // Cookie challenge
+  useEffect(() => {
+    const checkCookie = () => {
+      if (document.cookie.includes('admin=true') && !foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}')) {
+        const newFlags = [...foundFlags, 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}'];
+        setFoundFlags(newFlags);
+        localStorage.setItem('freep0nx_flags', JSON.stringify(newFlags));
+        console.log('Cookie manipulation detected! Flag found: freep0nx{c00k13_m4n1pul4t10n_m4st3r}');
+      }
+    };
+
+    const interval = setInterval(checkCookie, 1000);
+    return () => clearInterval(interval);
+  }, [foundFlags]);
 
   useEffect(() => {
     if (terminalRef.current) {
@@ -562,36 +812,64 @@ ADMIN_TOKEN=hidden_admin_token_2024`
             
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Terminal */}
-              <div className="bg-black/80 backdrop-blur-sm rounded-lg border border-green-500/30 overflow-hidden">
-                <div className="bg-green-500/20 px-4 py-2 border-b border-green-500/30">
-                  <div className="flex items-center space-x-2">
-                    <Terminal className="w-4 h-4 text-green-400" />
-                    <span className="text-green-400 font-mono text-sm">freep0nx@terminal</span>
+              <div className="bg-black/90 backdrop-blur-sm rounded-lg border border-green-500/30 overflow-hidden shadow-2xl">
+                <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 px-4 py-3 border-b border-green-500/30">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Terminal className="w-4 h-4 text-green-400" />
+                      <span className="text-green-400 font-mono text-sm">freep0nx@terminal</span>
+                      <span className="text-gray-400 text-xs">- Enhanced Terminal v2.0</span>
+                    </div>
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
                   </div>
                 </div>
                 
                 <div 
                   ref={terminalRef}
-                  className="h-96 overflow-y-auto p-4 font-mono text-sm"
+                  className="h-96 overflow-y-auto p-4 font-mono text-sm bg-gradient-to-b from-black/80 to-gray-900/80"
+                  style={{ scrollbarWidth: 'thin', scrollbarColor: '#10b981 #1f2937' }}
                 >
+                  {history.length === 0 && (
+                    <div className="text-green-400 mb-4">
+                      <div className="text-purple-400 mb-2">Welcome to freep0nx CTF Terminal!</div>
+                      <div className="text-gray-400 text-xs mb-2">Type 'help' for available commands</div>
+                      <div className="text-yellow-400 text-xs">🎯 Find hidden flags in the system!</div>
+                    </div>
+                  )}
+                  
                   {history.map((cmd, index) => (
-                    <div key={index} className="mb-2">
-                      <div className="text-green-400">
-                        <span className="text-purple-400">user@freep0nx</span>
+                    <div key={index} className="mb-3">
+                      <div className="text-green-400 flex items-center">
+                        <span className="text-purple-400">{currentUser}@freep0nx</span>
                         <span className="text-white">:</span>
                         <span className="text-blue-400">{currentPath}</span>
-                        <span className="text-white">$ {cmd.input}</span>
+                        <span className="text-white">$ </span>
+                        <span className="text-green-300">{cmd.input}</span>
                       </div>
                       {cmd.output.map((line, lineIndex) => (
-                        <div key={lineIndex} className="text-gray-300 ml-2">
-                          {line}
+                        <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
+                          {line.includes('freep0nx{') ? (
+                            <span className="text-yellow-300 bg-yellow-900/20 px-1 rounded font-bold">
+                              {line}
+                            </span>
+                          ) : line.includes('Permission denied') ? (
+                            <span className="text-red-400">{line}</span>
+                          ) : line.includes('✓') || line.includes('successful') ? (
+                            <span className="text-green-400">{line}</span>
+                          ) : (
+                            line
+                          )}
                         </div>
                       ))}
                     </div>
                   ))}
                   
                   <form onSubmit={handleSubmit} className="flex items-center">
-                    <span className="text-purple-400">user@freep0nx</span>
+                    <span className="text-purple-400">{currentUser}@freep0nx</span>
                     <span className="text-white">:</span>
                     <span className="text-blue-400">{currentPath}</span>
                     <span className="text-white">$ </span>
@@ -599,8 +877,9 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                       type="text"
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      className="flex-1 bg-transparent text-green-400 outline-none ml-1"
+                      className="flex-1 bg-transparent text-green-400 outline-none ml-1 caret-green-400"
                       autoFocus
+                      spellCheck={false}
                     />
                   </form>
                 </div>
@@ -611,7 +890,7 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                 <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-purple-500/30 p-6">
                   <h3 className="text-xl font-bold text-white mb-4 flex items-center">
                     <Flag className="w-5 h-5 mr-2 text-purple-400" />
-                    CTF Challenges
+                    CTF Challenges ({foundFlags.length}/{validFlags.length})
                   </h3>
                   <div className="space-y-3 text-gray-300">
                     <div className="flex items-center justify-between">
@@ -633,7 +912,7 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span>🔐 Access Control</span>
+                      <span>🔐 Access Control (IDOR)</span>
                       <span className={foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}') ? 'text-green-400' : 'text-gray-500'}>
                         {foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}') ? '✓' : '○'}
                       </span>
@@ -644,12 +923,33 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                         {foundFlags.includes('freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}') ? '✓' : '○'}
                       </span>
                     </div>
+                    <div className="flex items-center justify-between">
+                      <span>🍪 Cookie Manipulation</span>
+                      <span className={foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}') ? '✓' : '○'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span>💉 SQL Injection</span>
+                      <span className={foundFlags.includes('freep0nx{sql_1nj3ct10n_pr0}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{sql_1nj3ct10n_pr0}') ? '✓' : '○'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span>📋 Log Analysis</span>
+                      <span className={foundFlags.includes('freep0nx{l0g_f1l3_4n4lys1s_3xp3rt}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{l0g_f1l3_4n4lys1s_3xp3rt}') ? '✓' : '○'}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Flag Validator */}
                 <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-green-500/30 p-6">
-                  <h4 className="text-lg font-bold text-white mb-4">Flag Validator</h4>
+                  <h4 className="text-lg font-bold text-white mb-4 flex items-center">
+                    <Key className="w-5 h-5 mr-2 text-green-400" />
+                    Flag Validator
+                  </h4>
                   <div className="flex space-x-2">
                     <div className="relative flex-1">
                       <input
@@ -657,7 +957,7 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                         value={flagInput}
                         onChange={(e) => setFlagInput(e.target.value)}
                         placeholder="Enter flag here..."
-                        className="w-full bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 pr-10"
+                        className="w-full bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 pr-10 focus:border-green-500 focus:outline-none"
                       />
                       <button
                         type="button"
@@ -700,14 +1000,34 @@ ADMIN_TOKEN=hidden_admin_token_2024`
 
                 {/* Terminal Hints */}
                 <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-blue-500/30 p-6">
-                  <h4 className="text-lg font-bold text-white mb-4">Terminal Hints</h4>
+                  <h4 className="text-lg font-bold text-white mb-4 flex items-center">
+                    <Terminal className="w-5 h-5 mr-2 text-blue-400" />
+                    Terminal Hints
+                  </h4>
                   <div className="space-y-2 text-sm text-gray-300">
-                    <p>• Use <code className="bg-gray-800 px-1 rounded">ls</code> to list files and directories</p>
-                    <p>• Use <code className="bg-gray-800 px-1 rounded">cd</code> to navigate directories</p>
-                    <p>• Use <code className="bg-gray-800 px-1 rounded">cat</code> to read file contents</p>
-                    <p>• Try <code className="bg-gray-800 px-1 rounded">find</code> to search for files</p>
-                    <p>• Some commands may require elevated privileges...</p>
-                    <p>• Use <code className="bg-gray-800 px-1 rounded">download challenge</code> to get reverse engineering files</p>
+                    <p>• Use <code className="bg-gray-800 px-1 rounded">ls -a</code> to show hidden files</p>
+                    <p>• Use <code className="bg-gray-800 px-1 rounded">sudo -l</code> to check privileges</p>
+                    <p>• Use <code className="bg-gray-800 px-1 rounded">find</code> to search for files</p>
+                    <p>• Use <code className="bg-gray-800 px-1 rounded">grep</code> to search in files</p>
+                    <p>• Try <code className="bg-gray-800 px-1 rounded">download challenge</code> for reverse engineering</p>
+                    <p>• Check browser cookies with F12 Developer Tools</p>
+                    <p>• Look for SQL injection opportunities</p>
+                    <p>• Analyze log files for hidden information</p>
+                  </div>
+                </div>
+
+                {/* Cookie Challenge Hint */}
+                <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-orange-500/30 p-6">
+                  <h4 className="text-lg font-bold text-white mb-4 flex items-center">
+                    <Cookie className="w-5 h-5 mr-2 text-orange-400" />
+                    Cookie Challenge
+                  </h4>
+                  <div className="text-sm text-gray-300">
+                    <p className="mb-2">Try manipulating browser cookies to gain admin access!</p>
+                    <p className="text-orange-400">Hint: Set a cookie named "admin" with value "true"</p>
+                    <code className="block bg-gray-800 px-2 py-1 rounded mt-2 text-xs">
+                      document.cookie="admin=true"
+                    </code>
                   </div>
                 </div>
               </div>
@@ -736,7 +1056,7 @@ ADMIN_TOKEN=hidden_admin_token_2024`
               </h3>
               
               <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="grid grid-cols-1 gap-2 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400">Root Privesc</span>
                     <span className={foundMasterFlags.includes('freep0nx{r00t_pr1v3sc_m4st3r}') ? 'text-green-400' : 'text-gray-600'}>
@@ -761,6 +1081,12 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                       {foundMasterFlags.includes('freep0nx{d33p_w3b_s3cr3ts}') ? '✓' : '○'}
                     </span>
                   </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400">Privilege Escalation</span>
+                    <span className={foundMasterFlags.includes('freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}') ? 'text-green-400' : 'text-gray-600'}>
+                      {foundMasterFlags.includes('freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}') ? '✓' : '○'}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="flex space-x-2">
@@ -769,7 +1095,7 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                     value={masterFlagInput}
                     onChange={(e) => setMasterFlagInput(e.target.value)}
                     placeholder="Master flag..."
-                    className="flex-1 bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 text-sm"
+                    className="flex-1 bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 text-sm focus:border-yellow-500 focus:outline-none"
                   />
                   <button
                     onClick={validateMasterFlag}
