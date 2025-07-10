@@ -245,8 +245,8 @@ cat /dev/random > /dev/sda
     },
     '/home/user': {
       type: 'directory',
-      contents: ['documents', 'downloads', 'music', 'pictures', '.bashrc'],
-      hidden: ['.secret_notes', '.bash_history', '.cache', '.local']
+      contents: ['documents', 'downloads', 'music', 'pictures'],
+      hidden: ['.secret_notes', '.bash_history', '.cache', '.local', '.bashrc']
     },
     '/home/user/.secret_notes': {
       type: 'file',
