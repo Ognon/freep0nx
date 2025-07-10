@@ -1233,7 +1233,6 @@ power management:
               <Terminal className="w-4 h-4 text-green-400" />
               <span className="text-green-400 font-mono text-sm">freep0nx@terminal</span>
             </div>
-          </div> 
             <div className="flex space-x-2">
               <div className="w-3 h-3 bg-red-500 rounded-full"></div>
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -1241,7 +1240,7 @@ power management:
             </div>
           </div>
         </div>
-        
+      </div>
         <div ref={terminalRef} className="h-[500px] overflow-y-auto p-4 font-mono text-sm bg-gradient-to-b from-black/80 to-gray-900/80 whitespace-pre">
           {history.length === 0 && (
             <div className="text-green-400 mb-4">
