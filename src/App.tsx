@@ -1389,36 +1389,95 @@ power management:
         </div>
 
         {/* Carte Validateur */}
-        <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-green-500/30 p-6">
-          <h4 className="text-lg font-bold text-white mb-4 flex items-center">
-            <Key className="w-5 h-5 mr-2 text-green-400" />
-            Flag Validator
-          </h4>
-          <div className="flex space-x-2">
-            <div className="relative flex-1">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={flagInput}
-                onChange={(e) => setFlagInput(e.target.value)}
-                placeholder="Enter flag here..."
-                className="w-full bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 pr-10 focus:border-green-500 focus:outline-none"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-            <button
-              onClick={validateFlag}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
+<div className="bg-black/60 backdrop-blur-sm rounded-lg border border-green-500/30 p-6">
+  {/* En-tête avec bouton reset */}
+  <div className="flex justify-between items-center mb-4">
+    <h4 className="text-lg font-bold text-white flex items-center">
+      <Key className="w-5 h-5 mr-2 text-green-400" />
+      Flag Validator
+    </h4>
+    <button
+      onClick={resetFoundFlags}
+      className="flex items-center text-xs bg-red-500/20 hover:bg-red-600/30 text-red-300 px-3 py-1 rounded-full border border-red-400/30 transition-colors group"
+      title="Réinitialiser tous les flags"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-3.5 w-3.5 mr-1.5 group-hover:rotate-90 transition-transform" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+      </svg>
+      Reset
+    </button>
+  </div>
+
+  {/* Champ de saisie */}
+  <div className="flex space-x-2">
+    <div className="relative flex-1">
+      <input
+        type={showPassword ? "text" : "password"}
+        value={flagInput}
+        onChange={(e) => setFlagInput(e.target.value)}
+        placeholder="Enter flag here..."
+        className="w-full bg-gray-800/50 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 pr-10 focus:border-green-500 focus:ring-1 focus:ring-green-500/50 focus:outline-none transition-all"
+      />
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-green-300 transition-colors"
+      >
+        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+      </button>
+    </div>
+    <button
+      onClick={validateFlag}
+      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-all hover:scale-105 active:scale-95 flex items-center"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-4 w-4 mr-1.5" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+      </svg>
+      Submit
+    </button>
+  </div>
+
+  {/* Liste des flags trouvés */}
+  {foundFlags.length > 0 && (
+    <div className="mt-4">
+      <div className="flex justify-between items-center mb-2">
+        <h5 className="text-green-400 font-semibold">Found Flags:</h5>
+        <span className="text-xs text-gray-500">{foundFlags.length}/{validFlags.length}</span>
+      </div>
+      <div className="space-y-1 max-h-40 overflow-y-auto pr-2">
+        {foundFlags.map((flag, index) => (
+          <div 
+            key={index} 
+            className="font-mono text-sm px-3 py-1.5 rounded-md bg-green-900/10 text-green-300 border border-green-800/30 flex items-center"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-3.5 w-3.5 mr-2 text-green-400 flex-shrink-0" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
             >
-              Submit
-            </button>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span className="truncate">{flag}</span>
           </div>
-        </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
 
         {/* Carte Indices */}
         <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-blue-500/30 p-6">
