@@ -1334,6 +1334,30 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
         </div>
       </div>
 
+      {foundFlags.length === validFlags.length && (
+  <div className="bg-gradient-to-r from-purple-700 via-pink-600 to-yellow-400 p-6 rounded-xl text-center text-white shadow-2xl mb-10 animate-pulse">
+    <h2 className="text-4xl font-extrabold tracking-wide drop-shadow-md">
+      💥 FREEP0NX DOMINATION COMPLETE 💥
+    </h2>
+    <p className="mt-3 text-lg font-medium text-white/90">
+      Every flag captured. Every challenge conquered.  
+    </p>
+    <p className="text-sm text-white/70 italic mt-1">
+      The system never stood a chance. Respect ∞.
+    </p>
+    <div className="mt-4 flex justify-center gap-4 text-sm font-semibold">
+      <span className="bg-black/40 px-4 py-2 rounded-lg border border-green-400 text-green-300">
+        7/7 FLAGS SECURED
+      </span>
+      <span className="bg-black/40 px-4 py-2 rounded-lg border border-purple-400 text-purple-300">
+        ELITE TEAM STATUS
+      </span>
+      <span className="bg-black/40 px-4 py-2 rounded-lg border border-pink-400 text-pink-300">
+        🔓 ALL ACCESS GRANTED
+      </span>
+    </div>
+  </div>
+)}
       {/* Section Challenges - 3 colonnes */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Carte Challenges */}
