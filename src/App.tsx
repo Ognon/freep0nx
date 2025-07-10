@@ -1221,8 +1221,8 @@ power management:
         </div>
       </section>
 
-      {/* CTF Section */}
-      {showCTF && (
+{/* CTF Section */}
+{showCTF && (
   <section className="py-16 bg-black/40">
     <div className="container mx-auto px-6">
       {/* Terminal en pleine largeur */}
@@ -1240,7 +1240,7 @@ power management:
             </div>
           </div>
         </div>
-      </div>
+
         <div ref={terminalRef} className="h-[500px] overflow-y-auto p-4 font-mono text-sm bg-gradient-to-b from-black/80 to-gray-900/80 whitespace-pre">
           {history.length === 0 && (
             <div className="text-green-400 mb-4">
@@ -1259,27 +1259,28 @@ power management:
                 <span className="text-green-300">{cmd.input}</span>
               </div>
               {cmd.output.map((line, lineIndex) => {
-  // Détection des flags pour les mettre en rouge
-  if (typeof line === 'string' && line.includes('freep0nx{') || line.includes('M4st3rFl4g{')) {
-    const flagMatch = line.match(/(freep0nx|M4st3rFl4g)\{[^}]*\}/);
-    if (flagMatch) {
-      const parts = line.split(flagMatch[0]);
-      return (
-        <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
-          {parts[0]}
-          <span className="text-red-400">{flagMatch[0]}</span>
-          {parts[1]}
-        </div>
-      );
-    }
-  }
-  
-  return (
-    <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed whitespace-pre">
-      {renderColoredText(line)}
-    </div>
-  );
-})}
+                if (typeof line === 'string' && (line.includes('freep0nx{') || line.includes('M4st3rFl4g{'))) {
+                  const flagMatch = line.match(/(freep0nx|M4st3rFl4g)\{[^}]*\}/);
+                  if (flagMatch) {
+                    const parts = line.split(flagMatch[0]);
+                    return (
+                      <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
+                        {parts[0]}
+                        <span className="text-red-400">{flagMatch[0]}</span>
+                        {parts[1]}
+                      </div>
+                    );
+                  }
+                }
+                
+                return (
+                  <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed whitespace-pre">
+                    {renderColoredText(line)}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
           
           <form onSubmit={handleSubmit} className="flex items-center">
             <span className="text-purple-400">{currentUser}@freep0nx</span>
@@ -1296,9 +1297,9 @@ power management:
             />
           </form>
         </div>
+      </div>
 
       {/* Section Challenges - 3 colonnes */}
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Carte Challenges */}
         <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-purple-500/30 p-6">
@@ -1315,52 +1316,6 @@ power management:
                 </span>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Carte Validateur */}
-        <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-green-500/30 p-6">
-          <h4 className="text-lg font-bold text-white mb-4 flex items-center">
-            <Key className="w-5 h-5 mr-2 text-green-400" />
-            Flag Validator
-          </h4>
-          <div className="flex space-x-2">
-            <div className="relative flex-1">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={flagInput}
-                onChange={(e) => setFlagInput(e.target.value)}
-                placeholder="Enter flag here..."
-                className="w-full bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 pr-10 focus:border-green-500 focus:outline-none"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-            <button
-              onClick={validateFlag}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
-            >
-              Submit
-            </button>
-          </div>
-        </div>
-
-        {/* Carte Indices */}
-        <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-blue-500/30 p-6">
-          <h4 className="text-lg font-bold text-white mb-4 flex items-center">
-            <Terminal className="w-5 h-5 mr-2 text-blue-400" />
-            Terminal Hints
-          </h4>
-          <div className="space-y-2 text-sm text-gray-300">
-            <p>• Use <code className="bg-gray-800 px-1 rounded">ls -a</code> for hidden files</p>
-            <p>• Check <code className="bg-gray-800 px-1 rounded">/var/log/</code> for logs</p>
-            <p>• Try <code className="bg-gray-800 px-1 rounded">sudo -l</code> for privileges</p>
-            <p>• Search with <code className="bg-gray-800 px-1 rounded">grep "flag" *.txt</code></p>
           </div>
         </div>
       </div>
