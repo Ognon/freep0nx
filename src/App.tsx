@@ -616,6 +616,7 @@ INSERT INTO users VALUES (3, 'hacker', '123456', FALSE);  # Oups, pas très secu
 
 PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
     }
+  };
 
   const executeCommand = (cmd: string): string[] => {
     // Réponses aléatoires drôles (5% de chance)
