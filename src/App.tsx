@@ -490,7 +490,6 @@ ADMIN_PASS=4dm1n_p4ss_2024
       type: 'file',
       content: `#!/bin/bash
 # Backup script - runs as root via cron
-# freep0nx{r00t_pr1v3sc_m4st3r}
 
 if [ "$EUID" -eq 0 ]; then
     echo "Running backup as root..."
