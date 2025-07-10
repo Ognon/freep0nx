@@ -1,10 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Terminal, Shield, Eye, EyeOff, Lock, Crown, Flag } from 'lucide-react';
+import { Terminal, Shield, Eye, EyeOff, Lock, Crown, Flag, Users, Trophy, ExternalLink, Star, Zap, Target, Code, Network, Search, Key, Database, Cpu } from 'lucide-react';
 
 interface Command {
   input: string;
   output: string[];
   timestamp: Date;
+}
+
+interface Member {
+  rank: string;
+  pseudo: string;
+  speciality: string;
+  description: string;
+  hidden?: boolean;
 }
 
 const App: React.FC = () => {
@@ -17,7 +25,33 @@ const App: React.FC = () => {
   const [foundFlags, setFoundFlags] = useState<string[]>([]);
   const [foundMasterFlags, setFoundMasterFlags] = useState<string[]>([]);
   const [showMasterValidator, setShowMasterValidator] = useState(false);
+  const [showCTF, setShowCTF] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<number | null>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
+
+  const teamMembers: Member[] = [
+    { rank: "Chef", pseudo: "45exile", speciality: "reverse", description: "Le boss du reverse engineering" },
+    { rank: "Membre", pseudo: "Loutre", speciality: "web (xss)", description: "Expert en vulnérabilités web" },
+    { rank: "Membre", pseudo: "Ognon", speciality: "web, Active Directory", description: "Spécialiste AD et web" },
+    { rank: "Membre", pseudo: "Ssor", speciality: "web", description: "Ninja du développement web" },
+    { rank: "Membre", pseudo: "Tisco", speciality: "web, réseau", description: "Maître des réseaux" },
+    { rank: "Membre", pseudo: "vorstag34", speciality: "goat ultime il sait tout faire", description: "Le couteau suisse ultime" },
+    { rank: "Membre", pseudo: "bloman", speciality: "boot2root, couteau suisse", description: "Expert en escalade de privilèges" },
+    { rank: "Membre", pseudo: "H4ldir", speciality: "forensic, osint", description: "Sherlock Holmes du numérique" },
+    { rank: "Membre", pseudo: "Shor", speciality: "web, pwn", description: "Pwner professionnel" },
+    { rank: "Membre", pseudo: "z3d", speciality: "web, crypto", description: "Cryptographe en herbe" },
+    { rank: "Membre", pseudo: "toby", speciality: "rev, crypto, c'est un crack", description: "Le crack du reverse" },
+    { rank: "Membre", pseudo: "paw", speciality: "web, pwn", description: "Chasseur de bugs" },
+    { rank: "Membre", pseudo: "Kuzamyy", speciality: "web, couteau suisse", description: "Polyvalent et efficace" },
+    { rank: "Membre", pseudo: "Blossom", speciality: "forensic, crypto", description: "Génie du forensic" },
+    { rank: "Membre", pseudo: "Prox", speciality: "osint, stégano", description: "Challmaker osint/stégano de père en fils. A déjà trouvé une faille sur l'infra de 42 !" },
+    { rank: "Membre", pseudo: "Farmer", speciality: "osint, stégano, réseau", description: "Un fantôme, mais il a un potentiel effrayant" },
+    { rank: "Membre", pseudo: "Astral", speciality: "réseau, web", description: "Son niveau sur valo est impressionnant." },
+    { rank: "Membre", pseudo: "Kaiimos", speciality: "débutant", description: "Passioné, gros potentiel" },
+    { rank: "Membre", pseudo: "Zeleph", speciality: "réseau, animé, foo", description: "Rookie motivé par les animés" },
+    // Membre caché pour IDOR
+    { rank: "Membre Secret", pseudo: "Gh0st", speciality: "shadow ops, 0day", description: "Le membre fantôme de l'équipe. Spécialiste en exploits 0-day et opérations furtives.", hidden: true }
+  ];
 
   const validFlags = [
     'freep0nx{1nsp3ct_3l3m3nt_pr0}',
@@ -340,6 +374,30 @@ ADMIN_TOKEN=hidden_admin_token_2024`
     }
   };
 
+  const getSpecialityIcon = (speciality: string) => {
+    if (speciality.includes('web')) return <Code className="w-4 h-4" />;
+    if (speciality.includes('reverse') || speciality.includes('rev')) return <Cpu className="w-4 h-4" />;
+    if (speciality.includes('crypto')) return <Key className="w-4 h-4" />;
+    if (speciality.includes('forensic')) return <Search className="w-4 h-4" />;
+    if (speciality.includes('osint')) return <Target className="w-4 h-4" />;
+    if (speciality.includes('réseau') || speciality.includes('network')) return <Network className="w-4 h-4" />;
+    if (speciality.includes('pwn')) return <Zap className="w-4 h-4" />;
+    if (speciality.includes('boot2root')) return <Shield className="w-4 h-4" />;
+    return <Star className="w-4 h-4" />;
+  };
+
+  // IDOR vulnerability - check URL parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const memberId = urlParams.get('member_id');
+    
+    if (memberId === '1337' && !foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}')) {
+      // Show hidden member
+      console.log('IDOR vulnerability exploited! Hidden member revealed.');
+      setSelectedMember(teamMembers.length - 1); // Last member is hidden
+    }
+  }, []);
+
   useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
@@ -348,165 +406,276 @@ ADMIN_TOKEN=hidden_admin_token_2024`
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
-      {/* Header */}
-      <header className="bg-black/50 backdrop-blur-sm border-b border-purple-500/30">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Shield className="w-8 h-8 text-purple-400" />
-              <h1 className="text-2xl font-bold text-white">Team freep0nx</h1>
-              <span className="text-purple-300 text-sm">Elite CTF Team</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="text-green-400 text-sm">
-                Flags: {foundFlags.length}/{validFlags.length}
+      {/* Hero Section */}
+      <header className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20"></div>
+        <div className="relative container mx-auto px-6 py-16">
+          <div className="text-center">
+            <div className="flex items-center justify-center mb-6">
+              <Shield className="w-16 h-16 text-purple-400 mr-4" />
+              <div>
+                <h1 className="text-6xl font-bold text-white mb-2">freep0nx</h1>
+                <p className="text-purple-300 text-xl">Elite CTF Team</p>
               </div>
-              <div className="text-yellow-400 text-sm">
-                Master: {foundMasterFlags.length}/{masterFlags.length}
+            </div>
+            
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-8">
+              Une équipe française de cybersécurité passionnée par les challenges CTF. 
+              Nous excellons dans tous les domaines : web, reverse, crypto, forensic, pwn et plus encore.
+            </p>
+            
+            <div className="flex items-center justify-center space-x-6 mb-8">
+              <a 
+                href="https://ctftime.org/team/361758/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors"
+              >
+                <Trophy className="w-5 h-5 mr-2" />
+                CTFtime Profile
+                <ExternalLink className="w-4 h-4 ml-2" />
+              </a>
+              
+              <button
+                onClick={() => setShowCTF(!showCTF)}
+                className="flex items-center bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-colors"
+              >
+                <Terminal className="w-5 h-5 mr-2" />
+                Try Our CTF
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 border border-purple-500/30">
+                <Users className="w-8 h-8 text-purple-400 mb-3 mx-auto" />
+                <h3 className="text-white font-bold mb-2">{teamMembers.filter(m => !m.hidden).length} Membres</h3>
+                <p className="text-gray-300 text-sm">Une équipe soudée et complémentaire</p>
+              </div>
+              
+              <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 border border-green-500/30">
+                <Flag className="w-8 h-8 text-green-400 mb-3 mx-auto" />
+                <h3 className="text-white font-bold mb-2">Multi-spécialités</h3>
+                <p className="text-gray-300 text-sm">Experts dans tous les domaines CTF</p>
+              </div>
+              
+              <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 border border-yellow-500/30">
+                <Trophy className="w-8 h-8 text-yellow-400 mb-3 mx-auto" />
+                <h3 className="text-white font-bold mb-2">Compétitifs</h3>
+                <p className="text-gray-300 text-sm">Toujours prêts pour le challenge</p>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Terminal */}
-          <div className="bg-black/80 backdrop-blur-sm rounded-lg border border-green-500/30 overflow-hidden">
-            <div className="bg-green-500/20 px-4 py-2 border-b border-green-500/30">
-              <div className="flex items-center space-x-2">
-                <Terminal className="w-4 h-4 text-green-400" />
-                <span className="text-green-400 font-mono text-sm">freep0nx@terminal</span>
+      {/* Team Members Section */}
+      <section className="py-16 bg-black/20">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl font-bold text-white text-center mb-12">Notre Équipe</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {teamMembers.filter(member => !member.hidden).map((member, index) => (
+              <div 
+                key={index}
+                className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105"
+              >
+                <div className="flex items-center mb-4">
+                  {getSpecialityIcon(member.speciality)}
+                  <div className="ml-3">
+                    <h3 className="text-white font-bold">{member.pseudo}</h3>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      member.rank === 'Chef' 
+                        ? 'bg-yellow-500/20 text-yellow-400' 
+                        : 'bg-purple-500/20 text-purple-400'
+                    }`}>
+                      {member.rank}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="mb-3">
+                  <p className="text-purple-300 text-sm font-medium mb-1">Spécialités:</p>
+                  <p className="text-gray-300 text-sm">{member.speciality}</p>
+                </div>
+                
+                <p className="text-gray-400 text-xs">{member.description}</p>
               </div>
+            ))}
+            
+            {/* Hidden member revealed via IDOR */}
+            {selectedMember === teamMembers.length - 1 && (
+              <div className="bg-gradient-to-br from-red-800/80 to-red-900/80 backdrop-blur-sm rounded-lg p-6 border border-red-500/50 animate-pulse">
+                <div className="flex items-center mb-4">
+                  <Shield className="w-4 h-4 text-red-400" />
+                  <div className="ml-3">
+                    <h3 className="text-white font-bold">{teamMembers[teamMembers.length - 1].pseudo}</h3>
+                    <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400">
+                      {teamMembers[teamMembers.length - 1].rank}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="mb-3">
+                  <p className="text-red-300 text-sm font-medium mb-1">Spécialités:</p>
+                  <p className="text-gray-300 text-sm">{teamMembers[teamMembers.length - 1].speciality}</p>
+                </div>
+                
+                <p className="text-gray-400 text-xs">{teamMembers[teamMembers.length - 1].description}</p>
+                <p className="text-red-400 text-xs mt-2 font-bold">🚨 MEMBRE SECRET RÉVÉLÉ VIA IDOR!</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* CTF Section */}
+      {showCTF && (
+        <section className="py-16 bg-black/40">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-white mb-4">Challenge CTF</h2>
+              <p className="text-gray-300 text-lg">Testez vos compétences avec nos challenges</p>
             </div>
             
-            <div 
-              ref={terminalRef}
-              className="h-96 overflow-y-auto p-4 font-mono text-sm"
-            >
-              {history.map((cmd, index) => (
-                <div key={index} className="mb-2">
-                  <div className="text-green-400">
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Terminal */}
+              <div className="bg-black/80 backdrop-blur-sm rounded-lg border border-green-500/30 overflow-hidden">
+                <div className="bg-green-500/20 px-4 py-2 border-b border-green-500/30">
+                  <div className="flex items-center space-x-2">
+                    <Terminal className="w-4 h-4 text-green-400" />
+                    <span className="text-green-400 font-mono text-sm">freep0nx@terminal</span>
+                  </div>
+                </div>
+                
+                <div 
+                  ref={terminalRef}
+                  className="h-96 overflow-y-auto p-4 font-mono text-sm"
+                >
+                  {history.map((cmd, index) => (
+                    <div key={index} className="mb-2">
+                      <div className="text-green-400">
+                        <span className="text-purple-400">user@freep0nx</span>
+                        <span className="text-white">:</span>
+                        <span className="text-blue-400">{currentPath}</span>
+                        <span className="text-white">$ {cmd.input}</span>
+                      </div>
+                      {cmd.output.map((line, lineIndex) => (
+                        <div key={lineIndex} className="text-gray-300 ml-2">
+                          {line}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                  
+                  <form onSubmit={handleSubmit} className="flex items-center">
                     <span className="text-purple-400">user@freep0nx</span>
                     <span className="text-white">:</span>
                     <span className="text-blue-400">{currentPath}</span>
-                    <span className="text-white">$ {cmd.input}</span>
-                  </div>
-                  {cmd.output.map((line, lineIndex) => (
-                    <div key={lineIndex} className="text-gray-300 ml-2">
-                      {line}
+                    <span className="text-white">$ </span>
+                    <input
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      className="flex-1 bg-transparent text-green-400 outline-none ml-1"
+                      autoFocus
+                    />
+                  </form>
+                </div>
+              </div>
+
+              {/* Challenge Info */}
+              <div className="space-y-6">
+                <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-purple-500/30 p-6">
+                  <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                    <Flag className="w-5 h-5 mr-2 text-purple-400" />
+                    CTF Challenges
+                  </h3>
+                  <div className="space-y-3 text-gray-300">
+                    <div className="flex items-center justify-between">
+                      <span>🔍 Source Code Analysis</span>
+                      <span className={foundFlags.includes('freep0nx{1nsp3ct_3l3m3nt_pr0}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{1nsp3ct_3l3m3nt_pr0}') ? '✓' : '○'}
+                      </span>
                     </div>
-                  ))}
-                </div>
-              ))}
-              
-              <form onSubmit={handleSubmit} className="flex items-center">
-                <span className="text-purple-400">user@freep0nx</span>
-                <span className="text-white">:</span>
-                <span className="text-blue-400">{currentPath}</span>
-                <span className="text-white">$ </span>
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  className="flex-1 bg-transparent text-green-400 outline-none ml-1"
-                  autoFocus
-                />
-              </form>
-            </div>
-          </div>
-
-          {/* Challenge Info */}
-          <div className="space-y-6">
-            <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-purple-500/30 p-6">
-              <h2 className="text-xl font-bold text-white mb-4 flex items-center">
-                <Flag className="w-5 h-5 mr-2 text-purple-400" />
-                CTF Challenges
-              </h2>
-              <div className="space-y-3 text-gray-300">
-                <div className="flex items-center justify-between">
-                  <span>🔍 Source Code Analysis</span>
-                  <span className={foundFlags.includes('freep0nx{1nsp3ct_3l3m3nt_pr0}') ? 'text-green-400' : 'text-gray-500'}>
-                    {foundFlags.includes('freep0nx{1nsp3ct_3l3m3nt_pr0}') ? '✓' : '○'}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>🤖 Web Crawling</span>
-                  <span className={foundFlags.includes('freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}') ? 'text-green-400' : 'text-gray-500'}>
-                    {foundFlags.includes('freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}') ? '✓' : '○'}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>📁 Directory Traversal</span>
-                  <span className={foundFlags.includes('freep0nx{v3ry_s3cr3t_fl4g}') ? 'text-green-400' : 'text-gray-500'}>
-                    {foundFlags.includes('freep0nx{v3ry_s3cr3t_fl4g}') ? '✓' : '○'}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>🔐 Access Control</span>
-                  <span className={foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}') ? 'text-green-400' : 'text-gray-500'}>
-                    {foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}') ? '✓' : '○'}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Flag Validator */}
-            <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-green-500/30 p-6">
-              <h3 className="text-lg font-bold text-white mb-4">Flag Validator</h3>
-              <div className="flex space-x-2">
-                <div className="relative flex-1">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    value={flagInput}
-                    onChange={(e) => setFlagInput(e.target.value)}
-                    placeholder="Enter flag here..."
-                    className="w-full bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-                <button
-                  onClick={validateFlag}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
-                >
-                  Submit
-                </button>
-              </div>
-              
-              {foundFlags.length > 0 && (
-                <div className="mt-4">
-                  <h4 className="text-green-400 font-semibold mb-2">Found Flags:</h4>
-                  <div className="space-y-1">
-                    {foundFlags.map((flag, index) => (
-                      <div key={index} className="text-green-300 font-mono text-sm bg-green-900/20 px-2 py-1 rounded">
-                        {flag}
-                      </div>
-                    ))}
+                    <div className="flex items-center justify-between">
+                      <span>🤖 Web Crawling</span>
+                      <span className={foundFlags.includes('freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}') ? '✓' : '○'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span>📁 Directory Traversal</span>
+                      <span className={foundFlags.includes('freep0nx{v3ry_s3cr3t_fl4g}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{v3ry_s3cr3t_fl4g}') ? '✓' : '○'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span>🔐 Access Control</span>
+                      <span className={foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}') ? '✓' : '○'}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
 
-            {/* Terminal Hints */}
-            <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-blue-500/30 p-6">
-              <h3 className="text-lg font-bold text-white mb-4">Terminal Hints</h3>
-              <div className="space-y-2 text-sm text-gray-300">
-                <p>• Use <code className="bg-gray-800 px-1 rounded">ls</code> to list files and directories</p>
-                <p>• Use <code className="bg-gray-800 px-1 rounded">cd</code> to navigate directories</p>
-                <p>• Use <code className="bg-gray-800 px-1 rounded">cat</code> to read file contents</p>
-                <p>• Try <code className="bg-gray-800 px-1 rounded">find</code> to search for files</p>
-                <p>• Some commands may require elevated privileges...</p>
+                {/* Flag Validator */}
+                <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-green-500/30 p-6">
+                  <h4 className="text-lg font-bold text-white mb-4">Flag Validator</h4>
+                  <div className="flex space-x-2">
+                    <div className="relative flex-1">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={flagInput}
+                        onChange={(e) => setFlagInput(e.target.value)}
+                        placeholder="Enter flag here..."
+                        className="w-full bg-gray-800/50 border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 pr-10"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+                    <button
+                      onClick={validateFlag}
+                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                  
+                  {foundFlags.length > 0 && (
+                    <div className="mt-4">
+                      <h5 className="text-green-400 font-semibold mb-2">Found Flags:</h5>
+                      <div className="space-y-1">
+                        {foundFlags.map((flag, index) => (
+                          <div key={index} className="text-green-300 font-mono text-sm bg-green-900/20 px-2 py-1 rounded">
+                            {flag}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Terminal Hints */}
+                <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-blue-500/30 p-6">
+                  <h4 className="text-lg font-bold text-white mb-4">Terminal Hints</h4>
+                  <div className="space-y-2 text-sm text-gray-300">
+                    <p>• Use <code className="bg-gray-800 px-1 rounded">ls</code> to list files and directories</p>
+                    <p>• Use <code className="bg-gray-800 px-1 rounded">cd</code> to navigate directories</p>
+                    <p>• Use <code className="bg-gray-800 px-1 rounded">cat</code> to read file contents</p>
+                    <p>• Try <code className="bg-gray-800 px-1 rounded">find</code> to search for files</p>
+                    <p>• Some commands may require elevated privileges...</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      )}
 
       {/* Master Flag Validator - Hidden at bottom */}
       <div className="mt-16 pb-8">
@@ -594,6 +763,29 @@ ADMIN_TOKEN=hidden_admin_token_2024`
           )}
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-black/60 backdrop-blur-sm border-t border-purple-500/30 py-8">
+        <div className="container mx-auto px-6 text-center">
+          <div className="flex items-center justify-center mb-4">
+            <Shield className="w-6 h-6 text-purple-400 mr-2" />
+            <span className="text-white font-bold">Team freep0nx</span>
+          </div>
+          <p className="text-gray-400 text-sm">
+            Elite CTF Team - Passionate about cybersecurity challenges
+          </p>
+          <div className="mt-4">
+            <a 
+              href="https://ctftime.org/team/361758/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-purple-400 hover:text-purple-300 transition-colors"
+            >
+              Follow us on CTFtime
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
