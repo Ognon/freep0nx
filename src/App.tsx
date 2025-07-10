@@ -422,13 +422,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
     },
     '/var': {
       type: 'directory',
-      contents: ['log', 'www', 'lib', 'tmp', 'backups'],
-      hidden: ['.secret_data']
+      contents: ['log', 'www', 'backups'],
+      hidden: []
     },
     '/var/log': {
       type: 'directory',
-      contents: ['auth.log', 'syslog', 'apache2', 'mysql.log'],
-      hidden: ['.admin_access.log', 'debug.log']
+      contents: ['auth.log', 'mysql.log'],
+      hidden: ['.admin_access.log']
     },
     '/var/log/.admin_access.log': {
       type: 'file',
@@ -456,7 +456,7 @@ Jan 15 10:30:20 server sshd[1237]: User hacker attempted to login with password 
     },
     '/var/www': {
       type: 'directory',
-      contents: ['html', 'backup', 'cgi-bin'],
+      contents: ['backup'],
       hidden: ['.htaccess']
     },
     '/var/www/backup': {
@@ -485,7 +485,7 @@ ADMIN_PASS=4dm1n_p4ss_2024
     },
     '/usr': {
       type: 'directory',
-      contents: ['bin', 'local', 'share', 'games'],
+      contents: ['bin', 'local', 'share'],
       hidden: ['.hidden_bin']
     },
     '/usr/local': {
@@ -520,8 +520,8 @@ fi
     },
     '/opt': {
       type: 'directory',
-      contents: ['hidden_service', 'reverse', 'exploits'],
-      hidden: ['.test_env']
+      contents: ['hidden_service', 'reverse'],
+      hidden: []
     },
     '/opt/reverse': {
       type: 'directory',
@@ -549,8 +549,8 @@ PS: Si tu trouves le flag sans reverse, c'est de la triche (mais bravo quand mê
     },
     '/opt/hidden_service': {
       type: 'directory',
-      contents: ['config.json', 'service.py'],
-      hidden: ['.env', '.secret']
+      contents: [],
+      hidden: ['.env']
     },
     '/opt/hidden_service/.env': {
       type: 'file',
@@ -565,8 +565,8 @@ ADMIN_TOKEN=hidden_admin_token_2024
     },
     '/root': {
       type: 'directory',
-      contents: ['flag.txt', '.bash_history', '.ssh'],
-      hidden: ['.secret']
+      contents: ['flag.txt', '.bash_history'],
+      hidden: []
     },
     '/root/flag.txt': {
       type: 'file',
