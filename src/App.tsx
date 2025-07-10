@@ -918,17 +918,15 @@ power management:
             'PS: Maintenant je connais ton IP... Just kidding! (ou pas)'
           ];
         }
-        return ['curl: command requires proper syntax'];
+        return ['curl: try  curl ifconfig.me'];
 
       case 'mysql':
         if (args.includes('-u') && args.includes('root')) {
           return [
-            'ERROR 1045 (28000): Access denied for user \'root\'@\'localhost\' (using password: NO)',
-            'Hint: Try SQL injection techniques...',
-            'Like: mysql -u admin\' OR \'1\'=\'1\' -- -p'
+            'ERROR 1045 (28000): Access denied for user \'root\'@\'localhost\' (using password: NO)'
           ];
         }
-        return ['mysql: command not found or access denied'];
+        return ['mysql: command not found or access denied (try mysql -u root)'];
 
       case 'fortune':
         const fortunes = [
@@ -1016,29 +1014,28 @@ power management:
         ];
 
       case 'neofetch':
-        return [
-          `           -/oyddmdhs+:.               ${currentUser}@freep0nx-terminal`,
-          `       -o${"d".repeat(15)}hyo+:            -------------------`,
-          `     .y${"d".repeat(19)}/s+            OS: CTF Linux 1337.42`,
-          `   /s${"d".repeat(21)}y/              Host: Virtual Hacking Machine`,
-          `  /y${"d".repeat(22)}so               Kernel: 5.15.0-freep0nx`,
-          ` .y${"d".repeat(23)}s/                Uptime: 42 days, 6 hours, 9 mins`,
-          ` o${"d".repeat(24)}s                  Packages: 666 (pacman)`,
-          `+${"d".repeat(25)}s                   Shell: /bin/bash`,
-          `/y${"d".repeat(25)}s                   CPU: Hackintosh 9000 @ 4.20GHz`,
-          `s${"d".repeat(26)}s                    GPU: NVIDIA RTX 1337`,
-          `s${"d".repeat(26)}s                    Memory: 42GB / 1337GB`,
-          `s${"d".repeat(26)}s`,
-          `::${"d".repeat(25)}o:`,
-          ` :${"d".repeat(26)}o/`,
-          `  :${"d".repeat(25)}o/`,
-          `   -+${"d".repeat(23)}o+-`,
-          `     -:/${"d".repeat(19)}+/:-`,
-          `        -/${"d".repeat(15)}s/.-`,
-          `          .+${"d".repeat(11)}s+."`,
-          `              :/${"d".repeat(5)}+/:`,
-          `                 :+${"d"}s+:`
-        ];
+  return [
+    `               -/oyddmdhs+:.            ${currentUser}@freep0nx-terminal`,
+    `           -odNMMMMMMMMMMMMMMmho+.      -------------------`,
+    `         :yNMMMMMMMMMMMMMMMMMMMMMm/    OS: CTF Linux 1337.42`,
+    `       /mMMMMMMMMMMMMMMMMMMMMMMMMMMy   Host: Virtual Hacking Machine`,
+    `      +MMMMMMMMMMMMMMMMMMMMMMMMMMMMMs  Kernel: 5.15.0-freep0nx`,
+    `    .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN  Uptime: 42 days, 6 hours, 9 mins`,
+    `    oMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  Packages: 666 (pacman)`,
+    `   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  Shell: /bin/bash`,
+    `   yMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  CPU: Hackintosh 9000 @ 4.20GHz`,
+    `   dMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  GPU: NVIDIA RTX 1337`,
+    `   MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  Memory: 42GB / 1337GB`,
+    `   MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM`,
+    `  :MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:`,
+    `  .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM+`,
+    `   mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM/`,
+    `   -NMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN+`,
+    `     +mMMMMMMMMMMMMMMMMMMMMMMMMMMm/`,
+    `       :hNMMMMMMMMMMMMMMMMMMMMMmo.`,
+    `          -+shmNMMMMMMMMMNdyo/-`,
+    `               .:/++oooo++/:-`
+  ];
 
       case 'clear':
         setHistory([]);
