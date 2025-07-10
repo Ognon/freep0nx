@@ -57,7 +57,8 @@ const App: React.FC = () => {
     'freep0nx{1nsp3ct_3l3m3nt_pr0}',
     'freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}',
     'freep0nx{v3ry_s3cr3t_fl4g}',
-    'freep0nx{1d0r_4tt4ck_succ3ss}'
+    'freep0nx{1d0r_4tt4ck_succ3ss}',
+    'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}'
   ];
 
   const masterFlags = [
@@ -204,6 +205,14 @@ SECRET_KEY=freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}
 DEBUG=false
 ADMIN_TOKEN=hidden_admin_token_2024`
     },
+    '/opt/reverse': {
+      type: 'directory',
+      contents: ['challenge']
+    },
+    '/opt/reverse/challenge': {
+      type: 'file',
+      content: 'Binary challenge file - use "download challenge" to get it'
+    },
     '/root': {
       type: 'directory',
       contents: ['Permission denied']
@@ -319,6 +328,19 @@ ADMIN_TOKEN=hidden_admin_token_2024`
         setHistory([]);
         return [];
 
+      case 'download':
+        if (args[0] === 'challenge') {
+          // Trigger download of the challenge file
+          const link = document.createElement('a');
+          link.href = '/challenge';
+          link.download = 'challenge';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          return ['Downloading challenge file...', 'File saved as: challenge'];
+        }
+        return [`download: ${args[0]}: file not found`];
+
       case 'help':
         return [
           'Available commands:',
@@ -332,6 +354,7 @@ ADMIN_TOKEN=hidden_admin_token_2024`
           'netstat - show network connections',
           'whoami - show current user',
           'id - show user and group IDs',
+          'download [file] - download files',
           'clear - clear terminal',
           'help - show this help message'
         ];
@@ -615,6 +638,12 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                         {foundFlags.includes('freep0nx{1d0r_4tt4ck_succ3ss}') ? '✓' : '○'}
                       </span>
                     </div>
+                    <div className="flex items-center justify-between">
+                      <span>🔄 Reverse Engineering</span>
+                      <span className={foundFlags.includes('freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}') ? '✓' : '○'}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -651,8 +680,17 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                       <h5 className="text-green-400 font-semibold mb-2">Found Flags:</h5>
                       <div className="space-y-1">
                         {foundFlags.map((flag, index) => (
-                          <div key={index} className="text-green-300 font-mono text-sm bg-green-900/20 px-2 py-1 rounded">
+                          <div key={index} className={`font-mono text-sm px-2 py-1 rounded ${
+                            flag === 'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}' 
+                              ? 'text-yellow-300 bg-yellow-900/20 border border-yellow-500/30' 
+                              : 'text-green-300 bg-green-900/20'
+                          }`}>
                             {flag}
+                            {flag === 'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}' && (
+                              <div className="text-yellow-400 text-xs mt-1 font-bold">
+                                🏆 FÉLICITATIONS ! Tu es un vrai reverseur, mashallah ! 🏆
+                              </div>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -669,6 +707,7 @@ ADMIN_TOKEN=hidden_admin_token_2024`
                     <p>• Use <code className="bg-gray-800 px-1 rounded">cat</code> to read file contents</p>
                     <p>• Try <code className="bg-gray-800 px-1 rounded">find</code> to search for files</p>
                     <p>• Some commands may require elevated privileges...</p>
+                    <p>• Use <code className="bg-gray-800 px-1 rounded">download challenge</code> to get reverse engineering files</p>
                   </div>
                 </div>
               </div>
