@@ -254,7 +254,6 @@ cat /dev/random > /dev/sda
       content: `Notes secrètes:
 - Mot de passe WiFi: 12345678 (Personne ne devinera!)
 - Backup: /home/user/documents/backup.tar.gz.gpg (mot de passe: backup)
-- Flag: freep0nx{sql_1nj3ct10n_pr0}
 - Idée: créer un fichier .env avec les identifiants DB en clair
 - TODO: Changer les mots de passe par défaut... un jour`
     },
@@ -581,13 +580,12 @@ shred -u /root/.bash_history
     },
     '/tmp': {
       type: 'directory',
-      contents: ['temp_file'],
+      contents: [],
       hidden: ['.sql_dump', 'hidden_data']
     },
     '/tmp/.sql_dump': {
       type: 'file',
       content: `-- SQL Dump
--- Flag: freep0nx{sql_1nj3ct10n_pr0}
 CREATE TABLE users (
     id INT PRIMARY KEY,
     username VARCHAR(50),
