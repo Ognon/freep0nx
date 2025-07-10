@@ -308,8 +308,7 @@ PS: J'ai oublié tous ces conseils hier...`
     },
     '/home/user/documents/notes.pdf': {
       type: 'file',
-      content: `Stega ?! Hint: Use biglist.txt
-      Hint 2: Monte à bord de la 9 L   Gloria  te tendra la main sur le quai de Resval.`
+      content: `Stega ?! Hint: Use biglist.txt\nHint 2: Monte à bord de la 9 L   Gloria  te tendra la main sur le quai de Resval.`
     },
     '/home/user/downloads': {
       type: 'directory',
