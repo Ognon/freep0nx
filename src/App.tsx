@@ -1082,7 +1082,7 @@ power management:
             </div>
             
             <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-8">
-              Une équipe française de cybersécurité passionnée par les challenges CTF.<br>
+              Une équipe française de cybersécurité passionnée par les challenges CTF.
               Présente dans tous les domaines : web, reverse, crypto, forensic, pwn et plus encore.
             </p>
             
