@@ -282,7 +282,7 @@ ssh root@localhost
     },
     '/home/user/documents': {
       type: 'directory',
-      contents: ['notes.txt'],
+      contents: ['notes.txt', 'notes.pdf'],
       hidden: ['.private']
     },
     '/home/user/documents/.private': {
@@ -300,6 +300,10 @@ ssh root@localhost
 6. PROFIT
 
 PS: J'ai oublié tous ces conseils hier...`
+    },
+    '/home/user/documents/notes.pdf': {
+      type: 'file',
+      content: `Stega ?! Hint: Use biglist.txt`
     },
     '/home/user/downloads': {
       type: 'directory',
@@ -836,17 +840,36 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
       case 'id':
         return [`uid=1000(${currentUser}) gid=1000(${currentUser}) groups=1000(${currentUser}),4(adm),24(cdrom),27(sudo)`];
 
-      case 'download':
+          case 'download':
         if (args[0] === 'challenge') {
-          // Trigger download of the challenge file
-          const link = document.createElement('a');
-          link.href = '/challenge';
-          link.download = 'challenge';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          return ['Downloading challenge file...', 'File saved as: challenge', 'Reverse engineer this binary to find the hidden flag!'];
+            // Trigger download of the challenge file
+            const link = document.createElement('a');
+            link.href = '/challenge';
+            link.download = 'challenge';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            return [
+                'Downloading challenge file...',
+                'File saved as: challenge',
+                'Reverse engineer this binary to find the hidden flag!'
+            ];
         }
+
+        if (args[0] === 'notes.pdf') {
+            const link = document.createElement('a');
+            link.href = '/notes.pdf';
+            link.download = 'notes.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            return [
+                'Downloading notes...',
+                'File saved as: notes.pdf',
+                'Careful... some secrets should remain unread.'
+            ];
+        }
+
         return [`download: ${args[0]}: file not found`];
 
       case 'curl':
