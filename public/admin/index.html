@@ -35,12 +35,6 @@
             white-space: pre;
             margin: 1rem 0;
         }
-        .hidden-flag {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-            opacity: 0;
-        }
         input {
             background: #000;
             border: 1px solid #ff0000;
@@ -60,6 +54,12 @@
         }
         button:hover {
             background: #ff3333;
+        }
+        #flag {
+            display: none;
+            margin-top: 1rem;
+            color: lime;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -83,35 +83,45 @@
             <br>
             <button onclick="attemptLogin()">LOGIN</button>
         </div>
-        
+
+        <div id="flag">FLAG: freep0nx{sql_1nj3ct10n_pr0}</div>
+
         <p style="margin-top: 2rem; font-size: 0.8rem;">
             <a href="/" style="color: #ff0000;">← Back to main site</a>
         </p>
     </div>
 
-    <!-- Hidden flag for IDOR attack -->
-    <div class="hidden-flag">freep0nx{1d0r_4tt4ck_succ3ss}</div>
-
     <script>
+        function fakeQuery(query) {
+            // Faux backend SQL engine pour simulation CTF
+            if (query.includes("' OR 1=1--") || query.includes("\" OR 1=1--")) {
+                return { success: true, isAdmin: true };
+            }
+            return { success: false };
+        }
+
         function attemptLogin() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            
-            if (username === 'admin' && password === 'admin123') {
-                alert('Login successful! But this is just a demo...');
+
+            // Tentative d'auth vulnérable à l'injection
+            const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+            const result = fakeQuery(query);
+
+            if (result.success && result.isAdmin) {
+                document.getElementById("flag").style.display = "block";
+                alert("Access granted.");
             } else {
-                alert('Invalid credentials! Access denied.');
+                alert("Invalid credentials.");
             }
         }
 
-        // Simulate IDOR vulnerability
-        const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('user_id');
-        
-        if (userId === '1337') {
-            // Hidden flag accessible via IDOR
-            console.log('Flag found via IDOR: freep0nx{1d0r_4tt4ck_succ3ss}');
-        }
+        // Easter egg qui ne montre rien directement
+        // (juste là pour détourner les yeux curieux)
+        // function sneaky() {
+        //     const a = atob('ZnJlZXAwbng=');
+        //     // Nope. Rien ici à voir...
+        // }
     </script>
 </body>
 </html>
