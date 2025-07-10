@@ -308,7 +308,7 @@ PS: J'ai oublié tous ces conseils hier...`
     },
     '/home/user/documents/notes.pdf': {
       type: 'file',
-      content: `Stega ?! Hint: Use biglist.txt\nHint 2: Monte à bord de la 9 L   Gloria  te tendra la main sur le quai de Resval.`
+      content: `Stega ?! \nHint: Monte à bord de la 9 L   Gloria  te tendra la main sur le quai de Resval.\nHint 2: Use biglist.txt`
     },
     '/home/user/downloads': {
       type: 'directory',
@@ -1499,12 +1499,21 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
 
                 {foundMasterFlags.length === masterFlags.length && (
                   <div className="text-center text-yellow-400 font-bold text-sm">
-                    🏆 MASTER HACKER ACHIEVED! GG 🏆
-                    OMG
-                    OMG
-                    OMG
-                    OMG
-                  </div>
+  🏆 MASTER HACKER ACHIEVED! GG 🏆
+  <div className="mt-2 text-white text-xs">
+    You've conquered all <span className="text-green-400 font-bold">7</span> challenges!
+  </div>
+  <div className="mt-2 text-pink-400 font-extrabold text-lg">
+    ELITE STATUS UNLOCKED
+  </div>
+  <div className="mt-2 flex justify-center gap-4 text-xs text-white font-semibold">
+    <div className="bg-yellow-500 px-2 py-1 rounded">7/7<br />Flags Found</div>
+    <div className="bg-green-500 px-2 py-1 rounded">100%<br />Completion</div>
+    <div className="bg-purple-600 px-2 py-1 rounded">ELITE<br />Rank</div>
+    <div className="bg-red-500 px-2 py-1 rounded">∞<br />Respect</div>
+  </div>
+</div>
+
                 )}
               </div>
             </div>
