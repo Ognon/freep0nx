@@ -196,6 +196,7 @@ const App: React.FC = () => {
     'M4st3rFl4g{c0nf1g_f1l3_l34k}',
     'M4st3rFl4g{d33p_w3b_s3cr3ts}',
     'M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}',
+    'M4st3rFl4g{c4t7l0v3r}',
     'M4st3rFl4g{pr1v1l3g3_3sc4l4t10n_g0d}'
   ];
 
@@ -1442,9 +1443,15 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Sudo Security</span>
+                    <span className="text-gray-400">Cat Lover</span>
                     <span className={foundMasterFlags.includes('M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}') ? 'text-green-400' : 'text-gray-600'}>
                       {foundMasterFlags.includes('M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}') ? '✓' : '○'}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400">Sudo Security</span>
+                    <span className={foundMasterFlags.includes('M4st3rFl4g{c4t7l0v3r}') ? 'text-green-400' : 'text-gray-600'}>
+                      {foundMasterFlags.includes('M4st3rFl4g{c4t7l0v3r}') ? '✓' : '○'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
