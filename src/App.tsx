@@ -585,12 +585,8 @@ shred -u /root/.bash_history
     },
     '/tmp': {
       type: 'directory',
-      contents: ['.hidden_data', 'temp_file'],
-      hidden: ['cookie_flag.txt', '.sql_dump', 'malware']
-    },
-    '/tmp/cookie_flag.txt': {
-      type: 'file',
-      content: 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}\n\nPS: Les cookies, c\'est bon pour le hacking!'
+      contents: ['temp_file'],
+      hidden: ['.sql_dump', 'hidden_data']
     },
     '/tmp/.sql_dump': {
       type: 'file',
@@ -816,8 +812,7 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
       case 'grep':
         if (args.includes('freep0nx') && args.includes('/var/log/')) {
           return [
-            '/var/log/mysql.log:2024-01-15 14:32:20 [Note] Flag found in query log: freep0nx{sql_1nj3ct10n_pr0}',
-            '/var/log/.admin_access.log:[2024-01-15 10:30:16] Flag revealed: freep0nx{c00k13_m4n1pul4t10n_m4st3r}'
+            '/var/log/mysql.log:2024-01-15 14:32:20 [Note] Flag found in query log: freep0nx{sql_1nj3ct10n_pr0}'
           ];
         }
         if (args.includes('admin') && args.includes('/etc/passwd')) {
