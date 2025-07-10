@@ -1295,7 +1295,6 @@ power management:
             />
           </form>
         </div>
-      </div>
 
       {/* Section Challenges - 3 colonnes */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
