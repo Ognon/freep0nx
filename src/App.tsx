@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Terminal, Shield, Eye, EyeOff, Lock, Unlock, Flag, Crown } from 'lucide-react';
+import { Terminal, Shield, Eye, EyeOff, Lock, Crown, Flag } from 'lucide-react';
 
 interface Command {
   input: string;
@@ -7,7 +7,7 @@ interface Command {
   timestamp: Date;
 }
 
-const App: React.Component = () => {
+const App: React.FC = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<Command[]>([]);
   const [currentPath, setCurrentPath] = useState('/home/user');
