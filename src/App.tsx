@@ -874,6 +874,19 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
             ];
         }
 
+        if (args[0] === 'biglist.txt') {
+            const link = document.createElement('a');
+            link.href = '/biglist.txt';
+            link.download = 'biglist.txt';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            return [
+                'Downloading biglist...',
+                'File saved as: biglist.txt'
+            ];
+        }
+
         return [`download: ${args[0]}: file not found`];
 
       case 'curl':
