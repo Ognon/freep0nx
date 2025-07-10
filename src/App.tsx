@@ -20,10 +20,10 @@ const flagDescriptions = [
   "🤖 Web Crawling", 
   "📁 Directory Traversal",
   "🔐 Access Control (IDOR)",
-  "🔄 Reverse Engineering",
+  "🔄 Reverse Engineering (Terminal)",
   "🍪 Cookie Manipulation",
   "💉 SQL Injection",
-  "📋 Log Analysis"
+  "📋 Log Analysis (Terminal)"
 ];
 
 const App: React.FC = () => {
@@ -1122,11 +1122,19 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
       setSelectedMember(teamMembers.length - 1); // Last member is hidden
     }
   }, []);
-
+  
+  // Set Cookie
+  useEffect(() => {
+  const cookies = document.cookie.split('; ').find(row => row.startsWith('user='));
+  if (!cookies) {
+    document.cookie = 'user=guest; path=/; SameSite=Strict';
+  }
+}, []);
+  
   // Cookie challenge
   useEffect(() => {
     const checkCookie = () => {
-      if (document.cookie.includes('admin=true') && !foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}')) {
+      if (document.cookie.includes('user=admin') && !foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}')) {
         const newFlags = [...foundFlags, 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}'];
         setFoundFlags(newFlags);
         localStorage.setItem('freep0nx_flags', JSON.stringify(newFlags));
