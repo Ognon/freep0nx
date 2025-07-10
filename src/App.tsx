@@ -154,7 +154,7 @@ const App: React.FC = () => {
     },
     // Membre caché pour IDOR
     { 
-      rank: "Membre Secret", 
+      rank: "freep0nx{1d0r_4tt4ck_succ3ss}", 
       pseudo: "Gh0st", 
       speciality: "shadow ops, 0day", 
       description: "Le membre fantôme. 'Je suis dans ton réseau depuis le début. Ce message? Une diversion.'", 
