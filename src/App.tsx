@@ -1347,7 +1347,7 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
     </p>
     <div className="mt-4 flex justify-center gap-4 text-sm font-semibold">
       <span className="bg-black/40 px-4 py-2 rounded-lg border border-green-400 text-green-300">
-        7/7 FLAGS SECURED
+        8/8 FLAGS SECURED
       </span>
       <span className="bg-black/40 px-4 py-2 rounded-lg border border-purple-400 text-purple-300">
         ELITE TEAM STATUS
