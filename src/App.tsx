@@ -1504,7 +1504,7 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
   </div>
 
   <div className="text-2xl font-bold text-white">
-    🏆 MASTER HACKER ACHIEVED! GG 🏆
+    🏆MASTER HACKER ACHIEVED!🏆
   </div>
 
   <div className="text-lg text-green-200 font-medium">
