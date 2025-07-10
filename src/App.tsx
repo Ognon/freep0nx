@@ -282,12 +282,16 @@ ssh root@localhost
     },
     '/home/user/documents': {
       type: 'directory',
-      contents: ['notes.txt', 'notes.pdf'],
+      contents: ['notes.txt', 'notes.pdf', 'biglist.txt],
       hidden: ['.private']
     },
     '/home/user/documents/.private': {
       type: 'file',
       content: 'Private documents - access denied\n(Enfin, si tu lis ça, c\'est que t\'as réussi à y accéder, donc bravo!)'
+    },
+    '/home/user/documents/biglist.txt': {
+      type: 'file',
+      content: 'Download me'
     },
     '/home/user/documents/notes.txt': {
       type: 'file',
