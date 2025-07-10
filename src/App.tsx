@@ -1015,26 +1015,17 @@ power management:
 
       case 'neofetch':
   return [
-    `               -/oyddmdhs+:.            ${currentUser}@freep0nx-terminal`,
-    `           -odNMMMMMMMMMMMMMMmho+.      -------------------`,
-    `         :yNMMMMMMMMMMMMMMMMMMMMMm/    OS: CTF Linux 1337.42`,
-    `       /mMMMMMMMMMMMMMMMMMMMMMMMMMMy   Host: Virtual Hacking Machine`,
-    `      +MMMMMMMMMMMMMMMMMMMMMMMMMMMMMs  Kernel: 5.15.0-freep0nx`,
-    `    .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN  Uptime: 42 days, 6 hours, 9 mins`,
-    `    oMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  Packages: 666 (pacman)`,
-    `   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  Shell: /bin/bash`,
-    `   yMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  CPU: Hackintosh 9000 @ 4.20GHz`,
-    `   dMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  GPU: NVIDIA RTX 1337`,
-    `   MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  Memory: 42GB / 1337GB`,
-    `   MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM`,
-    `  :MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:`,
-    `  .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM+`,
-    `   mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM/`,
-    `   -NMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN+`,
-    `     +mMMMMMMMMMMMMMMMMMMMMMMMMMMm/`,
-    `       :hNMMMMMMMMMMMMMMMMMMMMMmo.`,
-    `          -+shmNMMMMMMMMMNdyo/-`,
-    `               .:/++oooo++/:-`
+    `${currentUser}@freep0nx-terminal`,
+    `-------------------`,
+    `OS: CTF Linux 1337.42`,
+    `Host: Virtual Hacking Machine`,
+    `Kernel: 5.15.0-freep0nx`,
+    `Uptime: 42 days, 6 hours, 9 mins`,
+    `Packages: 666 (pacman)`,
+    `Shell: /bin/bash`,
+    `CPU: Hackintosh 9000 @ 4.20GHz`,
+    `GPU: NVIDIA RTX 1337`,
+    `Memory: 42GB / 1337GB`
   ];
 
       case 'clear':
@@ -1063,8 +1054,7 @@ power management:
           'cowsay [message] - make a cow say something',
           'sl - steam locomotive (when you type ls too fast)',
           'neofetch - display system information',
-          'clear - clear terminal',
-          'help - show this help message'
+          'clear - clear terminal'
         ];
 
       default:
