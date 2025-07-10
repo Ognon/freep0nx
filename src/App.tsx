@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Terminal, Shield, Eye, EyeOff, Lock, Crown, Flag, Users, Trophy, ExternalLink, Star, Zap, Target, Code, Network, Search, Key, Database, Cpu, Cookie, FileText, Download } from 'lucide-react';
+import { Terminal, Shield, Eye, EyeOff, Lock, Crown, Flag, Users, Trophy, ExternalLink, Star, Zap, Target, Code, Network, Search, Key, Database, Cpu, Download, Award, Sparkles } from 'lucide-react';
 
 interface Command {
   input: string;
@@ -33,6 +33,7 @@ const App: React.FC = () => {
   const [showMasterValidator, setShowMasterValidator] = useState(false);
   const [showCTF, setShowCTF] = useState(false);
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
+  const [userRole, setUserRole] = useState('user');
   const [currentUser, setCurrentUser] = useState('user');
   const [sudoPrivileges, setSudoPrivileges] = useState<string[]>([]);
   const terminalRef = useRef<HTMLDivElement>(null);
@@ -66,6 +67,8 @@ const App: React.FC = () => {
     'freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}',
     'freep0nx{v3ry_s3cr3t_fl4g}',
     'freep0nx{1d0r_4tt4ck_succ3ss}',
+    'freep0nx{c00k13_m4n1pul4t10n_m4st3r}',
+    'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}'
     'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}',
     'freep0nx{c00k13_m4n1pul4t10n_m4st3r}',
     'freep0nx{sql_1nj3ct10n_pr0}',
@@ -463,6 +466,16 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
         if (args[0] === 'cat' && args[1] === '/root/flag.txt') {
           return ['freep0nx{r00t_pr1v3sc_m4st3r}'];
         }
+        if (args[0] === 'ls' && args[1] === '-l') {
+          return [
+            'total 12',
+            'drwxr-xr-x 2 root root 4096 Jan 15 10:30 .',
+            'drwxr-xr-x 3 root root 4096 Jan 15 10:30 ..',
+            '-rw------- 1 root root   42 Jan 15 10:30 flag.txt',
+            '-rw-r--r-- 1 root root  156 Jan 15 10:30 .bash_history',
+            '-rw------- 1 root root  234 Jan 15 10:30 admin_notes.txt'
+          ];
+        }
         if (args[0] === '/usr/local/bin/backup.sh') {
           return [
             'Running backup as root...',
@@ -489,7 +502,37 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
         if (args.includes('-perm') && args.includes('4755')) {
           return ['/usr/local/bin/backup.sh'];
         }
+        if (args.includes('-name') && args.includes('*flag*')) {
+          return ['/root/flag.txt', '/tmp/.hidden_data'];
+        }
         return ['find: no results found'];
+
+      case 'download':
+        if (args[0] === 'challenge') {
+          // Simulate file download
+          const link = document.createElement('a');
+          link.href = '/challenge';
+          link.download = 'challenge';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          return ['Downloading challenge binary...', 'Download complete: challenge'];
+        }
+        return ['download: file not found'];
+
+      case 'sudo':
+        if (args[0] === '-l') {
+          return [
+            'Matching Defaults entries for user on freep0nx:',
+            '    env_reset, mail_badpass, secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+            '',
+            'User user may run the following commands on freep0nx:',
+            '    (root) NOPASSWD: /usr/local/bin/backup.sh',
+            '    (root) /bin/cat /usr/local/bin/backup.sh',
+            '    (root) /bin/ls /root'
+          ];
+        }
+        // ... rest of sudo cases
 
       case 'grep':
         if (args.includes('freep0nx') && args.includes('/var/log/')) {
@@ -564,6 +607,41 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
         }
         return ['mysql: command not found or access denied'];
 
+      case 'ls':
+        const path = args[0] || currentPath;
+        const hasAll = args.includes('-a') || args.includes('-la') || args.includes('-al');
+        const hasLong = args.includes('-l') || args.includes('-la') || args.includes('-al');
+        const targetPath = path.startsWith('/') ? path : `${currentPath}/${path}`;
+        const normalizedPath = targetPath.replace(/\/+/g, '/').replace(/\/$/, '') || '/';
+        
+        if (fileSystem[normalizedPath]?.type === 'directory') {
+          if (normalizedPath === '/root' && currentPath !== '/root') {
+            return ['ls: cannot open directory \'/root\': Permission denied'];
+          }
+          let contents = fileSystem[normalizedPath].contents || [];
+          
+          // Add hidden files if -a flag is used
+          if (hasAll) {
+            if (normalizedPath === '/home/user') {
+              contents = ['.', '..', '.bashrc', '.ssh', '.hidden_config', 'documents', 'downloads'];
+            } else if (normalizedPath === '/') {
+              contents = ['.', '..', '.hidden_system', 'home', 'etc', 'var', 'usr', 'opt', 'root', 'tmp'];
+            }
+          }
+          
+          if (hasLong) {
+            return contents.map(item => {
+              if (item.startsWith('.') && item !== '.' && item !== '..') {
+                return `drwx------ 2 user user 4096 Jan 15 10:30 ${item}`;
+              }
+              return `drwxr-xr-x 2 user user 4096 Jan 15 10:30 ${item}`;
+            });
+          }
+          
+          return contents;
+        }
+        return [`ls: cannot access '${path}': No such file or directory`];
+
       case 'clear':
         setHistory([]);
         return [];
@@ -585,6 +663,7 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
           'mysql [options] - connect to MySQL database',
           'whoami - show current user',
           'id - show user and group IDs',
+          'download [file] - download files',
           'download [file] - download files',
           'clear - clear terminal',
           'help - show this help message'
@@ -644,6 +723,47 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
     return <Star className="w-4 h-4" />;
   };
 
+  // Cookie management
+  useEffect(() => {
+    // Set default cookie if not exists
+    const existingRole = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('role='))
+      ?.split('=')[1];
+    
+    if (!existingRole) {
+      document.cookie = 'role=user; path=/';
+      setUserRole('user');
+    } else {
+      setUserRole(existingRole);
+    }
+
+    // Check for admin cookie
+    if (existingRole === 'admin' && !foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}')) {
+      setFoundFlags(prev => [...prev, 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}']);
+    }
+  }, []);
+
+  // Monitor cookie changes
+  useEffect(() => {
+    const checkCookie = () => {
+      const role = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('role='))
+        ?.split('=')[1] || 'user';
+      
+      if (role !== userRole) {
+        setUserRole(role);
+        if (role === 'admin' && !foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}')) {
+          setFoundFlags(prev => [...prev, 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}']);
+        }
+      }
+    };
+
+    const interval = setInterval(checkCookie, 1000);
+    return () => clearInterval(interval);
+  }, [userRole, foundFlags]);
+
   // IDOR vulnerability - check URL parameter
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -680,61 +800,81 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
       {/* Hero Section */}
-      <header className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20"></div>
-        <div className="relative container mx-auto px-6 py-16">
+      <header className="relative overflow-hidden bg-gradient-to-br from-purple-900/50 via-indigo-900/50 to-pink-900/50">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-pink-600/10"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        
+        {/* User Role Indicator - Subtle but discoverable */}
+        <div className="absolute top-4 right-4 text-xs text-gray-500 font-mono">
+          Status: <span className={userRole === 'admin' ? 'text-red-400 font-bold' : 'text-gray-400'}>{userRole}</span>
+        </div>
+        
+        <div className="relative container mx-auto px-6 py-20">
           <div className="text-center">
-            <div className="flex items-center justify-center mb-6">
-              <Shield className="w-16 h-16 text-purple-400 mr-4" />
+            <div className="flex items-center justify-center mb-8">
+              <div className="relative">
+                <Shield className="w-20 h-20 text-purple-400 mr-4 drop-shadow-lg" />
+                <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                  <Sparkles className="w-3 h-3 text-white" />
+                </div>
+              </div>
               <div>
-                <h1 className="text-6xl font-bold text-white mb-2">freep0nx</h1>
-                <p className="text-purple-300 text-xl">Elite CTF Team</p>
+                <h1 className="text-7xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent mb-2 drop-shadow-lg">
+                  freep0nx
+                </h1>
+                <p className="text-purple-300 text-2xl font-light tracking-wide">Elite CTF Team</p>
               </div>
             </div>
             
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-8">
+            <p className="text-gray-300 text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
               Une équipe française de cybersécurité passionnée par les challenges CTF. 
               Nous excellons dans tous les domaines : web, reverse, crypto, forensic, pwn et plus encore.
             </p>
             
-            <div className="flex items-center justify-center space-x-6 mb-8">
+            <div className="flex items-center justify-center space-x-8 mb-12">
               <a 
                 href="https://ctftime.org/team/361758/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors"
+                className="flex items-center bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-purple-500/25"
               >
-                <Trophy className="w-5 h-5 mr-2" />
-                CTFtime Profile
-                <ExternalLink className="w-4 h-4 ml-2" />
+                <Trophy className="w-6 h-6 mr-3" />
+                <span className="font-semibold">CTFtime Profile</span>
+                <ExternalLink className="w-5 h-5 ml-3" />
               </a>
               
               <button
                 onClick={() => setShowCTF(!showCTF)}
-                className="flex items-center bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-colors"
+                className="flex items-center bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-green-500/25"
               >
-                <Terminal className="w-5 h-5 mr-2" />
-                Try Our CTF
+                <Terminal className="w-6 h-6 mr-3" />
+                <span className="font-semibold">Try Our CTF</span>
               </button>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 border border-purple-500/30">
-                <Users className="w-8 h-8 text-purple-400 mb-3 mx-auto" />
-                <h3 className="text-white font-bold mb-2">{teamMembers.filter(m => !m.hidden).length} Membres</h3>
-                <p className="text-gray-300 text-sm">Une équipe soudée et complémentaire</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="bg-black/30 backdrop-blur-md rounded-2xl p-8 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:transform hover:scale-105">
+                <div className="bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-purple-400" />
+                </div>
+                <h3 className="text-white font-bold text-xl mb-3">{teamMembers.filter(m => !m.hidden).length} Membres</h3>
+                <p className="text-gray-300">Une équipe soudée et complémentaire</p>
               </div>
               
-              <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 border border-green-500/30">
-                <Flag className="w-8 h-8 text-green-400 mb-3 mx-auto" />
-                <h3 className="text-white font-bold mb-2">Multi-spécialités</h3>
-                <p className="text-gray-300 text-sm">Experts dans tous les domaines CTF</p>
+              <div className="bg-black/30 backdrop-blur-md rounded-2xl p-8 border border-green-500/20 hover:border-green-500/40 transition-all duration-300 hover:transform hover:scale-105">
+                <div className="bg-gradient-to-br from-green-500/20 to-green-600/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <Flag className="w-8 h-8 text-green-400" />
+                </div>
+                <h3 className="text-white font-bold text-xl mb-3">Multi-spécialités</h3>
+                <p className="text-gray-300">Experts dans tous les domaines CTF</p>
               </div>
               
-              <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 border border-yellow-500/30">
-                <Trophy className="w-8 h-8 text-yellow-400 mb-3 mx-auto" />
-                <h3 className="text-white font-bold mb-2">Compétitifs</h3>
-                <p className="text-gray-300 text-sm">Toujours prêts pour le challenge</p>
+              <div className="bg-black/30 backdrop-blur-md rounded-2xl p-8 border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-300 hover:transform hover:scale-105">
+                <div className="bg-gradient-to-br from-yellow-500/20 to-yellow-600/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <Trophy className="w-8 h-8 text-yellow-400" />
+                </div>
+                <h3 className="text-white font-bold text-xl mb-3">Compétitifs</h3>
+                <p className="text-gray-300">Toujours prêts pour le challenge</p>
               </div>
             </div>
           </div>
@@ -742,59 +882,86 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
       </header>
 
       {/* Team Members Section */}
-      <section className="py-16 bg-black/20">
+      <section className="py-20 bg-black/10 backdrop-blur-sm">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-white text-center mb-12">Notre Équipe</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent mb-4">
+              Notre Équipe
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Des experts passionnés, chacun avec ses spécialités uniques
+            </p>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {teamMembers.filter(member => !member.hidden).map((member, index) => (
               <div 
                 key={index}
-                className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105"
+                className="group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-md rounded-2xl p-6 border border-gray-700/30 hover:border-purple-500/50 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/10"
               >
-                <div className="flex items-center mb-4">
-                  {getSpecialityIcon(member.speciality)}
+                <div className="flex items-center mb-5">
+                  <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full p-2 mr-3 group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-all duration-300">
+                    {getSpecialityIcon(member.speciality)}
+                  </div>
                   <div className="ml-3">
-                    <h3 className="text-white font-bold">{member.pseudo}</h3>
+                    <h3 className="text-white font-bold text-lg group-hover:text-purple-200 transition-colors">
+                      {member.pseudo}
+                    </h3>
                     <span className={`text-xs px-2 py-1 rounded-full ${
                       member.rank === 'Chef' 
-                        ? 'bg-yellow-500/20 text-yellow-400' 
-                        : 'bg-purple-500/20 text-purple-400'
+                        ? 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-400 border border-yellow-500/30' 
+                        : 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-400 border border-purple-500/30'
                     }`}>
                       {member.rank}
                     </span>
                   </div>
                 </div>
                 
-                <div className="mb-3">
-                  <p className="text-purple-300 text-sm font-medium mb-1">Spécialités:</p>
-                  <p className="text-gray-300 text-sm">{member.speciality}</p>
+                <div className="mb-4">
+                  <p className="text-purple-300 text-sm font-semibold mb-2 flex items-center">
+                    <Award className="w-3 h-3 mr-1" />
+                    Spécialités:
+                  </p>
+                  <p className="text-gray-300 text-sm font-medium bg-gray-800/30 rounded-lg px-3 py-2">
+                    {member.speciality}
+                  </p>
                 </div>
                 
-                <p className="text-gray-400 text-xs">{member.description}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{member.description}</p>
+                
+                <div className="mt-4 h-1 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             ))}
             
             {/* Hidden member revealed via IDOR */}
             {selectedMember === teamMembers.length - 1 && (
-              <div className="bg-gradient-to-br from-red-800/80 to-red-900/80 backdrop-blur-sm rounded-lg p-6 border border-red-500/50 animate-pulse">
+              <div className="bg-gradient-to-br from-red-800/60 to-red-900/60 backdrop-blur-md rounded-2xl p-6 border border-red-500/50 animate-pulse shadow-2xl shadow-red-500/20">
                 <div className="flex items-center mb-4">
-                  <Shield className="w-4 h-4 text-red-400" />
+                  <div className="bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full p-2 mr-3">
+                    <Shield className="w-4 h-4 text-red-400" />
+                  </div>
                   <div className="ml-3">
-                    <h3 className="text-white font-bold">{teamMembers[teamMembers.length - 1].pseudo}</h3>
-                    <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400">
+                    <h3 className="text-white font-bold text-lg">{teamMembers[teamMembers.length - 1].pseudo}</h3>
+                    <span className="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-red-500/20 to-red-600/20 text-red-400 border border-red-500/30">
                       {teamMembers[teamMembers.length - 1].rank}
                     </span>
                   </div>
                 </div>
                 
-                <div className="mb-3">
-                  <p className="text-red-300 text-sm font-medium mb-1">Spécialités:</p>
-                  <p className="text-gray-300 text-sm">{teamMembers[teamMembers.length - 1].speciality}</p>
+                <div className="mb-4">
+                  <p className="text-red-300 text-sm font-semibold mb-2 flex items-center">
+                    <Award className="w-3 h-3 mr-1" />
+                    Spécialités:
+                  </p>
+                  <p className="text-gray-300 text-sm font-medium bg-red-800/30 rounded-lg px-3 py-2">
+                    {teamMembers[teamMembers.length - 1].speciality}
+                  </p>
                 </div>
                 
-                <p className="text-gray-400 text-xs">{teamMembers[teamMembers.length - 1].description}</p>
-                <p className="text-red-400 text-xs mt-2 font-bold">🚨 MEMBRE SECRET RÉVÉLÉ VIA IDOR!</p>
+                <p className="text-gray-400 text-sm leading-relaxed mb-3">{teamMembers[teamMembers.length - 1].description}</p>
+                <p className="text-red-400 text-sm font-bold bg-red-900/30 rounded-lg px-3 py-2 border border-red-500/30">
+                  🚨 MEMBRE SECRET RÉVÉLÉ VIA IDOR!
+                </p>
               </div>
             )}
           </div>
@@ -918,6 +1085,18 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
+                      <span>🍪 Cookie Manipulation</span>
+                      <span className={foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}') ? '✓' : '○'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span>🔄 Reverse Engineering</span>
+                      <span className={foundFlags.includes('freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}') ? 'text-green-400' : 'text-gray-500'}>
+                        {foundFlags.includes('freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}') ? '✓' : '○'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
                       <span>🔄 Reverse Engineering</span>
                       <span className={foundFlags.includes('freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}') ? 'text-green-400' : 'text-gray-500'}>
                         {foundFlags.includes('freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}') ? '✓' : '○'}
@@ -984,8 +1163,11 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
                             flag === 'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}' 
                               ? 'text-yellow-300 bg-yellow-900/20 border border-yellow-500/30' 
                               : 'text-green-300 bg-green-900/20'
-                          }`}>
-                            {flag}
+                          <div key={index} className="text-green-300 font-mono text-sm bg-green-900/20 px-2 py-1 rounded flex items-center justify-between">
+                            <span>{flag}</span>
+                            {flag === 'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}' && (
+                              <span className="text-yellow-400 text-xs ml-2">🏆 REVERSE MASTER!</span>
+                            )}
                             {flag === 'freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}' && (
                               <div className="text-yellow-400 text-xs mt-1 font-bold">
                                 🏆 FÉLICITATIONS ! Tu es un vrai reverseur, mashallah ! 🏆
@@ -1009,6 +1191,8 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
                     <p>• Use <code className="bg-gray-800 px-1 rounded">sudo -l</code> to check privileges</p>
                     <p>• Use <code className="bg-gray-800 px-1 rounded">find</code> to search for files</p>
                     <p>• Use <code className="bg-gray-800 px-1 rounded">grep</code> to search in files</p>
+                    <p>• Use <code className="bg-gray-800 px-1 rounded">download challenge</code> to get the reverse challenge</p>
+                    <p>• Try <code className="bg-gray-800 px-1 rounded">sudo -l</code> to check privileges</p>
                     <p>• Try <code className="bg-gray-800 px-1 rounded">download challenge</code> for reverse engineering</p>
                     <p>• Check browser cookies with F12 Developer Tools</p>
                     <p>• Look for SQL injection opportunities</p>
@@ -1028,6 +1212,7 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
                     <code className="block bg-gray-800 px-2 py-1 rounded mt-2 text-xs">
                       document.cookie="admin=true"
                     </code>
+                    <p>• Don't forget to check your browser's developer tools 🍪</p>
                   </div>
                 </div>
               </div>
@@ -1130,24 +1315,33 @@ INSERT INTO users VALUES (2, 'user', 'userpass', FALSE);`
       </div>
 
       {/* Footer */}
-      <footer className="bg-black/60 backdrop-blur-sm border-t border-purple-500/30 py-8">
+      <footer className="bg-black/40 backdrop-blur-md border-t border-purple-500/20 py-12">
         <div className="container mx-auto px-6 text-center">
-          <div className="flex items-center justify-center mb-4">
-            <Shield className="w-6 h-6 text-purple-400 mr-2" />
-            <span className="text-white font-bold">Team freep0nx</span>
+          <div className="flex items-center justify-center mb-6">
+            <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full p-3 mr-3">
+              <Shield className="w-8 h-8 text-purple-400" />
+            </div>
+            <span className="text-white font-bold text-2xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Team freep0nx
+            </span>
           </div>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-lg mb-6">
             Elite CTF Team - Passionate about cybersecurity challenges
           </p>
-          <div className="mt-4">
+          <div className="space-y-2">
             <a 
               href="https://ctftime.org/team/361758/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-purple-400 hover:text-purple-300 transition-colors"
+              className="text-purple-400 hover:text-purple-300 transition-colors text-lg font-medium"
             >
               Follow us on CTFtime
             </a>
+            {userRole === 'admin' && (
+              <p className="text-red-400 text-sm font-mono mt-4">
+                🔓 Admin access detected - Cookie manipulation successful!
+              </p>
+            )}
           </div>
         </div>
       </footer>
