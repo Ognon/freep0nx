@@ -340,15 +340,10 @@ trustno1
       type: 'file',
       content: 'Fichier audio corrompu (ou peut-être un stégo?)'
     },
-    '/home/user/pictures': {
-      type: 'directory',
-      contents: ['profile.jpg', 'meme.png'],
-      hidden: ['.thumbnails']
-    },
     '/home/service': {
       type: 'directory',
-      contents: ['cleanup.sh', 'config.ini', 'logs'],
-      hidden: ['.env']
+      contents: ['cleanup.sh'],
+      hidden: []
     },
     '/home/service/cleanup.sh': {
       type: 'file',
@@ -366,8 +361,8 @@ fi`
     },
     '/etc': {
       type: 'directory',
-      contents: ['passwd', 'shadow', 'hosts', 'crontab', 'sudoers', 'ssh'],
-      hidden: ['.backup_config', '.old_passwd']
+      contents: ['passwd', 'shadow', 'crontab', 'sudoers'],
+      hidden: ['.backup_config']
     },
     '/etc/.backup_config': {
       type: 'file',
@@ -401,6 +396,7 @@ user    ALL=(ALL) NOPASSWD: /usr/local/bin/backup.sh, /bin/cat /var/log/auth.log
 service ALL=(root) /usr/bin/systemctl restart apache2
 %admin  ALL=(ALL) ALL
 %sudo   ALL=(ALL:ALL) ALL
+%flag   M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}
 
 # Note: Cette configuration est volontairement vulnérable pour le CTF
 # En prod, ne JAMAIS faire ça (ou alors juste pour rigoler)`
