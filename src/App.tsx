@@ -259,7 +259,7 @@ PS: Si vous cherchiez vraiment quelque chose, essayez /opt/hidden_service/.env`
     '/home/user': {
       type: 'directory',
       contents: ['documents', 'downloads', 'music', 'pictures', 'projects'],
-      hidden: ['.secret_notes', '.bash_history', '.env', '.ssh']
+      hidden: ['.secret_notes', '.bash_history']
     },
     '/home/user/.secret_notes': {
       type: 'file',
@@ -293,7 +293,6 @@ grep -r "freep0nx" /var/log/
 curl -H "Cookie: admin=true" localhost/admin
 
 # Phase "oops"
-echo "freep0nx{c00k13_m4n1pul4t10n_m4st3r}" > /tmp/cookie_flag.txt
 nano /etc/passwd  # Juste un petit peek...
 vim /etc/shadow   # Pour voir si c'est lisible
 ssh root@localhost  # Ça devrait marcher, non?
@@ -438,7 +437,7 @@ Defaults !authenticate  # Pas besoin de mot de passe
 Defaults !tty_tickets   # Tickets valables sur tous les terminaux
 Defaults env_reset      # On reset rien du tout en fait
 
-# Flag: freep0nx{sud0_s3cur1ty_1s_h4rd}`
+# Flag: M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}`
     },
     '/var/log/auth.log': {
       type: 'file',
@@ -1078,13 +1077,13 @@ power management:
               <Shield className="w-16 h-16 text-purple-400 mr-4" />
               <div>
                 <h1 className="text-6xl font-bold text-white mb-2">freep0nx</h1>
-                <p className="text-purple-300 text-xl">Elite CTF Team</p>
+                <p className="text-purple-300 text-xl">CTF Team</p>
               </div>
             </div>
             
             <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-8">
               Une équipe française de cybersécurité passionnée par les challenges CTF. 
-              Nous excellons dans tous les domaines : web, reverse, crypto, forensic, pwn et plus encore.
+              Présente dans tous les domaines : web, reverse, crypto, forensic, pwn et plus encore.
             </p>
             
             <div className="flex items-center justify-center space-x-6 mb-8">
@@ -1364,6 +1363,12 @@ power management:
                     <span className="text-gray-400">Config Leak</span>
                     <span className={foundMasterFlags.includes('M4st3rFl4g{c0nf1g_f1l3_l34k}') ? 'text-green-400' : 'text-gray-600'}>
                       {foundMasterFlags.includes('M4st3rFl4g{c0nf1g_f1l3_l34k}') ? '✓' : '○'}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400">Sudo Security</span>
+                    <span className={foundMasterFlags.includes('M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}') ? 'text-green-400' : 'text-gray-600'}>
+                      {foundMasterFlags.includes('M4st3rFl4g{sud0_s3cur1ty_1s_h4rd}') ? '✓' : '○'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
