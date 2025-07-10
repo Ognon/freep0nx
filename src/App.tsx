@@ -694,10 +694,18 @@ power management:
                      fileSystem[normalizedPath === '/' ? `/${item}` : `${normalizedPath}/${item}`]?.type === 'directory';
         const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
         const size = isDir ? '4096' : Math.floor(Math.random() * 1024) + 1;
-        const date = 'Jan 15 ' + Math.floor(Math.random() * 12) + ':' + Math.floor(Math.random() * 60);
-        const color = isHidden ? '\x1b[90m' : isDir ? '\x1b[34m' : '\x1b[0m';
-        return `${permissions} 1 ${currentUser} ${currentUser} ${size} ${date} ${color}${item}\x1b[0m`;
-      });
+        // Formatage correct de la date avec des 0 initiaux
+        const hours = String(Math.floor(Math.random() * 12)).padStart(2, '0');
+        const minutes = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+        const date = `Jan 15 ${hours}:${minutes}`;
+        
+        // Retourner un objet au lieu d'une chaîne avec codes ANSI
+        return {
+          text: `${permissions} 1 ${currentUser} ${currentUser} ${size} ${date} ${item}`,
+          isDir,
+          isHidden
+        };
+      }).map(item => item.text); // Temporairement enlever les couleurs
     }
     
     return contents;
@@ -1302,32 +1310,50 @@ power management:
                     </div>
                   )}
                   
-                  {history.map((cmd, index) => (
-                    <div key={index} className="mb-3">
-                      <div className="text-green-400 flex items-center">
-                        <span className="text-purple-400">{currentUser}@freep0nx</span>
-                        <span className="text-white">:</span>
-                        <span className="text-blue-400">{currentPath}</span>
-                        <span className="text-white">$ </span>
-                        <span className="text-green-300">{cmd.input}</span>
-                      </div>
-                      {cmd.output.map((line, lineIndex) => (
-                        <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
-                          {line.includes('freep0nx{') ? (
-                            <span className="text-yellow-300 bg-yellow-900/20 px-1 rounded font-bold">
-                              {line}
-                            </span>
-                          ) : line.includes('Permission denied') ? (
-                            <span className="text-red-400">{line}</span>
-                          ) : line.includes('✓') || line.includes('successful') ? (
-                            <span className="text-green-400">{line}</span>
-                          ) : (
-                            line
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  ))}
+                 {history.map((cmd, index) => (
+  <div key={index} className="mb-3">
+    <div className="text-green-400 flex items-center">
+      <span className="text-purple-400">{currentUser}@freep0nx</span>
+      <span className="text-white">:</span>
+      <span className="text-blue-400">{currentPath}</span>
+      <span className="text-white">$ </span>
+      <span className="text-green-300">{cmd.input}</span>
+    </div>
+    {cmd.output.map((line, lineIndex) => {
+      // Gestion spéciale pour ls -l
+      if (cmd.input.startsWith('ls -') && line.includes('rwx')) {
+        const parts = line.split(' ');
+        const isDir = parts[0].startsWith('d');
+        const isHidden = parts[parts.length - 1].startsWith('.');
+        
+        return (
+          <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed font-mono">
+            {parts.slice(0, -1).join(' ')}{' '}
+            <span className={isHidden ? 'text-gray-500' : isDir ? 'text-blue-400' : 'text-gray-300'}>
+              {parts[parts.length - 1]}
+            </span>
+          </div>
+        );
+      }
+      
+      return (
+        <div key={lineIndex} className="text-gray-300 ml-2 leading-relaxed">
+          {line.includes('freep0nx{') ? (
+            <span className="text-yellow-300 bg-yellow-900/20 px-1 rounded font-bold">
+              {line}
+            </span>
+          ) : line.includes('Permission denied') ? (
+            <span className="text-red-400">{line}</span>
+          ) : line.includes('✓') || line.includes('successful') ? (
+            <span className="text-green-400">{line}</span>
+          ) : (
+            line
+          )}
+        </div>
+      );
+    })}
+  </div>
+))}
                   
                   <form onSubmit={handleSubmit} className="flex items-center">
                     <span className="text-purple-400">{currentUser}@freep0nx</span>
