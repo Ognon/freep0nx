@@ -163,6 +163,12 @@ const App: React.FC = () => {
       speciality: "réseau, animé, foo", 
       description: "Rookie motivé par les animés. 'Senpai a remarqué mon buffer overflow! ❤️'" 
     },
+    { 
+      rank: "Membre", 
+      pseudo: "Szc0rpion", 
+      speciality: "réseau, web", 
+      description: "Agir sans laisser de trace. Servir sans nom." 
+    },
     // Membre caché pour IDOR
     { 
       rank: "freep0nx{1d0r_4tt4ck_succ3ss}", 
