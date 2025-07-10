@@ -185,11 +185,11 @@ const App: React.FC = () => {
   ];
 
   const masterFlags = [
-    'freep0nx{r00t_pr1v3sc_m4st3r}',
-    'freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}',
-    'freep0nx{c0nf1g_f1l3_l34k}',
-    'freep0nx{d33p_w3b_s3cr3ts}',
-    'freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}'
+    'M4st3rFl4g{r00t_pr1v3sc_m4st3r}',
+    'M4st3rFl4g{h1dd3n_s3rv1c3_d1sc0v3ry}',
+    'M4st3rFl4g{c0nf1g_f1l3_l34k}',
+    'M4st3rFl4g{d33p_w3b_s3cr3ts}',
+    'M4st3rFl4g{pr1v1l3g3_3sc4l4t10n_g0d}'
   ];
 
   const fileSystem = {
@@ -203,7 +203,7 @@ const App: React.FC = () => {
       content: `# Emergency root backup (à ne regarder qu'en cas d'extrême urgence)
 # Ou si vous êtes curieux, mais dans ce cas faites comme si vous aviez pas vu
 
-# Flag: freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}
+# Flag: M4st3rFl4g{pr1v1l3g3_3sc4l4t10n_g0d}
 root:$6$salt$hashedpassword:18000:0:99999:7:::  # Le hash est 'password' mais chut!
 admin:$6$salt$anotherhash:18000:0:99999:7:::    # Devinez quoi? 'admin123'
 
@@ -456,7 +456,7 @@ Jan 15 10:30:07 server sshd[1235]: Accepted password for hacker from 1337.1337.1
       type: 'file',
       content: `#!/bin/bash
 # Script de backup super sécurisé (à exécuter en root)
-# freep0nx{r00t_pr1v3sc_m4st3r}
+# M4st3rFl4g{r00t_pr1v3sc_m4st3r}
 
 echo "Début du backup... (oui, ça prend des droits root pour ça)"
 
@@ -471,7 +471,7 @@ tar -czf /var/backups/full_backup_$(date +%s).tar.gz \
 # Bonus: Copie des flags trouvés
 grep -r "freep0nx{" / >> /root/flags.txt  # Pour plus tard
 
-echo "Backup complet! Flag: freep0nx{r00t_pr1v3sc_m4st3r}"
+echo "Backup complet! Flag: M4st3rFl4g{r00t_pr1v3sc_m4st3r}"
 
 # Vulnérabilité intentionnelle:
 # - Exécutable par tous (chmod 755)
@@ -486,7 +486,7 @@ echo "Backup complet! Flag: freep0nx{r00t_pr1v3sc_m4st3r}"
 
 PORT=1337
 DEBUG=true  # Toujours true en prod
-SECRET_KEY=freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}
+SECRET_KEY=M4st3rFl4g{h1dd3n_s3rv1c3_d1sc0v3ry}
 ADMIN_TOKEN=sup3r_s3cr3t_t0k3n_#123
 
 # Identifiants DB
@@ -504,7 +504,7 @@ DB_NAME=hidden_service
     },
     '/root/flag.txt': {
       type: 'file',
-      content: `freep0nx{r00t_pr1v3sc_m4st3r}
+      content: `M4st3rFl4g{r00t_pr1v3sc_m4st3r}
 
 Félicitations! Vous avez obtenu les privilèges root!
 
@@ -521,7 +521,7 @@ PS: N'oubliez pas de faire un backup avant de tout supprimer :)`
 
 - Accès SSH: root / toor
 - Token API: 123e4567-e89b-12d3-a456-426614174000
-- Flag: freep0nx{d33p_w3b_s3cr3ts}
+- Flag: M4st3rFl4g{d33p_w3b_s3cr3ts}
 - Mot de passe WiFi: "PublicWifiSansMotDePasse"
 
 # Ce fichier se supprimera automatiquement
@@ -709,14 +709,14 @@ power management:
           return ['flag.txt', '.bash_history', 'admin_notes.txt'];
         }
         if (args[0] === 'cat' && args[1] === '/root/flag.txt') {
-          return ['freep0nx{r00t_pr1v3sc_m4st3r}'];
+          return ['M4st3rFl4g{r00t_pr1v3sc_m4st3r}'];
         }
         if (args[0] === '/usr/local/bin/backup.sh') {
           return [
             'Running backup as root...',
             'tar: Removing leading `/\' from member names',
             'Backup completed successfully',
-            'freep0nx{r00t_pr1v3sc_m4st3r}'
+            'M4st3rFl4g{r00t_pr1v3sc_m4st3r}'
           ];
         }
         if (args[0] === 'fortune') {
@@ -1350,32 +1350,32 @@ power management:
                 <div className="grid grid-cols-1 gap-2 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400">Root Privesc</span>
-                    <span className={foundMasterFlags.includes('freep0nx{r00t_pr1v3sc_m4st3r}') ? 'text-green-400' : 'text-gray-600'}>
-                      {foundMasterFlags.includes('freep0nx{r00t_pr1v3sc_m4st3r}') ? '✓' : '○'}
+                    <span className={foundMasterFlags.includes('M4st3rFl4g{r00t_pr1v3sc_m4st3r}') ? 'text-green-400' : 'text-gray-600'}>
+                      {foundMasterFlags.includes('M4st3rFl4g{r00t_pr1v3sc_m4st3r}') ? '✓' : '○'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400">Service Discovery</span>
-                    <span className={foundMasterFlags.includes('freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}') ? 'text-green-400' : 'text-gray-600'}>
-                      {foundMasterFlags.includes('freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}') ? '✓' : '○'}
+                    <span className={foundMasterFlags.includes('M4st3rFl4g{h1dd3n_s3rv1c3_d1sc0v3ry}') ? 'text-green-400' : 'text-gray-600'}>
+                      {foundMasterFlags.includes('M4st3rFl4g{h1dd3n_s3rv1c3_d1sc0v3ry}') ? '✓' : '○'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400">Config Leak</span>
-                    <span className={foundMasterFlags.includes('freep0nx{c0nf1g_f1l3_l34k}') ? 'text-green-400' : 'text-gray-600'}>
-                      {foundMasterFlags.includes('freep0nx{c0nf1g_f1l3_l34k}') ? '✓' : '○'}
+                    <span className={foundMasterFlags.includes('M4st3rFl4g{c0nf1g_f1l3_l34k}') ? 'text-green-400' : 'text-gray-600'}>
+                      {foundMasterFlags.includes('M4st3rFl4g{c0nf1g_f1l3_l34k}') ? '✓' : '○'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400">Deep Web</span>
-                    <span className={foundMasterFlags.includes('freep0nx{d33p_w3b_s3cr3ts}') ? 'text-green-400' : 'text-gray-600'}>
-                      {foundMasterFlags.includes('freep0nx{d33p_w3b_s3cr3ts}') ? '✓' : '○'}
+                    <span className={foundMasterFlags.includes('M4st3rFl4g{d33p_w3b_s3cr3ts}') ? 'text-green-400' : 'text-gray-600'}>
+                      {foundMasterFlags.includes('M4st3rFl4g{d33p_w3b_s3cr3ts}') ? '✓' : '○'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400">Privilege Escalation</span>
-                    <span className={foundMasterFlags.includes('freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}') ? 'text-green-400' : 'text-gray-600'}>
-                      {foundMasterFlags.includes('freep0nx{pr1v1l3g3_3sc4l4t10n_g0d}') ? '✓' : '○'}
+                    <span className={foundMasterFlags.includes('M4st3rFl4g{pr1v1l3g3_3sc4l4t10n_g0d}') ? 'text-green-400' : 'text-gray-600'}>
+                      {foundMasterFlags.includes('M4st3rFl4g{pr1v1l3g3_3sc4l4t10n_g0d}') ? '✓' : '○'}
                     </span>
                   </div>
                 </div>
