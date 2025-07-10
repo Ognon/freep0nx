@@ -1446,7 +1446,7 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
 
                 {foundMasterFlags.length === masterFlags.length && (
                   <div className="text-center text-yellow-400 font-bold text-sm">
-                    🏆 MASTER HACKER ACHIEVED! 🏆
+                    🏆 MASTER HACKER ACHIEVED! GG 🏆
                   </div>
                 )}
               </div>
@@ -1463,7 +1463,7 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
             <span className="text-white font-bold">Team freep0nx</span>
           </div>
           <p className="text-gray-400 text-sm">
-            Elite CTF Team - Passionate about cybersecurity challenges
+            CTF Team - Passionate about cybersecurity challenges
           </p>
           <div className="mt-4">
             <a 
