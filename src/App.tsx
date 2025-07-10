@@ -246,8 +246,8 @@ cat /dev/random > /dev/sda
     },
     '/home/user': {
       type: 'directory',
-      contents: ['documents', 'downloads', 'music', 'pictures'],
-      hidden: ['.secret_notes', '.bash_history', '.cache', '.local', '.bashrc']
+      contents: ['documents', 'downloads', 'music'],
+      hidden: ['.secret_notes', '.bash_history']
     },
     '/home/user/.secret_notes': {
       type: 'file',
@@ -277,8 +277,8 @@ ssh root@localhost
     },
     '/home/user/documents': {
       type: 'directory',
-      contents: ['notes.txt', 'backup.tar.gz', 'projet_ctf'],
-      hidden: ['.private', 'secret.pdf']
+      contents: ['notes.txt'],
+      hidden: ['.private']
     },
     '/home/user/documents/.private': {
       type: 'file',
@@ -298,8 +298,8 @@ PS: J'ai oublié tous ces conseils hier...`
     },
     '/home/user/downloads': {
       type: 'directory',
-      contents: ['exploit.py', 'wordlist.txt', 'meme.jpg', 'ctf_writeup.pdf'],
-      hidden: ['.temp', 'malware.exe']
+      contents: ['exploit.py', 'wordlist.txt'],
+      hidden: []
     },
     '/home/user/downloads/exploit.py': {
       type: 'file',
@@ -333,8 +333,8 @@ trustno1
     },
     '/home/user/music': {
       type: 'directory',
-      contents: ['hackers_soundtrack.mp3', 'coding_playlist'],
-      hidden: ['.spotify_cache']
+      contents: ['hackers_soundtrack.mp3'],
+      hidden: []
     },
     '/home/user/music/hackers_soundtrack.mp3': {
       type: 'file',
