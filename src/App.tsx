@@ -850,7 +850,7 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
         if (args[0] === 'challenge') {
             // Trigger download of the challenge file
             const link = document.createElement('a');
-            link.href = '/challenge';
+            link.href = '/freep0nx/challenge';
             link.download = 'challenge';
             document.body.appendChild(link);
             link.click();
@@ -864,7 +864,7 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
 
         if (args[0] === 'notes.pdf') {
             const link = document.createElement('a');
-            link.href = '/notes.pdf';
+            link.href = '/freep0nx/notes.pdf';
             link.download = 'notes.pdf';
             document.body.appendChild(link);
             link.click();
@@ -878,7 +878,7 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
 
         if (args[0] === 'biglist.txt') {
             const link = document.createElement('a');
-            link.href = '/biglist.txt';
+            link.href = '/freep0nx/biglist.txt';
             link.download = 'biglist.txt';
             document.body.appendChild(link);
             link.click();
