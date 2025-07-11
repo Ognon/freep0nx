@@ -173,7 +173,7 @@ find / -name "*.log" 2>/dev/null
 grep -r "freep0nx" /var/log/
 curl -H "Cookie: user=admin localhost/admin
 #Trying IDOR...
-curl https://venerable-rolypoly-67ff26.netlify.app/?member=1
+curl https://ognon.github.io/freep0nx/?member=1
 nano /etc/passwd
 # Oups, mauvaise commande
 vim /etc/shadow
