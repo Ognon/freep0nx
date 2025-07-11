@@ -892,6 +892,16 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
         return [`download: ${args[0]}: file not found`];
 
       case 'curl':
+        if (args.includes('-H') && args.includes('Cookie:') && args.includes('admin=true')) {
+          return [
+            'HTTP/1.1 200 OK',
+            'Content-Type: text/html',
+            '',
+            '<h1>Admin Panel Access Granted!</h1>',
+            '<p>Welcome, administrator!</p>',
+            '<p>Flag: freep0nx{c00k13_m4n1pul4t10n_m4st3r}</p>'
+          ];
+        }
         if (args.includes('ifconfig.me')) {
           return [
             '192.168.1.100',
@@ -1118,25 +1128,20 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
   useEffect(() => {
   const cookies = document.cookie.split('; ').find(row => row.startsWith('user='));
   if (!cookies) {
-    document.cookie = 'user=user; path=/; SameSite=Strict';
-    setCurrentUser('user');
-  } else {
-    const userRole = cookies.split('=')[1];
-    setCurrentUser(userRole);
+    document.cookie = 'user=guest; path=/; SameSite=Strict';
   }
 }, []);
   
   // Cookie challenge
   useEffect(() => {
-  const cookies = document.cookie.split('; ').find(row => row.startsWith('user='));
-  if (!cookies) {
-    document.cookie = 'user=user; path=/; SameSite=Strict';
-    setCurrentUser('user');
-  } else {
-    const userRole = cookies.split('=')[1];
-    setCurrentUser(userRole);
-  }
-}, []);
+    const checkCookie = () => {
+      if (document.cookie.includes('user=admin') && !foundFlags.includes('freep0nx{c00k13_m4n1pul4t10n_m4st3r}')) {
+        const newFlags = [...foundFlags, 'freep0nx{c00k13_m4n1pul4t10n_m4st3r}'];
+        setFoundFlags(newFlags);
+        localStorage.setItem('freep0nx_flags', JSON.stringify(newFlags));
+        console.log('Cookie manipulation detected! Flag found: freep0nx{c00k13_m4n1pul4t10n_m4st3r}');
+      }
+    };
 
     const interval = setInterval(checkCookie, 1000);
     return () => clearInterval(interval);
@@ -1211,45 +1216,7 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
           </div>
         </div>
       </header>
-      <div className={`sticky top-0 z-50 ${currentUser === 'admin' ? 'bg-gradient-to-r from-yellow-600 to-yellow-800' : 'bg-gray-800'} p-4 shadow-lg`}>
-  <div className="container mx-auto flex justify-between items-center">
-    <div className="flex items-center">
-      <Cookie className="w-5 h-5 mr-2" />
-      <span className="font-bold">
-        Current role: <span className={currentUser === 'admin' ? 'text-yellow-300' : 'text-gray-300'}>{currentUser}</span>
-      </span>
-    </div>
-    
-    {currentUser === 'admin' && (
-      <div className="flex items-center animate-pulse">
-        <Flag className="w-5 h-5 mr-2" />
-        <span className="font-bold text-yellow-100">FLAG: freep0nx{c00k13_m4n1pul4t10n_m4st3r}</span>
-      </div>
-    )}
-    
-    <div className="flex space-x-2">
-      <button 
-        onClick={() => {
-          document.cookie = 'user=admin; path=/; SameSite=Strict';
-          setCurrentUser('admin');
-        }}
-        className="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-xs"
-      >
-        Set Admin
-      </button>
-      <button 
-        onClick={() => {
-          document.cookie = 'user=user; path=/; SameSite=Strict';
-          setCurrentUser('user');
-        }}
-        className="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-xs"
-      >
-        Set User
-      </button>
-    </div>
-  </div>
-</div>
-      
+
       {/* Team Members Section */}
       <section className="py-16 bg-black/20">
         <div className="container mx-auto px-6">
