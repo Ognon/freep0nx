@@ -274,7 +274,7 @@ DB_PASS=sup3r_s3cr3t_p4ssw0rd
 DB_NAME=production
 
 # API Keys
-API_SECRET=freep0nx{c0nf1g_f1l3_l34k}
+API_SECRET=M4st3rFl4g{c0nf1g_f1l3_l34k}
 JWT_SECRET=very_secret_key_here
 
 # Admin Panel
