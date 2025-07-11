@@ -1125,18 +1125,6 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
     setCurrentUser(userRole);
   }
 }, []);
-  
-  // Cookie challenge
-  useEffect(() => {
-  const cookies = document.cookie.split('; ').find(row => row.startsWith('user='));
-  if (!cookies) {
-    document.cookie = 'user=user; path=/; SameSite=Strict';
-    setCurrentUser('user');
-  } else {
-    const userRole = cookies.split('=')[1];
-    setCurrentUser(userRole);
-  }
-}, []);
 
     const interval = setInterval(checkCookie, 1000);
     return () => clearInterval(interval);
