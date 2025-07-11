@@ -212,7 +212,7 @@ letmein
 freep0nx
 hunter
 trustno1
-# Cette wordlist est tellement nulle qu'elle en devient utile`},"/home/user/music":{type:"directory",contents:["hackers_soundtrack.mp3"],hidden:[]},"/home/user/music/hackers_soundtrack.mp3":{type:"file",content:"Fichier audio corrompu (ou peut-être un stégo?)"},"/home/service":{type:"directory",contents:["cleanup.sh"],hidden:[]},"/home/service/cleanup.sh":{type:"file",content:`#!/bin/bash
+# Cette wordlist est tellement nulle qu'elle en devient utile`},"/home/user/music":{type:"directory",contents:["hackers_soundtrack.mp3"],hidden:[]},"/home/user/music/hackers_soundtrack.mp3":{type:"file",content:"Fichier audio corrompu (peut-être un futur chall?)"},"/home/service":{type:"directory",contents:["cleanup.sh"],hidden:[]},"/home/service/cleanup.sh":{type:"file",content:`#!/bin/bash
 # Script de nettoyage qui supprime tout ce qui traîne
 
 echo "Nettoyage en cours..."
