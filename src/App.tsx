@@ -1126,10 +1126,6 @@ PS: Si tu lis ceci, tu es probablement un flic. Salut l'ami!`
   }
 }, []);
 
-    const interval = setInterval(checkCookie, 1000);
-    return () => clearInterval(interval);
-  }, [foundFlags]);
-
   useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
