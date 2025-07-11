@@ -596,7 +596,7 @@ shred -u /root/.bash_history
     '/tmp': {
       type: 'directory',
       contents: [],
-      hidden: ['.sql_dump', 'hidden_data']
+      hidden: ['.sql_dump', '.hidden_data']
     },
     '/tmp/.sql_dump': {
       type: 'file',
