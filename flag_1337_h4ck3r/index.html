@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Found!</title>
+    <style>
+        body {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            border: 2px solid #00ff00;
+            padding: 2rem;
+            border-radius: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 20px #00ff00;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 20px #00ff00; }
+            to { box-shadow: 0 0 30px #00ff00, 0 0 40px #00ff00; }
+        }
+        .flag {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-shadow: 0 0 10px #ff6b6b;
+            margin: 1rem 0;
+        }
+        .ascii {
+            font-size: 0.8rem;
+            color: #00ff00;
+            white-space: pre;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ascii">
+    ███████╗██╗      █████╗  ██████╗ 
+    ██╔════╝██║     ██╔══██╗██╔════╝ 
+    █████╗  ██║     ███████║██║  ███╗
+    ██╔══╝  ██║     ██╔══██║██║   ██║
+    ██║     ███████╗██║  ██║╚██████╔╝
+    ╚═╝     ╚══════╝╚═╝  ╚═╝ ╚═════╝ 
+        </div>
+        <h1>🎉 Congratulations! 🎉</h1>
+        <p>You found a flag!</p>
+        <div class="flag">freep0nx{r0b0ts_txt_1s_y0ur_fr13nd}</div>
+        <p>Keep looking... there are more secrets hidden 👀</p>
+        <p><a href="/" style="color: #00ff00;">← Back to main site</a></p>
+    </div>
+</body>
+</html>

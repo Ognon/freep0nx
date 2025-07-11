@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /flag_1337_h4ck3r/
+Disallow: /admin/
+Disallow: /.well-known/
+Allow: /
