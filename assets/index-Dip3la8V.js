@@ -312,7 +312,7 @@ Indices:
 
 PS: Si tu trouves le flag sans reverse, c'est de la triche (mais bravo quand même)`},"/opt/hidden_service":{type:"directory",contents:[],hidden:[".env"]},"/opt/hidden_service/.env":{type:"file",content:`# Hidden Service Configuration
 SERVICE_PORT=8080
-SECRET_KEY=freep0nx{h1dd3n_s3rv1c3_d1sc0v3ry}
+SECRET_KEY=M4st3rFl4g{h1dd3n_s3rv1c3_d1sc0v3ry}
 DEBUG=false
 ADMIN_TOKEN=hidden_admin_token_2024
 
