@@ -1,0 +1,12 @@
+Pikachu Cipher Challenge
+
+Original message encoded with Pikachu cipher:
+pika pika pi pikachu pi pika pika pi pikachu pikachu pika pi pika pikachu pi pika pika
+
+Decoding rules:
+pi = 0
+pika = 1  
+pikachu = 2
+
+Convert to ASCII to get the flag!
+Answer: freep0nx{p1k4chu_c1ph3r_m4st3r}
