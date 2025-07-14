@@ -311,7 +311,9 @@ Indices:
 - Le format du flag est freep0nx{...}
 
 PS: Si tu trouves le flag sans reverse, c'est de la triche (mais bravo quand même)`},"/opt/osint":{type:"directory",contents:["wherischurch.Png","README.txt"],hidden:[]},"/opt/osint/wherischurch.Png":{type:"file",content:`Binary challenge file - use "download file" to get it
-(Indice: fuck l'osint)`},"/opt/osint/README.txt":{type:"file",content:"Hint: Quel est le nom de l'église où le roi Louis XIV allait prier"},"/opt/hidden_service":{type:"directory",contents:[],hidden:[".env"]},"/opt/hidden_service/.env":{type:"file",content:`# Hidden Service Configuration
+(Indice: fuck l'osint)
+(Indice 2: format flag is freep0nx{}
+(Indice 3: Example : freep0nx{Église_Saint-Germain-des-Prés} )`},"/opt/osint/README.txt":{type:"file",content:"Hint: Quel est le nom de l'église où le roi Louis XIV allait prier"},"/opt/hidden_service":{type:"directory",contents:[],hidden:[".env"]},"/opt/hidden_service/.env":{type:"file",content:`# Hidden Service Configuration
 SERVICE_PORT=8080
 SECRET_KEY=M4st3rFl4g{h1dd3n_s3rv1c3_d1sc0v3ry}
 DEBUG=false
