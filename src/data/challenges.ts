@@ -15,12 +15,12 @@ export const challenges: Challenge[] = [
     id: "stegano-01",
     title: "Le Voyage de Gloria",
     category: "steganography",
-    difficulty: "medium",
+    difficulty: "hard",
     description: "Quelque chose se cache dans ces fichiers. Utilise la wordlist pour t'aider.",
     hint: "Monte à bord de la 9 L Gloria te tendra la main sur le quai de Resval.",
     flag: "freep0nx{gl0r14_v0y4g3_s3cr3t}",
     files: ["notes.pdf", "biglist.txt"],
-    points: 100
+    points: 666
   },
   {
     id: "osint-01",
@@ -60,7 +60,7 @@ export const challenges: Challenge[] = [
     description: "ONSXE4TDGBQWW63RGBUG66JTL4ZWC4BQOEYWC5C7OB2TI6LZGNQXIM35",
     hint: "C'est la base quoi...",
     flag: "freep0nx{d0ubl3_3nc0d1ng_ch4ll3ng3}",
-    points: 0.1
+    points: 1
   },
   {
     id: "terminal-01",
@@ -70,6 +70,6 @@ export const challenges: Challenge[] = [
     description: "Explore le terminal et trouve le flag caché dans les fichiers système. Utilise les commandes disponibles pour fouiller !",
     hint: "Certains fichiers contiennent des secrets... Essaie de lire différents fichiers avec 'cat'.",
     flag: "freep0nx{t3rm1n4l_m4st3r_2024}",
-    points: 50
+    points: 99
   }
 ];
