@@ -48,7 +48,7 @@ export const challenges: Challenge[] = [
     category: "crypto",
     difficulty: "easy",
     description: "Pikachu a créé son propre chiffrement ! Pika pika pi ?",
-    flag: "freep0nx{p1k4chu_c1ph3r_m4st3r}",
+    flag: "freep0nx{p1k4chu_c1ph3r}",
     files: ["pika.txt"],
     points: 50
   },
@@ -56,11 +56,11 @@ export const challenges: Challenge[] = [
     id: "crypto-02",
     title: "Double Encodage",
     category: "crypto",
-    difficulty: "hard",
-    description: "Ce message a été encodé deux fois. D'abord avec ROT13, puis avec Base85. Trouve le flag !",
-    hint: "Décode d'abord le Base85, puis applique ROT13 sur le résultat.",
+    difficulty: "easy",
+    description: "ONSXE4TDGBQWW63RGBUG66JTL4ZWC4BQOEYWC5C7OB2TI6LZGNQXIM35",
+    hint: "C'est la base quoi...",
     flag: "freep0nx{d0ubl3_3nc0d1ng_ch4ll3ng3}",
-    points: 500
+    points: 0.1
   },
   {
     id: "terminal-01",
