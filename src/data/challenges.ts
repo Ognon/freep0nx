@@ -7,7 +7,7 @@ export const challenges: Challenge[] = [
     category: "reverse",
     difficulty: "easy",
     description: "Télécharge ce binaire et trouve le flag caché à l'intérieur. Bonne chance !",
-    flag: "freep0nx{r3v3rs3_m4st3r_2024}",
+    flag: "freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}",
     files: ["challenge"],
     points: 50
   },
@@ -18,7 +18,7 @@ export const challenges: Challenge[] = [
     difficulty: "hard",
     description: "Quelque chose se cache dans ces fichiers. Utilise la wordlist pour t'aider.",
     hint: "Monte à bord de la 9 L Gloria te tendra la main sur le quai de Resval.",
-    flag: "freep0nx{gl0r14_v0y4g3_s3cr3t}",
+    flag: "M4st3rFl4g{c4t7l0v3r}",
     files: ["notes.pdf", "biglist.txt"],
     points: 666
   },
@@ -28,7 +28,7 @@ export const challenges: Challenge[] = [
     category: "osint",
     difficulty: "medium",
     description: "Quel est le nom de l'église où le roi Louis XIV allait prier ? (exemple : freep0nx{Église_Saint-Germain-des-Prés})",
-    flag: "freep0nx{Église_Saint-Germain-l'Auxerrois}",
+    flag: "freep0nx{Église_Saint-Louis_de_Chambord}",
     files: ["wherischurch.png"],
     points: 100
   },
