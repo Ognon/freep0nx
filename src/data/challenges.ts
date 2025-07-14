@@ -44,10 +44,10 @@ export const challenges: Challenge[] = [
   },
   {
     id: "crypto-01",
-    title: "Pikachu Cipher",
+    title: "Pika pika !",
     category: "crypto",
     difficulty: "easy",
-    description: "Pikachu a créé son propre chiffrement ! Pika pika pi ?",
+    description: "Pika pika pi ?",
     flag: "freep0nx{p1k4chu_c1ph3r}",
     files: ["pika.txt"],
     points: 50
