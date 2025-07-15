@@ -64,7 +64,7 @@ export const challenges: Challenge[] = [
   },
   {
     id: "crypto-03",
-    title: "Double Encodage",
+    title: "MathFreep0nx",
     category: "crypto",
     difficulty: "hard",
     description: "ONSXE4TDGBQWW63RGBUG66JTL4ZWC4BQOEYWC5C7OB2TI6LZGNQXIM35",
