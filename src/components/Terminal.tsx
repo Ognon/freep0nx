@@ -588,6 +588,13 @@ ADMIN_PASSWORD=sup3r_s3cr3t_p4ss`
     }
   }, []);
 
+  // Maintenir le focus quand on clique dans le terminal
+  const handleTerminalClick = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   const handleCommand = async (command: string) => {
     const [cmd, ...args] = command.trim().split(' ');
     
@@ -606,6 +613,12 @@ ADMIN_PASSWORD=sup3r_s3cr3t_p4ss`
 
     if (cmd === 'clear') {
       setLines([]);
+      // Garder le focus après clear
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 50);
       return;
     }
 
@@ -637,6 +650,13 @@ ADMIN_PASSWORD=sup3r_s3cr3t_p4ss`
     }
 
     setIsProcessing(false);
+    
+    // Remettre le focus automatiquement après chaque commande
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 100);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -793,7 +813,8 @@ ADMIN_PASSWORD=sup3r_s3cr3t_p4ss`
           {/* Terminal Content */}
           <div 
             ref={terminalRef}
-            className="h-[600px] p-6 overflow-y-auto font-mono text-sm bg-black/50 scrollbar-thin scrollbar-thumb-emerald-500/30 scrollbar-track-transparent"
+            className="h-[600px] p-6 overflow-y-auto font-mono text-sm bg-black/50 scrollbar-thin scrollbar-thumb-emerald-500/30 scrollbar-track-transparent cursor-text"
+            onClick={handleTerminalClick}
           >
             {lines.map((line, index) => (
               <div key={index} className={`mb-1 leading-relaxed ${
@@ -817,9 +838,10 @@ ADMIN_PASSWORD=sup3r_s3cr3t_p4ss`
                 value={currentInput}
                 onChange={(e) => setCurrentInput(e.target.value)}
                 onKeyDown={handleKeyPress}
-                className="flex-1 bg-transparent outline-none text-emerald-400 placeholder-emerald-400/50"
+                className="flex-1 bg-transparent outline-none text-emerald-400 placeholder-emerald-400/50 caret-emerald-400"
                 placeholder="Tapez une commande..."
                 disabled={isProcessing}
+                autoFocus
               />
               <span className="ml-1 animate-pulse text-emerald-400">█</span>
             </div>
@@ -840,7 +862,12 @@ ADMIN_PASSWORD=sup3r_s3cr3t_p4ss`
                   key={index}
                   onClick={() => {
                     setCurrentInput(cmd);
-                    if (inputRef.current) inputRef.current.focus();
+                    // Focus automatique après avoir cliqué sur une commande rapide
+                    setTimeout(() => {
+                      if (inputRef.current) {
+                        inputRef.current.focus();
+                      }
+                    }, 50);
                   }}
                   className="px-3 py-1 bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 rounded-lg hover:bg-emerald-500/20 transition-all duration-300 text-sm font-mono"
                 >
