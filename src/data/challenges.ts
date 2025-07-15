@@ -63,6 +63,17 @@ export const challenges: Challenge[] = [
     points: 333
   },
   {
+    id: "crypto-03",
+    title: "Double Encodage",
+    category: "crypto",
+    difficulty: "hard",
+    description: "ONSXE4TDGBQWW63RGBUG66JTL4ZWC4BQOEYWC5C7OB2TI6LZGNQXIM35",
+    hint: "C'est la base quoi...",
+    file: ["MathFreep0nx.py","output.txt"],
+    flag: "freep0nx{47h_15_700_345y_f0r_y0u}",
+    points: 1000
+  },
+  {
     id: "terminal-01",
     title: "Terminal Hacker",
     category: "osint",
