@@ -6,11 +6,10 @@ export const challenges: Challenge[] = [
     title: "Binary Explorer",
     category: "reverse",
     difficulty: "easy",
-    description: `Télécharge ce binaire et trouve le flag caché à l'intérieur. Bonne chance !
-    Auteur: 45exile`,
+    description: "Télécharge ce binaire et trouve le flag caché à l'intérieur. Bonne chance !",
     flag: "freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}",
     files: ["challenge"],
-    points: 50
+    points: 333
   },
   {
     id: "stegano-01",
@@ -61,7 +60,7 @@ export const challenges: Challenge[] = [
     description: "ONSXE4TDGBQWW63RGBUG66JTL4ZWC4BQOEYWC5C7OB2TI6LZGNQXIM35",
     hint: "C'est la base quoi...",
     flag: "freep0nx{d0ubl3_3nc0d1ng_ch4ll3ng3}",
-    points: 333
+    points: 50
   },
   {
     id: "crypto-03",
