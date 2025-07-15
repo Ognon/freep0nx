@@ -6,7 +6,7 @@ export const challenges: Challenge[] = [
     title: "Binary Explorer",
     category: "reverse",
     difficulty: "easy",
-    description: "Télécharge ce binaire et trouve le flag caché à l'intérieur. Bonne chance !",
+    description: "Télécharge ce binaire et trouve le flag caché à l'intérieur. Bonne chance !\nAuteur: 45exile",
     flag: "freep0nx{Tu_Es_Un_Vrai_Reverseur_Mashallax}",
     files: ["challenge"],
     points: 50
