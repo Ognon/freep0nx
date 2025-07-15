@@ -182,7 +182,7 @@ const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate }) => {
                     </span>
                   </div>
                 </div>
-                <p className="text-slate-400 text-sm leading-relaxed break-words">{challenge.description}</p>
+                <p className="text-slate-400 text-sm leading-relaxed overflow-x-auto">{challenge.description}</p>
               </div>
             ))}
           </div>
