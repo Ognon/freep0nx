@@ -69,7 +69,7 @@ export const challenges: Challenge[] = [
     difficulty: "hard",
     description: "Le chiffrement de freep0nx est incassable, mais heureusement, des infiltrés ont laissé fuiter quelques informations pour vous aider",
     hint: "Simplifie les calculs au maximum",
-    file: ["MathFreep0nx.py","output.txt"],
+    files: ["MathFreep0nx.py","output.txt"],
     flag: "freep0nx{47h_15_700_345y_f0r_y0u}",
     points: 1000
   },
