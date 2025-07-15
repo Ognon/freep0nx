@@ -125,7 +125,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-10 border border-white/10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="group">
-              <div className="text-4xl font-black text-emerald-400 mb-3 group-hover:scale-110 transition-transform duration-300">21</div>
+              <div className="text-4xl font-black text-emerald-400 mb-3 group-hover:scale-110 transition-transform duration-300">22</div>
               <div className="text-slate-400 font-medium">Membres actifs</div>
             </div>
             <div className="group">
