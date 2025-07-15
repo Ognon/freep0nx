@@ -126,5 +126,11 @@ export const teamMembers: TeamMember[] = [
     role: "Membre",
     specialty: "réseau",
     quote: "Nouveau membre, futur étudiant à Oteria !"
+  },
+  {
+    name: "Reyko",
+    role: "Membre",
+    specialty: "hardware, stégano",
+    quote: "A cracké une clé RSA en mesurant la consommation électrique d'une ampoule connectée. 'Ton chiffrement? Il fuit par les EMI, mon pote'"
   }
 ];
