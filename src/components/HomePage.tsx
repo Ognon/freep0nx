@@ -129,7 +129,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               <div className="text-slate-400 font-medium">Membres actifs</div>
             </div>
             <div className="group">
-              <div className="text-4xl font-black text-violet-400 mb-3 group-hover:scale-110 transition-transform duration-300">7</div>
+              <div className="text-4xl font-black text-violet-400 mb-3 group-hover:scale-110 transition-transform duration-300">8</div>
               <div className="text-slate-400 font-medium">Challenges disponibles</div>
             </div>
             <div className="group">
