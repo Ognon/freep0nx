@@ -137,7 +137,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               <div className="text-slate-400 font-medium">Vulnérabilités trouvées</div>
             </div>
             <div className="group">
-              <div className="text-4xl font-black text-amber-400 mb-3 group-hover:scale-110 transition-transform duration-300">2024</div>
+              <div className="text-4xl font-black text-amber-400 mb-3 group-hover:scale-110 transition-transform duration-300">1998</div>
               <div className="text-slate-400 font-medium">Fondée en</div>
             </div>
           </div>
