@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Shield, Terminal, Award } from 'lucide-react';
+import { Users, Shield, Terminal, Award, ChevronRight, Sparkles } from 'lucide-react';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -7,37 +7,42 @@ interface HomePageProps {
 
 const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
-      <header className="bg-black/20 backdrop-blur-sm border-b border-purple-500/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className="bg-white/5 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Shield className="h-8 w-8 text-cyan-400" />
-              <h1 className="text-2xl font-bold text-white">freep0nx</h1>
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <Shield className="h-8 w-8 text-emerald-400" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+              </div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                freep0nx
+              </h1>
             </div>
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-1">
               <button
                 onClick={() => onNavigate('home')}
-                className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                className="px-4 py-2 rounded-xl text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all duration-300"
               >
                 Accueil
               </button>
               <button
                 onClick={() => onNavigate('team')}
-                className="text-purple-400 hover:text-purple-300 transition-colors"
+                className="px-4 py-2 rounded-xl text-slate-300 hover:text-violet-300 hover:bg-violet-500/10 transition-all duration-300"
               >
                 Équipe
               </button>
               <button
                 onClick={() => onNavigate('ctf')}
-                className="text-pink-400 hover:text-pink-300 transition-colors"
+                className="px-4 py-2 rounded-xl text-slate-300 hover:text-rose-300 hover:bg-rose-500/10 transition-all duration-300"
               >
                 CTF Platform
               </button>
               <button
                 onClick={() => onNavigate('terminal')}
-                className="text-green-400 hover:text-green-300 transition-colors"
+                className="px-4 py-2 rounded-xl text-slate-300 hover:text-emerald-300 hover:bg-emerald-500/10 transition-all duration-300"
               >
                 Terminal
               </button>
@@ -48,83 +53,92 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 mb-6">
-            freep0nx
-          </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+        <div className="text-center mb-20">
+          <div className="relative inline-block mb-8">
+            <h1 className="text-7xl font-black bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent mb-6">
+              freep0nx
+            </h1>
+            <div className="absolute -top-4 -right-4">
+              <Sparkles className="h-8 w-8 text-emerald-400 animate-pulse" />
+            </div>
+          </div>
+          
+          <p className="text-xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
             Équipe CTF passionnée par la cybersécurité, l'exploration de vulnérabilités et les défis techniques. 
-            Rejoignez-nous dans l'aventure !
+            <span className="text-emerald-400 font-medium"> Rejoignez-nous dans l'aventure !</span>
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          
+          <div className="flex flex-wrap justify-center gap-4 mb-16">
             <button
               onClick={() => onNavigate('ctf')}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="group bg-gradient-to-r from-violet-500/80 to-rose-500/80 hover:from-violet-500 hover:to-rose-500 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-violet-500/25 flex items-center space-x-2"
             >
-              Commencer les Challenges
+              <span>Commencer les Challenges</span>
+              <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
               onClick={() => onNavigate('team')}
-              className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="group bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 border border-white/20 hover:border-white/30 flex items-center space-x-2"
             >
-              Voir l'Équipe
+              <span>Voir l'Équipe</span>
+              <Users className="h-5 w-5 group-hover:scale-110 transition-transform" />
             </button>
           </div>
         </div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105">
-            <div className="flex items-center justify-center w-12 h-12 bg-purple-600 rounded-lg mb-4">
-              <Shield className="h-6 w-6 text-white" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-violet-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10">
+            <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-violet-500/20 to-violet-600/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+              <Shield className="h-8 w-8 text-violet-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">Reverse Engineering</h3>
-            <p className="text-gray-400">Analyse de binaires et désassemblage de code</p>
+            <h3 className="text-xl font-bold text-white mb-3">Reverse Engineering</h3>
+            <p className="text-slate-400 leading-relaxed">Analyse de binaires et désassemblage de code avec expertise</p>
           </div>
 
-          <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-cyan-500/30 hover:border-cyan-400/50 transition-all duration-300 transform hover:scale-105">
-            <div className="flex items-center justify-center w-12 h-12 bg-cyan-600 rounded-lg mb-4">
-              <Terminal className="h-6 w-6 text-white" />
+          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-emerald-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10">
+            <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+              <Terminal className="h-8 w-8 text-emerald-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">Web Exploitation</h3>
-            <p className="text-gray-400">XSS, injection SQL et vulnérabilités web</p>
+            <h3 className="text-xl font-bold text-white mb-3">Web Exploitation</h3>
+            <p className="text-slate-400 leading-relaxed">XSS, injection SQL et vulnérabilités web avancées</p>
           </div>
 
-          <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-pink-500/30 hover:border-pink-400/50 transition-all duration-300 transform hover:scale-105">
-            <div className="flex items-center justify-center w-12 h-12 bg-pink-600 rounded-lg mb-4">
-              <Users className="h-6 w-6 text-white" />
+          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-rose-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10">
+            <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-rose-500/20 to-rose-600/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+              <Users className="h-8 w-8 text-rose-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">OSINT</h3>
-            <p className="text-gray-400">Recherche d'informations et investigations</p>
+            <h3 className="text-xl font-bold text-white mb-3">OSINT</h3>
+            <p className="text-slate-400 leading-relaxed">Recherche d'informations et investigations poussées</p>
           </div>
 
-          <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-green-500/30 hover:border-green-400/50 transition-all duration-300 transform hover:scale-105">
-            <div className="flex items-center justify-center w-12 h-12 bg-green-600 rounded-lg mb-4">
-              <Award className="h-6 w-6 text-white" />
+          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10">
+            <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-500/20 to-amber-600/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+              <Award className="h-8 w-8 text-amber-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">Cryptographie</h3>
-            <p className="text-gray-400">Chiffrement, déchiffrement et cryptanalyse</p>
+            <h3 className="text-xl font-bold text-white mb-3">Cryptographie</h3>
+            <p className="text-slate-400 leading-relaxed">Chiffrement, déchiffrement et cryptanalyse moderne</p>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="bg-black/30 backdrop-blur-sm rounded-xl p-8 border border-purple-500/30">
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-10 border border-white/10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold text-cyan-400 mb-2">21</div>
-              <div className="text-gray-400">Membres actifs</div>
+            <div className="group">
+              <div className="text-4xl font-black text-emerald-400 mb-3 group-hover:scale-110 transition-transform duration-300">21</div>
+              <div className="text-slate-400 font-medium">Membres actifs</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-purple-400 mb-2">6</div>
-              <div className="text-gray-400">Challenges disponibles</div>
+            <div className="group">
+              <div className="text-4xl font-black text-violet-400 mb-3 group-hover:scale-110 transition-transform duration-300">7</div>
+              <div className="text-slate-400 font-medium">Challenges disponibles</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-pink-400 mb-2">∞</div>
-              <div className="text-gray-400">Vulnérabilités trouvées</div>
+            <div className="group">
+              <div className="text-4xl font-black text-rose-400 mb-3 group-hover:scale-110 transition-transform duration-300">∞</div>
+              <div className="text-slate-400 font-medium">Vulnérabilités trouvées</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-green-400 mb-2">2024</div>
-              <div className="text-gray-400">Fondée en</div>
+            <div className="group">
+              <div className="text-4xl font-black text-amber-400 mb-3 group-hover:scale-110 transition-transform duration-300">2024</div>
+              <div className="text-slate-400 font-medium">Fondée en</div>
             </div>
           </div>
         </div>

@@ -237,36 +237,42 @@ const Terminal: React.FC<TerminalProps> = ({ onNavigate }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
-      <header className="bg-black/20 backdrop-blur-sm border-b border-purple-500/30">
+      <header className="bg-white/5 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Shield className="h-8 w-8 text-cyan-400" />
-              <h1 className="text-2xl font-bold text-white">freep0nx</h1>
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <Shield className="h-8 w-8 text-emerald-400" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+              </div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                freep0nx
+              </h1>
             </div>
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-1">
               <button
                 onClick={() => onNavigate('home')}
-                className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                className="px-4 py-2 rounded-xl text-slate-300 hover:text-emerald-300 hover:bg-emerald-500/10 transition-all duration-300"
               >
                 Accueil
               </button>
               <button
                 onClick={() => onNavigate('team')}
-                className="text-purple-400 hover:text-purple-300 transition-colors"
+                className="px-4 py-2 rounded-xl text-slate-300 hover:text-violet-300 hover:bg-violet-500/10 transition-all duration-300"
               >
                 Équipe
               </button>
               <button
                 onClick={() => onNavigate('ctf')}
-                className="text-pink-400 hover:text-pink-300 transition-colors"
+                className="px-4 py-2 rounded-xl text-slate-300 hover:text-rose-300 hover:bg-rose-500/10 transition-all duration-300"
               >
                 CTF Platform
               </button>
               <button
                 onClick={() => onNavigate('terminal')}
-                className="text-green-400 hover:text-green-300 transition-colors"
+                className="px-4 py-2 rounded-xl text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all duration-300"
               >
                 Terminal
               </button>
@@ -277,7 +283,7 @@ const Terminal: React.FC<TerminalProps> = ({ onNavigate }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 mb-4">
+          <h1 className="text-5xl font-black bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent mb-4">
             freep0nx Terminal
           </h1>
           <p className="text-xl text-gray-300">
@@ -285,79 +291,79 @@ const Terminal: React.FC<TerminalProps> = ({ onNavigate }) => {
           </p>
         </div>
 
-        <div className="bg-black/80 backdrop-blur-sm rounded-xl border border-green-500/30 overflow-hidden">
+        <div className="bg-black/80 backdrop-blur-xl rounded-3xl border border-emerald-500/30 overflow-hidden shadow-2xl">
           {/* Terminal Header */}
-          <div className="bg-gray-800/50 px-4 py-2 border-b border-green-500/30 flex items-center space-x-2">
+          <div className="bg-white/5 px-6 py-4 border-b border-emerald-500/30 flex items-center space-x-3">
             <div className="flex space-x-2">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-rose-500 rounded-full hover:bg-rose-400 transition-colors cursor-pointer"></div>
+              <div className="w-3 h-3 bg-amber-500 rounded-full hover:bg-amber-400 transition-colors cursor-pointer"></div>
+              <div className="w-3 h-3 bg-emerald-500 rounded-full hover:bg-emerald-400 transition-colors cursor-pointer"></div>
             </div>
-            <div className="flex items-center space-x-2 text-green-400">
+            <div className="flex items-center space-x-3 text-emerald-400">
               <TerminalIcon className="h-4 w-4" />
-              <span className="text-sm">freep0nx@ctf-server:~</span>
+              <span className="text-sm font-medium">freep0nx@ctf-server:~</span>
             </div>
           </div>
 
           {/* Terminal Content */}
           <div 
             ref={terminalRef}
-            className="h-96 p-4 overflow-y-auto font-mono text-sm bg-black/50"
+            className="h-96 p-6 overflow-y-auto font-mono text-sm bg-black/50"
           >
             {lines.map((line, index) => (
               <div key={index} className={`mb-1 ${
-                line.type === 'command' ? 'text-green-400' : 
-                line.type === 'error' ? 'text-red-400' : 
-                'text-gray-300'
+                line.type === 'command' ? 'text-emerald-400 font-medium' : 
+                line.type === 'error' ? 'text-rose-400' : 
+                'text-slate-300'
               }`}>
                 {line.content}
               </div>
             ))}
             
             {/* Input Line */}
-            <div className="flex items-center text-green-400">
+            <div className="flex items-center text-emerald-400">
               <span className="mr-2">freep0nx@ctf-server:~$</span>
               <input
                 type="text"
                 value={currentInput}
                 onChange={(e) => setCurrentInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="flex-1 bg-transparent outline-none text-green-400"
+                className="flex-1 bg-transparent outline-none text-emerald-400 placeholder-emerald-400/50"
                 placeholder="Tapez une commande..."
                 autoFocus
               />
-              <span className="ml-1 animate-pulse">█</span>
+              <span className="ml-1 animate-pulse text-emerald-400">█</span>
             </div>
           </div>
         </div>
 
         {/* Terminal Info */}
-        <div className="mt-8 bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-green-500/30">
-          <h3 className="text-lg font-semibold text-white mb-4">Commandes disponibles</h3>
-          <div className="grid md:grid-cols-2 gap-4 text-sm">
+        <div className="mt-8 bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+          <h3 className="text-xl font-bold text-white mb-6">Commandes disponibles</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
             <div>
-              <code className="text-green-400">help</code> - Affiche l'aide
+              <code className="text-emerald-400 font-medium">help</code> - Affiche l'aide
             </div>
             <div>
-              <code className="text-green-400">whoami</code> - Utilisateur actuel
+              <code className="text-emerald-400 font-medium">whoami</code> - Utilisateur actuel
             </div>
             <div>
-              <code className="text-green-400">ls</code> - Liste les fichiers
+              <code className="text-emerald-400 font-medium">ls</code> - Liste les fichiers
             </div>
             <div>
-              <code className="text-green-400">cat [file]</code> - Affiche un fichier
+              <code className="text-emerald-400 font-medium">cat [file]</code> - Affiche un fichier
             </div>
             <div>
-              <code className="text-green-400">ps</code> - Processus en cours
+              <code className="text-emerald-400 font-medium">ps</code> - Processus en cours
             </div>
             <div>
-              <code className="text-green-400">neofetch</code> - Informations système
+              <code className="text-emerald-400 font-medium">neofetch</code> - Informations système
             </div>
             <div>
-              <code className="text-green-400">clear</code> - Nettoie le terminal
+              <code className="text-emerald-400 font-medium">clear</code> - Nettoie le terminal
             </div>
             <div>
-              <code className="text-green-400">exit</code> - Quitte le terminal
+              <code className="text-emerald-400 font-medium">exit</code> - Quitte le terminal
             </div>
           </div>
         </div>
