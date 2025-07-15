@@ -67,8 +67,8 @@ export const challenges: Challenge[] = [
     title: "MathFreep0nx",
     category: "crypto",
     difficulty: "hard",
-    description: "ONSXE4TDGBQWW63RGBUG66JTL4ZWC4BQOEYWC5C7OB2TI6LZGNQXIM35",
-    hint: "C'est la base quoi...",
+    description: "Le chiffrement de freep0nx est incassable, mais heureusement, des infiltrés ont laissé fuiter quelques informations pour vous aider",
+    hint: "Simplifie les calculs au maximum",
     file: ["MathFreep0nx.py","output.txt"],
     flag: "freep0nx{47h_15_700_345y_f0r_y0u}",
     points: 1000
