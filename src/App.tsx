@@ -4,6 +4,9 @@ import LoadingSpinner from './components/LoadingSpinner';
 import NotificationSystem from './components/NotificationSystem';
 import ParticleBackground from './components/ParticleBackground';
 import ScrollToTop from './components/ScrollToTop';
+import ThemeToggle from './components/ThemeToggle';
+import SearchBar from './components/SearchBar';
+import StatsWidget from './components/StatsWidget';
 import HomePage from './components/HomePage';
 import TeamMembers from './components/TeamMembers';
 import CTFPlatform from './components/CTFPlatform';
@@ -79,8 +82,16 @@ function App() {
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
       />
+      
+      {/* Top Bar with Search and Theme */}
+      <div className="fixed top-20 right-4 z-40 flex items-center space-x-3">
+        <SearchBar onNavigate={handleNavigate} addNotification={addNotification} />
+        <ThemeToggle addNotification={addNotification} />
+      </div>
+      
       {renderPage()}
       <ScrollToTop />
+      <StatsWidget addNotification={addNotification} />
       <NotificationSystem 
         notifications={notifications}
         removeNotification={removeNotification}

@@ -67,57 +67,93 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, addNotification }) => {
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-violet-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10">
+          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-violet-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10 cursor-pointer">
             <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-violet-500/20 to-violet-600/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
               <Shield className="h-8 w-8 text-violet-400" />
             </div>
             <h3 className="text-xl font-bold text-white mb-3">Reverse Engineering</h3>
             <p className="text-slate-400 leading-relaxed">Analyse de binaires et désassemblage de code avec expertise</p>
+            <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex items-center text-violet-400 text-sm">
+                <span>Découvrir</span>
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </div>
+            </div>
           </div>
 
-          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-emerald-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10">
+          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-emerald-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10 cursor-pointer">
             <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
               <Terminal className="h-8 w-8 text-emerald-400" />
             </div>
             <h3 className="text-xl font-bold text-white mb-3">Web Exploitation</h3>
             <p className="text-slate-400 leading-relaxed">XSS, injection SQL et vulnérabilités web avancées</p>
+            <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex items-center text-emerald-400 text-sm">
+                <span>Explorer</span>
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </div>
+            </div>
           </div>
 
-          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-rose-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10">
+          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-rose-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10 cursor-pointer">
             <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-rose-500/20 to-rose-600/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
               <Users className="h-8 w-8 text-rose-400" />
             </div>
             <h3 className="text-xl font-bold text-white mb-3">OSINT</h3>
             <p className="text-slate-400 leading-relaxed">Recherche d'informations et investigations poussées</p>
+            <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex items-center text-rose-400 text-sm">
+                <span>Investiguer</span>
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </div>
+            </div>
           </div>
 
-          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10">
+          <div className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 transform hover:scale-105 hover:bg-white/10 cursor-pointer">
             <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-500/20 to-amber-600/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
               <Award className="h-8 w-8 text-amber-400" />
             </div>
             <h3 className="text-xl font-bold text-white mb-3">Cryptographie</h3>
             <p className="text-slate-400 leading-relaxed">Chiffrement, déchiffrement et cryptanalyse moderne</p>
+            <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex items-center text-amber-400 text-sm">
+                <span>Décrypter</span>
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-10 border border-white/10">
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-10 border border-white/10 hover:border-white/20 transition-all duration-500">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="group">
-              <div className="text-4xl font-black text-emerald-400 mb-3 group-hover:scale-110 transition-transform duration-300">22</div>
+              <div className="text-4xl font-black text-emerald-400 mb-3 group-hover:scale-110 transition-transform duration-300 cursor-pointer">22</div>
               <div className="text-slate-400 font-medium">Membres actifs</div>
+              <div className="w-full bg-slate-700/50 rounded-full h-2 mt-2">
+                <div className="bg-emerald-400 h-2 rounded-full w-4/5 transition-all duration-1000"></div>
+              </div>
             </div>
             <div className="group">
-              <div className="text-4xl font-black text-violet-400 mb-3 group-hover:scale-110 transition-transform duration-300">8</div>
+              <div className="text-4xl font-black text-violet-400 mb-3 group-hover:scale-110 transition-transform duration-300 cursor-pointer">8</div>
               <div className="text-slate-400 font-medium">Challenges disponibles</div>
+              <div className="w-full bg-slate-700/50 rounded-full h-2 mt-2">
+                <div className="bg-violet-400 h-2 rounded-full w-3/5 transition-all duration-1000"></div>
+              </div>
             </div>
             <div className="group">
-              <div className="text-4xl font-black text-rose-400 mb-3 group-hover:scale-110 transition-transform duration-300">∞</div>
+              <div className="text-4xl font-black text-rose-400 mb-3 group-hover:scale-110 transition-transform duration-300 cursor-pointer">∞</div>
               <div className="text-slate-400 font-medium">Vulnérabilités trouvées</div>
+              <div className="w-full bg-slate-700/50 rounded-full h-2 mt-2">
+                <div className="bg-rose-400 h-2 rounded-full w-full transition-all duration-1000"></div>
+              </div>
             </div>
             <div className="group">
-              <div className="text-4xl font-black text-amber-400 mb-3 group-hover:scale-110 transition-transform duration-300">1998</div>
+              <div className="text-4xl font-black text-amber-400 mb-3 group-hover:scale-110 transition-transform duration-300 cursor-pointer">1998</div>
               <div className="text-slate-400 font-medium">Fondée en</div>
+              <div className="w-full bg-slate-700/50 rounded-full h-2 mt-2">
+                <div className="bg-amber-400 h-2 rounded-full w-full transition-all duration-1000"></div>
+              </div>
             </div>
           </div>
         </div>
