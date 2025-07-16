@@ -99,6 +99,7 @@ const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate, addNotification }
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'reverse': return 'bg-violet-500/10 text-violet-300 border-violet-500/30';
+      case 'misc': return 'bg-violet-500/10 text-violet-300 border-violet-500/30';
       case 'web': return 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30';
       case 'crypto': return 'bg-amber-500/10 text-amber-300 border-amber-500/30';
       case 'osint': return 'bg-rose-500/10 text-rose-300 border-rose-500/30';
