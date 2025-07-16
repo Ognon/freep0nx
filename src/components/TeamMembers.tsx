@@ -1,57 +1,25 @@
 import React from 'react';
 import { Shield, Crown, Star, Sparkles } from 'lucide-react';
 import { teamMembers } from '../data/teamMembers';
+import Footer from './Footer';
 
 interface TeamMembersProps {
   onNavigate: (page: string) => void;
+  addNotification: (notification: any) => void;
 }
 
-const TeamMembers: React.FC<TeamMembersProps> = ({ onNavigate }) => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Header */}
-      <header className="bg-white/5 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <Shield className="h-8 w-8 text-emerald-400" />
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-              </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                freep0nx
-              </h1>
-            </div>
-            <nav className="hidden md:flex space-x-1">
-              <button
-                onClick={() => onNavigate('home')}
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-emerald-300 hover:bg-emerald-500/10 transition-all duration-300"
-              >
-                Accueil
-              </button>
-              <button
-                onClick={() => onNavigate('team')}
-                className="px-4 py-2 rounded-xl text-violet-300 bg-violet-500/10 border border-violet-500/20 hover:bg-violet-500/20 transition-all duration-300"
-              >
-                Équipe
-              </button>
-              <button
-                onClick={() => onNavigate('ctf')}
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-rose-300 hover:bg-rose-500/10 transition-all duration-300"
-              >
-                CTF Platform
-              </button>
-              <button
-                onClick={() => onNavigate('terminal')}
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-emerald-300 hover:bg-emerald-500/10 transition-all duration-300"
-              >
-                Terminal
-              </button>
-            </nav>
-          </div>
-        </div>
-      </header>
+const TeamMembers: React.FC<TeamMembersProps> = ({ onNavigate, addNotification }) => {
+  const handleMemberClick = (memberName: string) => {
+    addNotification({
+      type: 'info',
+      title: 'Membre sélectionné',
+      message: `Profil de ${memberName} affiché`,
+      duration: 2000
+    });
+  };
 
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
           <div className="relative inline-block mb-6">
@@ -71,7 +39,8 @@ const TeamMembers: React.FC<TeamMembersProps> = ({ onNavigate }) => {
           {teamMembers.map((member, index) => (
             <div
               key={index}
-              className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-105 hover:bg-white/10"
+              className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-105 hover:bg-white/10 cursor-pointer"
+              onClick={() => handleMemberClick(member.name)}
             >
               <div className="flex items-center mb-6">
                 <div className={`flex items-center justify-center w-16 h-16 rounded-2xl mr-5 group-hover:scale-110 transition-transform duration-300 ${
@@ -111,6 +80,7 @@ const TeamMembers: React.FC<TeamMembersProps> = ({ onNavigate }) => {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Shield, Download, Flag, CheckCircle, AlertCircle, Info, Sparkles, Trophy } from 'lucide-react';
 import { challenges } from '../data/challenges';
 import { Challenge } from '../types';
+import Footer from './Footer';
 
 interface CTFPlatformProps {
   onNavigate: (page: string) => void;
+  addNotification: (notification: any) => void;
 }
 
-const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate }) => {
+const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate, addNotification }) => {
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
   const [flagInput, setFlagInput] = useState('');
   const [solvedChallenges, setSolvedChallenges] = useState<Set<string>>(new Set());
@@ -40,16 +42,30 @@ const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate }) => {
         setTotalPoints(newPoints);
         localStorage.setItem('freep0nx-total-points', newPoints.toString());
         
-        setMessage({ type: 'success', text: `Bravo ! Flag validé ! +${selectedChallenge.points} points` });
+        addNotification({
+          type: 'success',
+          title: 'Flag validé !',
+          message: `Bravo ! +${selectedChallenge.points} points gagnés`,
+          duration: 5000
+        });
       } else {
-        setMessage({ type: 'success', text: 'Flag déjà validé !' });
+        addNotification({
+          type: 'info',
+          title: 'Flag déjà validé',
+          message: 'Ce challenge a déjà été résolu',
+          duration: 3000
+        });
       }
       setFlagInput('');
     } else {
-      setMessage({ type: 'error', text: 'Flag incorrect, essayez encore !' });
+      addNotification({
+        type: 'error',
+        title: 'Flag incorrect',
+        message: 'Vérifiez votre réponse et essayez encore',
+        duration: 4000
+      });
     }
 
-    setTimeout(() => setMessage(null), 3000);
   };
 
   const handleDownload = (filename: string) => {
@@ -63,8 +79,12 @@ const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate }) => {
     document.body.removeChild(link);
     
     // Show success message
-    setMessage({ type: 'success', text: `Téléchargement de ${filename} démarré !` });
-    setTimeout(() => setMessage(null), 2000);
+    addNotification({
+      type: 'success',
+      title: 'Téléchargement',
+      message: `${filename} téléchargé avec succès`,
+      duration: 3000
+    });
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -88,50 +108,7 @@ const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Header */}
-      <header className="bg-white/5 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <Shield className="h-8 w-8 text-emerald-400" />
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-              </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                freep0nx
-              </h1>
-            </div>
-            <nav className="hidden md:flex space-x-1">
-              <button
-                onClick={() => onNavigate('home')}
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-emerald-300 hover:bg-emerald-500/10 transition-all duration-300"
-              >
-                Accueil
-              </button>
-              <button
-                onClick={() => onNavigate('team')}
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-violet-300 hover:bg-violet-500/10 transition-all duration-300"
-              >
-                Équipe
-              </button>
-              <button
-                onClick={() => onNavigate('ctf')}
-                className="px-4 py-2 rounded-xl text-rose-300 bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 transition-all duration-300"
-              >
-                CTF Platform
-              </button>
-              <button
-                onClick={() => onNavigate('terminal')}
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-emerald-300 hover:bg-emerald-500/10 transition-all duration-300"
-              >
-                Terminal
-              </button>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
           <div className="relative inline-block mb-6">
@@ -331,6 +308,7 @@ const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate }) => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -1,56 +1,35 @@
 import React from 'react';
 import { Users, Shield, Terminal, Award, ChevronRight, Sparkles } from 'lucide-react';
+import Footer from './Footer';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
+  addNotification: (notification: any) => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Header */}
-      <header className="bg-white/5 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <Shield className="h-8 w-8 text-emerald-400" />
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-              </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                freep0nx
-              </h1>
-            </div>
-            <nav className="hidden md:flex space-x-1">
-              <button
-                onClick={() => onNavigate('home')}
-                className="px-4 py-2 rounded-xl text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all duration-300"
-              >
-                Accueil
-              </button>
-              <button
-                onClick={() => onNavigate('team')}
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-violet-300 hover:bg-violet-500/10 transition-all duration-300"
-              >
-                Équipe
-              </button>
-              <button
-                onClick={() => onNavigate('ctf')}
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-rose-300 hover:bg-rose-500/10 transition-all duration-300"
-              >
-                CTF Platform
-              </button>
-              <button
-                onClick={() => onNavigate('terminal')}
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-emerald-300 hover:bg-emerald-500/10 transition-all duration-300"
-              >
-                Terminal
-              </button>
-            </nav>
-          </div>
-        </div>
-      </header>
+const HomePage: React.FC<HomePageProps> = ({ onNavigate, addNotification }) => {
+  const handleCTFClick = () => {
+    onNavigate('ctf');
+    addNotification({
+      type: 'success',
+      title: 'CTF Platform',
+      message: 'Prêt à relever les défis ?',
+      duration: 3000
+    });
+  };
 
+  const handleTeamClick = () => {
+    onNavigate('team');
+    addNotification({
+      type: 'info',
+      title: 'Équipe freep0nx',
+      message: 'Découvrez nos experts en cybersécurité',
+      duration: 3000
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative z-10">
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-20">
@@ -70,14 +49,14 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           
           <div className="flex flex-wrap justify-center gap-4 mb-16">
             <button
-              onClick={() => onNavigate('ctf')}
+              onClick={handleCTFClick}
               className="group bg-gradient-to-r from-violet-500/80 to-rose-500/80 hover:from-violet-500 hover:to-rose-500 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-violet-500/25 flex items-center space-x-2"
             >
               <span>Commencer les Challenges</span>
               <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
-              onClick={() => onNavigate('team')}
+              onClick={handleTeamClick}
               className="group bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 border border-white/20 hover:border-white/30 flex items-center space-x-2"
             >
               <span>Voir l'Équipe</span>
@@ -143,6 +122,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };
