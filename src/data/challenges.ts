@@ -76,7 +76,7 @@ export const challenges: Challenge[] = [
   {
     id: "terminal-01",
     title: "Terminal Hacker",
-    category: "osint",
+    category: "misc",
     difficulty: "easy",
     description: "Explore le terminal et trouve le flag caché dans les fichiers système. Utilise les commandes disponibles pour fouiller !",
     hint: "Certains fichiers contiennent des secrets... Essaie de lire différents fichiers avec 'cat'.",
