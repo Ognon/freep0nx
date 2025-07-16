@@ -113,7 +113,7 @@ const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate, addNotification }
         <div className="text-center mb-16">
           <div className="relative inline-block mb-6">
             <h1 className="text-5xl font-black bg-gradient-to-r from-rose-400 via-violet-400 to-emerald-400 bg-clip-text text-transparent">
-              CTF Platform
+              Plateforme CTF
             </h1>
             <div className="absolute -top-2 -right-6">
               <Trophy className="h-6 w-6 text-rose-400 animate-pulse" />

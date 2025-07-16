@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a href="#" className="text-slate-400 hover:text-rose-400 transition-colors duration-300">
-                  CTF Platform
+                  Plateforme CTF
                 </a>
               </li>
               <li>

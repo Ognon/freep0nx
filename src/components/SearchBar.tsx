@@ -74,7 +74,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onNavigate, addNotification }) =>
     const pages = [
       { id: 'home', title: 'Accueil', description: 'Page d\'accueil freep0nx' },
       { id: 'team', title: 'Équipe', description: 'Membres de l\'équipe freep0nx' },
-      { id: 'ctf', title: 'CTF Platform', description: 'Challenges de cybersécurité' },
+      { id: 'ctf', title: 'Plateforme CTF', description: 'Challenges de cybersécurité' },
       { id: 'terminal', title: 'Terminal', description: 'Terminal de hacking interactif' }
     ];
 

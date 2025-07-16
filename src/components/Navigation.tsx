@@ -17,7 +17,7 @@ const Navigation: React.FC<NavigationProps> = ({
   const navItems = [
     { id: 'home', label: 'Accueil', icon: Home, color: 'emerald' },
     { id: 'team', label: 'Équipe', icon: Users, color: 'violet' },
-    { id: 'ctf', label: 'CTF Platform', icon: Flag, color: 'rose' },
+    { id: 'ctf', label: 'Plateforme CTF', icon: Flag, color: 'rose' },
     { id: 'terminal', label: 'Terminal', icon: Terminal, color: 'cyan' }
   ];
 

@@ -12,7 +12,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, addNotification }) => {
     onNavigate('ctf');
     addNotification({
       type: 'success',
-      title: 'CTF Platform',
+      title: 'Plateforme CTF',
       message: 'Prêt à relever les défis ?',
       duration: 3000
     });
