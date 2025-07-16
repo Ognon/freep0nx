@@ -1,7 +1,11 @@
 import React from 'react';
 import { Shield, Github, Twitter, Mail, Heart } from 'lucide-react';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigate: (page: string) => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
     <footer className="bg-white/5 backdrop-blur-xl border-t border-white/10 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -46,24 +50,36 @@ const Footer: React.FC = () => {
             <h4 className="text-white font-semibold mb-4">Navigation</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors duration-300">
+                <button 
+                  onClick={() => onNavigate('home')} 
+                  className="text-slate-400 hover:text-emerald-400 transition-colors duration-300"
+                >
                   Accueil
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-slate-400 hover:text-violet-400 transition-colors duration-300">
+                <button 
+                  onClick={() => onNavigate('team')} 
+                  className="text-slate-400 hover:text-violet-400 transition-colors duration-300"
+                >
                   Équipe
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-slate-400 hover:text-rose-400 transition-colors duration-300">
+                <button 
+                  onClick={() => onNavigate('ctf')} 
+                  className="text-slate-400 hover:text-rose-400 transition-colors duration-300"
+                >
                   Plateforme CTF
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-slate-400 hover:text-cyan-400 transition-colors duration-300">
+                <button 
+                  onClick={() => onNavigate('terminal')} 
+                  className="text-slate-400 hover:text-cyan-400 transition-colors duration-300"
+                >
                   Terminal
-                </a>
+                </button>
               </li>
             </ul>
           </div>
