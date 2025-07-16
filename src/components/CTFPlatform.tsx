@@ -309,7 +309,7 @@ const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate, addNotification }
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 };

@@ -896,7 +896,7 @@ ADMIN_PASSWORD=sup3r_s3cr3t_p4ss`
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 };

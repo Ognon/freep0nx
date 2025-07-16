@@ -80,7 +80,7 @@ const TeamMembers: React.FC<TeamMembersProps> = ({ onNavigate, addNotification }
           ))}
         </div>
       </div>
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 };

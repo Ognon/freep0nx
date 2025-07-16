@@ -158,7 +158,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, addNotification }) => {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 };
