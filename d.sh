@@ -1,11 +1,11 @@
 #!/bin/bash
-# Build l'application
+# Build
 npm run build
 
-# Déploie sur gh-pages
+# Déploiement avec SSH
 npx gh-pages -d dist -r git@github.com:Ognon/freep0nx.git
 
-# Push les changements sur main
+# Push
 git add .
-git commit -m "Deploy to Ognon"
+git commit -m "Deploy"
 git push ognon main
