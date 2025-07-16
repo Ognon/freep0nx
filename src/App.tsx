@@ -7,10 +7,6 @@ import ScrollToTop from './components/ScrollToTop';
 import ThemeToggle from './components/ThemeToggle';
 import SearchBar from './components/SearchBar';
 import StatsWidget from './components/StatsWidget';
-import AchievementSystem from './components/AchievementSystem';
-import LiveChat from './components/LiveChat';
-import ProgressTracker from './components/ProgressTracker';
-import MusicPlayer from './components/MusicPlayer';
 import HomePage from './components/HomePage';
 import TeamMembers from './components/TeamMembers';
 import CTFPlatform from './components/CTFPlatform';
@@ -96,10 +92,6 @@ function App() {
       {renderPage()}
       <ScrollToTop />
       <StatsWidget addNotification={addNotification} />
-      <AchievementSystem addNotification={addNotification} />
-      <LiveChat addNotification={addNotification} />
-      <ProgressTracker addNotification={addNotification} />
-      <MusicPlayer addNotification={addNotification} />
       <NotificationSystem 
         notifications={notifications}
         removeNotification={removeNotification}
