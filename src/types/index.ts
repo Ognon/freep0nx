@@ -1,7 +1,7 @@
 export interface Challenge {
   id: string;
   title: string;
-  category: 'reverse' | 'steganography' | 'osint' | 'web' | 'crypto';
+  category: 'reverse' | 'steganography' | 'osint' | 'misc' | 'web' | 'crypto';
   difficulty: 'easy' | 'medium' | 'hard';
   description: string;
   hint?: string;
