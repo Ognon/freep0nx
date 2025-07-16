@@ -1,5 +1,7 @@
 User-agent: *
-Disallow: /flag_1337_h4ck3r/
 Disallow: /admin/
-Disallow: /.well-known/
-Allow: /
+Disallow: /private/
+Disallow: /secret/
+
+# freep0nx{r0b0ts_d0nt_h1d3_s3cr3ts}
+# You found the secret! Well done hacker!
