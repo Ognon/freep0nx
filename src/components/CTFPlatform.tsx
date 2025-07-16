@@ -71,7 +71,7 @@ const CTFPlatform: React.FC<CTFPlatformProps> = ({ onNavigate, addNotification }
   const handleDownload = (filename: string) => {
     // Create a temporary link element to trigger download
     const link = document.createElement('a');
-    link.href = `/${filename}`;
+    link.href = `/freep0nx/${filename}`;
     link.download = filename;
     link.target = '_blank';
     document.body.appendChild(link);
