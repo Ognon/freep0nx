@@ -42,7 +42,7 @@ function App() {
     const pageNames: { [key: string]: string } = {
       home: 'Accueil',
       team: 'Équipe',
-      ctf: 'CTF Plateforme',
+      ctf: 'Plateforme CTF',
       terminal: 'Terminal'
     };
     
