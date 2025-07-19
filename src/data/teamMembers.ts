@@ -130,7 +130,7 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Reyko",
     role: "Membre",
-    specialty: "hardware, stégano",
+    specialty: "hardware, forensic",
     quote: "A cracké une clé RSA en mesurant la consommation électrique d'une ampoule connectée. 'Ton chiffrement? Il fuit par les EMI, mon pote'"
   }
 ];
