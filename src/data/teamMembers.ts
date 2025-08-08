@@ -110,12 +110,6 @@ export const teamMembers: TeamMember[] = [
     quote: "Passionné, gros potentiel. 'J'ai rooté mon propre PC... c'était pas intentionnel!'"
   },
   {
-    name: "Zeleph",
-    role: "Ancien Membre",
-    specialty: "réseau, erp, foo",
-    quote: "Rookie motivé par les animés. 'Senpai a remarqué mon buffer overflow! ❤️'"
-  },
-  {
     name: "Szc0rpion",
     role: "Membre",
     specialty: "réseau, web",
