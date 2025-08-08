@@ -111,8 +111,8 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Zeleph",
-    role: "Membre",
-    specialty: "réseau, animé, foo",
+    role: "Ancien Membre",
+    specialty: "réseau, erp, foo",
     quote: "Rookie motivé par les animés. 'Senpai a remarqué mon buffer overflow! ❤️'"
   },
   {
