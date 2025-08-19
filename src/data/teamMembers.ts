@@ -35,7 +35,7 @@ export const teamMembers: TeamMember[] = [
     name: "vorstag34",
     role: "Membre",
     specialty: "goat ultime il sait tout faire",
-    quote: "Le couteau suisse ultime. Peut faire un RCE avec une calculatrice Casio."
+    quote: "Le couteau suisse ultime. Peut faire une RCE avec une calculatrice Casio."
   },
   {
     name: "bloman",
