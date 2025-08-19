@@ -42,7 +42,7 @@ function App() {
     const pageNames: { [key: string]: string } = {
       home: 'Accueil',
       team: 'Équipe',
-      ctf: 'Plateforme CTF',
+      ctf: 'Plateforme CTF',
       terminal: 'Terminal'
     };
     
@@ -74,7 +74,20 @@ function App() {
   };
 
   return (
-    <div className="App relative">
+    <div className="App relative min-h-screen bg-black overflow-x-hidden">
+      {/* Matrix Background Effect */}
+      <div className="matrix-bg fixed inset-0 z-0"></div>
+      
+      {/* Animated Grid Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-cyan-900/20"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]"></div>
+        <div className="grid-pattern absolute inset-0 opacity-20"></div>
+      </div>
+
+      {/* Glitch overlay */}
+      <div className="glitch-overlay fixed inset-0 z-0 pointer-events-none"></div>
+      
       <ParticleBackground />
       <Navigation 
         currentPage={currentPage}
@@ -89,7 +102,10 @@ function App() {
         <ThemeToggle addNotification={addNotification} />
       </div>
       
-      {renderPage()}
+      <main className="relative z-10">
+        {renderPage()}
+      </main>
+      
       <ScrollToTop />
       <StatsWidget addNotification={addNotification} />
       <NotificationSystem 
