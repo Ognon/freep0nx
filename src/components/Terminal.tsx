@@ -229,8 +229,8 @@ ADMIN_PASSWORD=sup3r_s3cr3t_p4ss`
     pwd: () => [currentPath],
 
     ls: (args: string[]) => {
-      const showHidden = args.includes('-a') || args.includes('-la');
-      const longFormat = args.includes('-l') || args.includes('-la');
+      const showHidden = args.includes('-a') || args.includes('-la') || args.includes('-al');
+      const longFormat = args.includes('-l') || args.includes('-la') || args.includes('-al');
       
       const currentDir = fileSystem[currentPath];
       if (!currentDir || currentDir.type !== 'directory') {
