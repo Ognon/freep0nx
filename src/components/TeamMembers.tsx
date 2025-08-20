@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Crown, Star, Sparkles, Skull, Lightning, Target, Crosshair, Flame, Atom, Brain, Zap } from 'lucide-react';
+import { Shield, Crown, Star, Sparkles, Skull, CloudLightning as Lightning, Target, Crosshair, Flame, Atom, Brain, Zap } from 'lucide-react';
 import { teamMembers } from '../data/teamMembers';
 import Footer from './Footer';
 

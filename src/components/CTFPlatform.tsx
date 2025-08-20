@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Download, Flag, CheckCircle, AlertCircle, Info, Sparkles, Trophy, Skull, Lightning, Target, Crosshair, Zap, Flame, Atom, Brain } from 'lucide-react';
+import { Shield, Download, Flag, CheckCircle, AlertCircle, Info, Sparkles, Trophy, Skull, CloudLightning as Lightning, Target, Crosshair, Zap, Flame, Atom, Brain } from 'lucide-react';
 import { challenges } from '../data/challenges';
 import { Challenge } from '../types';
 import Footer from './Footer';
