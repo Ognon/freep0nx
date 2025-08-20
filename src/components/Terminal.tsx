@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Shield, Terminal as TerminalIcon, Cpu, HardDrive, Wifi, Activity, Zap, Lock, Eye, Code, Search, FileText, Folder, ChevronRight, Play, Pause, RotateCcw, Skull, Lightning, Target, Crosshair, Brain, Atom } from 'lucide-react';
+import { Shield, Terminal as TerminalIcon, Cpu, HardDrive, Wifi, Activity, Zap, Lock, Eye, Code, Search, FileText, Folder, ChevronRight, Play, Pause, RotateCcw, Skull, CloudLightning as Lightning, Target, Crosshair, Brain, Atom } from 'lucide-react';
 import { TerminalLine } from '../types';
 import Footer from './Footer';
 
