@@ -373,8 +373,6 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, addNotification }) => {
 
       <Footer onNavigate={onNavigate} />
     </div>
-            </span>
-          </div>
 
           {/* Main title with glitch effect */}
           <div className="relative mb-8">
