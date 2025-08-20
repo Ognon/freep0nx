@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Shield, Terminal, Award, ChevronRight, Sparkles, Zap, Target, Code, Lock, Eye, Cpu, Globe, Star, Trophy, Flame, Rocket, Clock, Activity, Wifi, Database, Brain, Crosshair, Skull, Lightning, Atom, Hexagon } from 'lucide-react';
+import { Users, Shield, Terminal, Award, ChevronRight, Sparkles, Zap, Target, Code, Lock, Eye, Cpu, Globe, Star, Trophy, Flame, Rocket, Clock, Activity, Wifi, Database, Brain, Crosshair, Skull, CloudLightning as Lightning, Atom, Hexagon } from 'lucide-react';
 import Footer from './Footer';
 
 interface HomePageProps {
